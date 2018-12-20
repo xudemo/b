@@ -1,0 +1,110 @@
+{extend name="common/base"/}
+{block name="title"}控制中心{/block}
+{block name="script"}
+<script type="text/javascript">
+	$(function () {
+        var html = $('.center').html();
+        if(html!=null){
+            $('.addwx').attr('href','#');
+         	$('.addli').click(function () {
+                //layer.msg('只能绑定一个公众号！');
+              	alert('只能绑定一个公众号！');
+            })
+           }
+    })
+</script>
+{/block}
+{block name='center'}
+<div class="content">
+   
+    <div class="usercontent">
+        <ul>
+            <li class="addli">
+                <a class="addwx" style="background-color:#7CBAE5" title="绑定公众号" href={$url}>绑定公众号</a>
+            </li>
+            <li>
+                <a title="功能中心" class="goldbuy" href="{:url('index/Index/func')}" style="background-color:#79CBE5" target="_blank">功能中心</a>
+            </li>
+            <li class="addli">
+                <a class="addbiz" title="官方案例" href="{:url('index/index/cases')}" style="background-color:#66D2C6" target="_blank">官方案例</a>
+            </li>
+            <li>
+                <a href="{:url('home/alipay/index')}" class="gold" title="当前套餐" style="background-color:#60D295;">
+                    <p style="margin-top: 10px;"><strong>当前套餐:</strong>免费版</p>
+                    <p>开通功能</p>
+                </a>
+            </li>
+            <li>
+                <a href="http://wpa.qq.com/msgrd?v=3&amp;uin=1440278174&amp;site=qq&amp;menu=yes" target="_blank">
+                    <div class="qqqun" style="background-color:#4CC15D">
+                        <div class="qt">官方客服</div>
+                        <div class="qt2" style="margin-left: -6px;">1440278174</div>
+                    </div>
+                </a>
+            </li>
+            <div class="clr"></div>
+        </ul>
+        <div class="clr"></div>
+    </div>
+    <div class="msgWrap">
+        <table class="ListProduct" border="0" cellspacing="0" cellpadding="0" width="100%">
+            <thead>
+            <tr>
+                <th>公众号名称</th>
+                <th style="text-align:center">VIP等级</th>
+                <th>原始ID</th>
+                <th>操作</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr></tr>
+              {if condition="!empty($users['user_id'])"}
+            <tr>
+                <td align="center" class ='center'>
+                    <div class="cateimg">
+                        <a href="javascript:;">
+                            <img src="{$users['head_img']}" width="40" height="40" style="width:40px;height:40px" class="cateimg_small">
+                            <img src="{$users['head_img']}" class="cateimg_big">
+                        </a>
+                    </div>
+                    <p></p><br>
+                    <p style="margin-top:-15px;">{$users['nick_name']}</p>
+              </td>
+                <td align="center">
+                    <p>免费版</p>
+                </td>
+                <td>{$users.user_name}</td>
+                <td class="norightborder">
+                    <a href="/home/edit/public_num?user_name={$users.user_name}">编辑</a>
+                    <a href="{:url('/index/index')}" class="btnGreens">功能管理</a>
+                    <a href="{$url}" class="btnGreens">重新授权</a>
+                </td>
+            </tr>
+              {/if}
+            </tbody>
+        </table>
+    </div>
+    <br>
+    <div class="cLine">
+        <div class="pageNavigator right">
+            <!--<div class="pages"> 1 条记录 1/1 页</div>-->
+        </div>
+        <div class="clr"></div>
+    </div>
+</div>
+<div class="clr"></div>
+<script>
+    function deletes(user_name) {
+        layer.confirm('确认要删除吗？', function (index) {
+            $.post("{:url('/home/index/delete')}", {user_name: user_name}, function (data) {
+                if(data.state == 0){
+                    layer.msg(data.message,{icon: 2,time:1000});
+                }else{
+                    layer.msg(data.message,{icon: 1,time:1000});
+                    setTimeout("window.location.reload()", 1000);
+                }
+            });
+        });
+    }
+</script>
+{/block}

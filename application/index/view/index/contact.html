@@ -1,0 +1,46 @@
+{extend name="common/base"/}
+{block name="title"}联系{/block}
+{block name="script"}
+<script>
+    $(function () {
+        $('.login a').removeClass('current');
+        $('.header ul li').removeClass('current');
+        $('.header ul li').eq(3).addClass('current');
+    })
+</script>
+{/block}
+{block name="center"}
+<div class="main_contact"><br>
+    <h2>关于视觉</h2>
+    <ul class="about">
+        <li>
+            <h3>平台简介</h3>
+            <p>四川视觉信息技术有限公司旗下专业微信第三方开发服务平台，成立于2018年9月，致力于为企业提供安全、稳定的全方位微营销服务。</p>
+        </li>
+        <li>
+            <h3>平台服务</h3>
+            <p>凭借丰富的产品功能、全新的产品设计，基于微信公众平台为企业提供开发、运营、推广一体化解决方案，帮助企业实现线上线下互通，能够为餐饮、娱乐、酒店、电商、零售、汽车、房产、金融、IT、影楼、婚庆、媒体、电台、医疗、美容、机关单位、教育、法律等各行业提供展示、营销、推广、服务的功能。</p>
+        </li>
+        <li>
+            <h3>企业文化</h3>
+            <p>诚信正直、不断创新、客户第一。</p>
+        </li>
+    </ul>
+    <h2>联系我们</h2>
+    <div class="contact">
+        <p>视觉</p>
+        <div class="fl" height="333">
+            <ul>
+                <li><i class="icon_01 tel"></i>0838-2515226</li>
+                <li><i class="icon_01 adr"></i>
+                    <span style="display: block; width: 500px;">四川省德阳市旌阳区汇通大厦</span>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <h2>合作伙伴</h2>
+    <div class="contact"><p><img src="/static/index/contact/partner.jpg" width="100%"></p></div>
+</div>
+<div style="display:none"><img src="/static/index/contact/weblogo.jpg"></div>
+<div style="display:none"><img src="/static/index/contact/hezuo.jpg"></div>
+{/block}

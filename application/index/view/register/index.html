@@ -1,0 +1,98 @@
+{extend name="common/base"/}
+{block name="title"}注册{/block}
+{block name="style"}
+    <style type="text/css">
+        .message{color: red;font-size: 16px; margin-top: 4px; margin-left: 140px;}
+        .hint{display: block; line-height: 39px; margin-top: 12px;font-size: 14px;color: #888;}
+    </style>
+{/block}
+{block name="script"}
+<script type="text/javascript">
+    $(function () {
+        $(function () {
+            $('.header ul li').removeClass('current');
+            $('.login a').removeClass('current');
+            $('.login a').eq(1).addClass('current');
+        });
+    })
+</script>
+{/block}
+{block name="center"}
+<div class="banner_reg">
+    <div class="banner_reg_main">
+
+    </div>
+</div>
+<div class="bg_reg_main">
+    <form action="" method="post" id="info_form">
+        <div class="reg_main">
+            <div class="title">
+                <i>1</i><h2>账号信息</h2>
+            </div>
+            <table width="100%" border="0">
+                <tr>
+                    <th>用户名</th>
+                    <td>
+                        <input name="nickname" id="username" type="text" placeholder="请输入用户名" class="focus" />
+                        <span class="hint">请填写5-13位的用户名</span>
+                    </td>
+                </tr>
+                <tr>
+                    <th>密码</th>
+                    <td>
+                        <input name="password" id="password" type="password" placeholder="请输入密码" />
+                        <span class="hint">请填写6-16位的密码</span>
+                    </td>
+                </tr>
+                <tr>
+                    <th>确认密码</th>
+                    <td>
+                        <input name="repassword" id="repassword" type="password" placeholder="请确认密码" />
+                    </td>
+                </tr>
+            </table>
+            <div class="title">
+                <i>2</i><h2>个人信息</h2>
+            </div>
+            <table width="100%" border="0">
+                <tr>
+                    <th>邮箱</th>
+                    <td>
+                        <input name="email" id="email" type="text" placeholder="请输入邮箱" />
+                        <span class="hint">用于接收ZNOTE相关资料</span>
+                    </td>
+                </tr>
+                <tr>
+                    <th>QQ</th>
+                    <td>
+                        <input name="qq" id="qq" type="text" placeholder="请填写qq" />
+                        <span class="hint">用于找回密码确认信息</span>
+                    </td>
+                </tr>
+                <tr>
+                    <th>电话</th>
+                    <td>
+                        <input name="phone" id="phone" type="text" placeholder="请输入电话" />
+                        <span class="hint">用于找回密码确认信息</span>
+                    </td>
+                </tr>
+            </table>
+            <div class="message"></div>
+            <input type="button" id="btn" value="立即注册" class="btn_reg" />
+        </div>
+    </form>
+</div>
+<script type="text/javascript">
+    $('#btn').click(function () {
+        $.post("{:url('/index/register/register')}",$('form').serialize(),function (data) {
+            if(data.state == 0){
+                 $('.message').html(data.message,{icon: 2, time: 1000});
+            } else if(data.state == 1){
+                $('.message').html('');
+               layer.msg(data.message,{icon: 1, time: 1000});
+                setTimeout("location.href='/home/index/index';",1500);
+            }
+        });
+    });
+</script>
+{/block}

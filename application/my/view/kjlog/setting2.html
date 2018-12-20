@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>砍价系统设置</title>
+    {include file="common/head"/}
+    <style>
+        form {
+            margin-left: 20px;
+        }
+        .input {
+            display: block;
+            width: 800px;
+        }
+        .btn{border-radius: 0px;}
+    </style>
+</head>
+<body>
+<xblock style="margin: 10px">
+    <a href="javascript:history.back(-1)">
+        <button class="layui-btn"><i class="layui-icon"></i>返回</button>
+    </a>
+</xblock>
+<div class="layui-form">
+    <fieldset class="layui-elem-field layui-field-title" style="margin-top: 50px;">
+        <legend>砍价活动设置</legend>
+    </fieldset>
+    <form id="addfrom" class="layui-form layui-form-pane" method="post" enctype="multipart/form-data" action="setting">
+        <div class="layui-form-item">
+            <label class="layui-form-label">活动标题</label>
+            <div class="layui-input-inline">
+                <input type="text" name="name" lay-verify="required" value="" placeholder="活动标题" autocomplete="off"
+                       class="layui-input input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">活动介绍</label>
+            <div class="layui-input-inline">
+            <input type="text" name="intro" lay-verify="required" value="" placeholder="活动介绍" autocomplete="off"
+                   class="layui-input input">
+        </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">活动地址</label>
+            <div class="layui-input-inline">
+                <input type="text" name="address" lay-verify="required" value="" placeholder="活动地址" autocomplete="off"
+                       class="layui-input input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">原价</label>
+            <div class="layui-input-inline">
+                <input type="text" name="money" lay-verify="required" value=""
+                       placeholder="原价" autocomplete="off" class="layui-input input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label" style="width: 150px">是否开启老生新生</label>
+            <div class="layui-input-inline" style="display: inline-block; width: 760px;">
+                <select name="state">
+                    <option value="0">是</option>
+                    <option value="1">否</option>
+                </select>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">老生底价</label>
+            <div class="layui-input-inline">
+                <input type="text" name="old" value=""
+                       placeholder="底价" autocomplete="off" class="layui-input input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">新生底价</label>
+            <div class="layui-input-inline">
+                <input type="text" name="newly" value=""
+                       placeholder="底价" autocomplete="off" class="layui-input input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">砍价人数</label>
+            <div class="layui-input-inline">
+                <input type="text" name="num_people" lay-verify="required" value=""
+                       placeholder="砍价人数" autocomplete="off" class="layui-input input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">砍价次数</label>
+            <div class="layui-input-inline">
+                <input type="text" name="kjnum" lay-verify="required" value=""
+                       placeholder="砍价次数" autocomplete="off" class="layui-input input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">开始日期</label>
+            <div class="layui-input-inline">
+                <input name="begin_time" lay-verify="required" type="date" value="" placeholder="砍价人数" autocomplete="off"
+                       class="layui-input input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">结束日期</label>
+            <div class="layui-input-inline">
+                <input name="finish_time" lay-verify="required" type="date" value="" placeholder="砍价人数" autocomplete="off"
+                       class="layui-input input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">公众号图片</label>
+            <div class="layui-input-inline" style="width: 800px;margin-top: 2px;">
+                <input class="filestyle layui-input input" lay-verify="required" type="file" name="public_img" value="" autocomplete="off"
+                      data-buttonBefore="true" data-buttonName="btn-primary" data-buttonText="上传">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">首页图片</label>
+            <div class="layui-input-inline" style="width: 800px;margin-top: 2px;">
+                <input class="filestyle layui-input input" lay-verify="required" type="file" name="mian_img" autocomplete="off"
+                       data-buttonBefore="true" data-buttonName="btn-primary" data-buttonText="上传">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">扫码图片</label>
+            <div class="layui-input-inline" style="width: 800px;margin-top: 2px;">
+                <input class="filestyle layui-input input" lay-verify="required" type="file" name="scan_img" autocomplete="off"
+                       data-buttonBefore="true" data-buttonName="btn-primary" data-buttonText="上传">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">微信二维码</label>
+            <div class="layui-input-inline" style="width: 800px;margin-top: 2px;">
+                <input class="filestyle layui-input input" lay-verify="required" type="file" name="twocode" autocomplete="off"
+                       data-buttonBefore="true" data-buttonName="btn-primary" data-buttonText="上传">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">品牌介绍</label>
+            <div class="layui-input-inline" style="width: 800px;margin-top: 2px;">
+                <input class="filestyle layui-input input" lay-verify="required" type="file" name="intro_img" autocomplete="off"
+                       data-buttonBefore="true" data-buttonName="btn-primary" data-buttonText="上传">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">活动规则</label>
+            <div class="layui-input-inline" style="width: 800px;margin-top: 2px;">
+                <input class="filestyle layui-input input" lay-verify="required" type="file" name="rule_img" autocomplete="off"
+                       data-buttonBefore="true" data-buttonName="btn-primary" data-buttonText="上传">
+            </div>
+        </div>
+        <input type="hidden" name="appid" value="{$appid}">
+        <div class="layui-form-item">
+            <button class="layui-btn" lay-submit lay-filter="formDemo">立即提交</button>
+        </div>
+    </form>
+</div>
+{if condition="$data['state'] == 1"}
+<script>
+    layui.use('upload', function(){
+        layer.msg("{$data['message']}",{icon: 1, time: 1500});
+        setTimeout("location.href = '/my/kjlog/index';",1500);
+    });
+</script>
+{/if}
+
+{if condition="$data['state'] == 2"}
+<script>
+    layui.use('upload', function(){
+        layer.msg("{$data['message']}",{icon: 2, time: 1500});
+    });
+</script>
+{/if}
+</body>
+</html>

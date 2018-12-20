@@ -1,0 +1,64 @@
+{extend name="common/base"/}
+{block name="title"}员工列表{/block}
+{block name="script"}
+<style>
+    #tags li {
+        background-color: #f9f9f9;
+        width: 120px;
+        height: 40px;
+        line-height: 40px;
+    }
+
+    #tags li a {
+        margin-left: 10px;
+    }
+</style>
+<script>
+    $(function () {
+        $('.selected').addClass('subCatalogList');
+        $('.selected').removeClass('selected');
+        $('.two li').eq(0).addClass('selected');
+        $('.now').hide();
+        $('.two').show();
+    })
+</script>
+{/block}
+{block name='center'}
+<div class="content">
+    <div class="cLineB"><h4 class="left">{$activity.name}</h4>
+        <div class="clr"></div>
+    </div>
+    <div class="msgWrap form">
+        <ul id="tags" style="width:100%">
+            <li><a href="/kjlog/index?id={$id}&appid={$appid}">用户列表</a></li>
+            <li><a href="/kjlog/apply?id={$id}&appid={$appid}">报名列表</a></li>
+            <li class="selectTag" style="background-color: #eee;"><a href="/kjlog/staff?id={$id}&appid={$appid}">员工列表</a></li>
+            <li><a href="/kjlog/pay?id={$id}&appid={$appid}">支付列表</a></li>
+            <li><a href="/kjlog/proof?id={$id}&appid={$appid}">凭证查询</a></li>
+          <li><a href="/kjlog/site?id={$id}&appid={$appid}">活动地址</a></li>
+          <li><a href="/kjlog/examples?id={$id}&appid={$appid}">折线图</a></li>
+            <div class="clr" style="height:1px;background:#eee;margin-bottom:20px;"></div>
+        </ul>
+    </div>
+    <table class="ListProduct" border="0" cellspacing="0" cellpadding="0" width="100%">
+        <thead>
+        <tr>
+            <th>微信名</th>
+            <th>支付人数</th>
+            <th>参团人数</th>
+            <th>浏览人数</th>
+        </tr>
+        </thead>
+        <tbody>
+        {volist name='member' id='m'}
+        <tr>
+            <td>{$m.nickname}</td>
+            <td>{$m.paycount}</td>
+            <td>{$m.ctcount}</td>
+            <td>{$m.lcount}</td>
+        </tr>
+        {/volist}
+        </tbody>
+    </table>
+</div>
+{/block}

@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="__STATIC__/x-admin/css/bootstrap.min.css">
+    <link rel="stylesheet" href="__STATIC__/x-admin/css/font.css">
+    <link rel="stylesheet" href="__STATIC__/x-admin/css/xadmin.css">
+    <link rel="stylesheet" href="__STATIC__/layui/css/layui.css">
+    <script type="text/javascript" src="__STATIC__/x-admin/js/jquery.min.js"></script>
+    <script src="__STATIC__/x-admin/lib/layui/layui.js" charset="utf-8"></script>
+    <script type="text/javascript" src="__STATIC__/x-admin/js/xadmin.js"></script>
+    <script type="text/javascript" src="__STATIC__/x-admin/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="__STATIC__/x-admin/js/bootstrap-filestyle.js"></script>
+</head>
+<body>
+<table class="layui-table">
+    <thead>
+    <tr>
+        <th>ID</th>
+        <th>活动ID</th>
+        <th>原因</th>
+        <th>描述</th>
+        <th>联系方式</th>
+    </tr>
+    </thead>
+    <tbody>
+    {volist name='list' id='u'}
+    <tr>
+        <td>{$u.id}</td>
+        <td>{$u.hid}</td>
+        <td>{$u.reason}</td>
+        <td>{$u.describe}</td>
+        <td>{$u.contact}</td>
+    </tr>
+    {/volist}
+    </tbody>
+</table>
+</body>
+</html>

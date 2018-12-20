@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>收支详情</title>
+    <link rel="stylesheet" href="__STATIC__/x-admin/css/font.css">
+    <link rel="stylesheet" href="__STATIC__/x-admin/css/xadmin.css">
+    <link rel="stylesheet" href="__STATIC__/layui/css/layui.css">
+    <script type="text/javascript" src="__STATIC__/x-admin/js/jquery.min.js"></script>
+    <script src="__STATIC__/x-admin/lib/layui/layui.js" charset="utf-8"></script>
+    <script type="text/javascript" src="__STATIC__/x-admin/js/xadmin.js"></script>
+</head>
+<body>
+<table class="layui-table">
+    <thead>
+    <tr>
+        <th>总支付数</th>
+        <th>总支付金额</th>
+        <th>总红包数</th>
+        <th>总红包金额</th>
+        <th>总退还金额</th>
+        <th>利润</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td>{$list.order.0.payNum}</td>
+        <td>￥{php} echo sprintf("%.2f", $list['order'][0]['money']);{/php}</td>
+        <td>{$list.integral.0.integralNum}</td>
+        <td>￥{php} echo sprintf("%.2f", $list['integral'][0]['integral']);{/php}</td>
+        <td>￥{php} echo sprintf("%.2f", $list['integral'][0]['sendIntegral']);{/php}</td>
+        <td>￥{php} echo sprintf("%.2f", $list['lirun']);{/php}</td>
+    </tr>
+    </tbody>
+</table>
+<table class="layui-table">
+    <thead>
+        <tr>
+            <th>微信名</th>
+            <th>是否支付</th>
+            <th>支付金额</th>
+            <th>支付时间</th>
+            <th>发送的红包金额</th>
+            <th>红包状态</th>
+        </tr>
+    </thead>
+    <tbody class="pay">
+    {volist name="$order" id="o"}
+        <tr>
+            <td>{$o.nickname}</td>
+            <td>
+                {eq name="$o.pay" value="0"}未支付{/eq}
+                {eq name="$o.pay" value="1"}已支付{/eq}
+            </td>
+            <td>￥{$o.money}</td>
+            <td>{$o.time}</td>
+            <td>￥{$o.integral}</td>
+            <td>
+                {eq name='$o.sendUse' value='0'}发送中{/eq}
+                {eq name='$o.sendUse' value='1'}待领取{/eq}
+                {eq name='$o.sendUse' value='2'}发送失败{/eq}
+                {eq name='$o.sendUse' value='3'}已领取{/eq}
+                {eq name='$o.sendUse' value='4'}退款中{/eq}
+                {eq name='$o.sendUse' value='5'}已退款{/eq}
+                {eq name='$o.sendUse' value='6'}未知{/eq}
+            </td>
+        </tr>
+    {/volist}
+    </tbody>
+</table>
+<div class="page" style="display: none;">{$page}</div>
+<script>
+    //滚到到底部自动拉取数据
+    //页面滚到底部异步加载下一页数据
+    $(window).scroll(function () {
+        //已经滚动到上面的页面高度
+        var scrollTop = parseFloat($(this).scrollTop()),
+        //页面高度
+                scrollHeight = $(document).height(),
+        //浏览器窗口高度
+                windowHeight = parseFloat($(this).height()),
+                totalHeight = scrollTop + windowHeight;
+        //此处是滚动条到底部时候触发的事件，在这里写要加载的数据，或者是拉动滚动条的操作
+        if (scrollTop + windowHeight >= scrollHeight - 0.7) {
+        	return false;
+             var page = $('.page').text()+20;
+            var id = {$id};
+            var img;
+            $.post('/my/finance/pay_details',{page:page,id:id},function (data) {
+                for (var i = 0; i < data.length; i++) {
+                	console.log(data[i]);
+                    if(data[i].pay == 0){
+                        var pay = '未支付';
+                    }
+                    if(data[i].pay == 1){
+                        pay = '已支付';
+                    }
+                    img += "<tr>" +
+                                "<td>"+data[i].nickname+"</td>" +
+                                "<td>"+pay+"</td>"+
+                                "<td>"+data[i].money+"</td>"+
+                                "<td>"+data[i].time+"</td>"+
+                                "<td>"+data[i].integral+"</td>"+
+                                "<td>"+"发送中"+"</td>"+
+                            "</tr>";
+                }
+                $('.page').html(page);
+                $('.pay').append(img);
+            });
+        }
+    });
+</script>
+</body>
+</html>

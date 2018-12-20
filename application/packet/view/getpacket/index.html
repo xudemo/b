@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
+    <title>微信积分</title>
+    <link href="__STATIC__/kj/layer/theme/default/layer.css" rel="stylesheet">
+    <script src="__STATIC__/x-admin/js/jquery.min.js"></script>
+    <script src="__STATIC__/kj/layer/layer.js" charset="utf-8"></script>
+
+    <link rel="stylesheet" href="/poster/css/csshake.min.css">
+    <link rel="stylesheet" href="/poster/css/style.css">
+    <script src="/poster/js/zepto.min.js"></script>
+    <style>
+        body{
+            margin: 0;
+            padding: 0;
+            background-color: #f6f6f6;
+        }
+        .conter img{
+            width: 50%;
+            height: 60%;
+            margin: 3.5rem auto 0;
+            display: block;
+        }
+        .conter .title{
+            text-align: center;
+            margin: 1.5rem auto;
+            display: block;
+            font-size: 1.2rem;
+            color: #af9c9c;
+        }
+        .conter button{
+            background-color: #06bc05;
+            width: 86%;
+            height: 50px;
+            margin: 1rem auto;
+            display: block;
+            border: none;
+            border-radius: 0.3em;
+            color: #fff;
+            font-size: 1.2rem;
+            margin-top: 2rem;
+        }
+        .dialog{
+            background: rgba(0,0,0,0.5);
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+        }
+        .t-btn{
+            display: none;
+        }
+    </style>
+</head>
+<body>
+<!--<div class="conter" >-->
+    <!--<img src="/poster/image/hongbao.png">-->
+    <!--<div class="title">您收到一个微信积分</div>-->
+    <!--<button type="button">领取积分</button>-->
+<!--</div>-->
+<!--<div class="dialog">-->
+
+<!--</div>-->
+<!-- 红包 -->
+<div class="red"><!-- shake-chunk -->
+    <span style="background-image: url(/poster/img/red-w.png);"></span>
+    <button class="redbutton" type="领取红包">拆红包</button>
+    <div class="red-jg" >
+        <h1></h1>
+        <h5></h5>
+    </div>
+</div>
+<!-- End 红包 -->
+<!-- 按钮 -->
+<div class="t-btn">
+    <button id="btn">立即领取</button>
+</div>
+<!-- End 按钮 -->
+
+<script>
+    id = {$id};
+    // 点击redbutton按钮时执行以下全部
+    $('.redbutton').click(function(){
+        // 在带有red样式的div中添加shake-chunk样式
+        $('.red').addClass('shake-chunk');
+        // 点击按钮2000毫秒后执行以下操作
+        setTimeout(function(){
+            $.post('/packet/getpacket/index',{id:id},function (data) {
+            	console.log(data);
+                // 在带有red样式的div中删除shake-chunk样式
+                $('.red').removeClass('shake-chunk');
+                // 将redbutton按钮隐藏
+                $('.redbutton').css("display" , "none");
+                // 修改red 下 span   背景图
+                $('.red > span').css("background-image" , "url(/poster/img/red-y.png)");
+                if(data.state == 0){
+                    $('h1').html('很遗憾！');
+                    $('h5').html(data.msg);
+                }
+                if(data.state == 1){
+                    $('h1').html('恭喜您！');
+                    $('h5').html(data.msg);
+                    $('.t-btn').css("display" , "block");
+                }
+                // 修改red-jg的css显示方式为块
+                $('.red-jg').css("display" , "block");
+            });
+        },2000);
+    });
+    $("#btn").click(function () {
+        $.post("/packet/getpacket/set_packet",{id:id},function (data) {
+            if(data.state == 0){
+                layer.msg(data.msg,{icon: 2,time:1000});
+            }else{
+                layer.msg(data.msg,{icon: 1,time:1000});
+            }
+        });
+    });
+</script>
+</body>
+</html>

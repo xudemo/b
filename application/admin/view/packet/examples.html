@@ -1,0 +1,191 @@
+{extend name="common/base"/}
+{block name="title"}折线图{/block}
+{block name="script"}
+<style>
+    #tags li {
+        background-color: #f9f9f9;
+        width: 120px;
+        height: 40px;
+        line-height: 40px;
+    }
+
+    #tags li a {
+        margin-left: 10px;
+    }
+    .center {
+        margin: 8px 0;
+    }
+
+    .left {
+        float: left;
+    }
+
+    .left button {
+        background-color: #00b219;
+        width: 60px;
+        height: 30px;
+        color: #fff;
+    }
+
+    .right {
+        float: right;
+    }
+
+    .right select {
+        height: 28px;
+        position: relative;
+        left: 8px;
+    }
+
+    .right input {
+        height: 26px;
+        width: 180px;
+        position: relative;
+        left: 4px;
+    }
+
+    .right button {
+        background-color: #00b219;
+        width: 50px;
+        height: 28px;
+        color: #fff;
+    }
+    .statement{
+        display: flex;
+        margin-top: 30px;
+        color: #fff;
+    }
+    .zhong{
+        width: 100%;
+        height: 100px;
+        margin-left: 10px;
+    }
+    .zhong div:first-child{
+        margin: 10px 0 0 10px;
+        font-size: 14px;
+    }
+    .zhong div:last-child{
+        text-align: center;
+        margin-top: 10px;
+        font-size: 24px;
+    }
+</style>
+<script>
+$(function () {
+        $('.selected').addClass('subCatalogList');
+        $('.selected').removeClass('selected');
+        $('.two li').eq(1).addClass('selected');
+        $('.now').hide();
+        $('.two').show();
+    })
+</script>
+<script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts/echarts.min.js"></script>
+<script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts-gl/echarts-gl.min.js"></script>
+<script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts-stat/ecStat.min.js"></script>
+<script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts/extension/dataTool.min.js"></script>
+<script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts/map/js/china.js"></script>
+<script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts/map/js/world.js"></script>
+<script type="text/javascript" src="https://api.map.baidu.com/api?v=2.0&ak=ZUONbpqGBsYGXNIYHicvbAbM"></script>
+<script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts/extension/bmap.min.js"></script>
+<script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/simplex.js"></script>
+{/block}
+{block name='center'}
+<div class="content">
+    <div class="cLineB"><h4 class="left">{$activity.name}</h4>
+        <div class="clr"></div>
+    </div>
+    <div class="msgWrap form">
+        <ul id="tags" style="width:100%">
+                        <li><a href="/packet/index?id={$id}&appid={$appid}">用户列表</a></li>
+            <li><a href="/packet/apply?id={$id}&appid={$appid}">参与用户</a></li>
+                        <li><a href="/packet/staff?id={$id}&appid={$appid}">员工列表</a></li>
+            <li><a href="/packet/pay?id={$id}&appid={$appid}">支付列表</a></li>
+            <li><a href="/packet/hb?id={$id}&appid={$appid}">红包列表</a></li>
+            <li><a href="/packet/proof?id={$id}&appid={$appid}">凭证查询</a></li>
+            <li><a href="/packet/site?id={$id}&appid={$appid}">活动地址</a></li>
+            <li class="selectTag" style="background-color: #eee;"><a href="/packet/examples?id={$id}&appid={$appid}">折线图</a></li>
+            <div class="clr" style="height:1px;background:#eee;margin-bottom:20px;"></div>
+        </ul>
+    </div>
+    <div id="container" style="height: 400px;margin-top: 30px;"></div>
+    <div class="statement">
+        <div class="zhong" style="background-color: #0960a5;">
+            <div>总访问数</div>
+            <div>{$m['sumup']}</div>
+        </div>
+        <div class="zhong" style="background-color: #b0d9f9;">
+            <div>老生支付数</div>
+            <div>{$m['oldNum']}</div>
+        </div>
+        <div class="zhong" style="background-color: #edc340;">
+            <div>总支付数</div>
+            <div>{$m['pay_sumup']}</div>
+        </div>
+        <div class="zhong" style="background-color: #858585;">
+            <div>总红包数</div>
+            <div>{$m['hbNum']}</div>
+        </div>
+        <div class="zhong" style="background-color: #67A00D;">
+            <div>总发放红包金额</div>
+            <div>￥{$m['hb_money']}</div>
+        </div>
+        <div class="zhong" style="background-color: #cc4a4c;">
+            <div>总支付金额</div>
+            <div>￥{$m['order']}</div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+    var dom = document.getElementById("container");
+    var myChart = echarts.init(dom);
+    var app = {};
+    option = null;
+    option = {
+        title: {
+            text: ''
+        },
+        tooltip: {
+            trigger: 'axis'
+        },
+        legend: {
+            data:['支付人数','浏览人数']
+        },
+        grid: {
+            left: '3%',
+            right: '4%',
+            bottom: '3%',
+            containLabel: true
+        },
+        toolbox: {
+            feature: {
+                saveAsImage: {}
+            }
+        },
+        xAxis: {
+            type: 'category',
+            boundaryGap: false,
+            data: [{$data['date']}]
+        },
+        yAxis: {
+            type: 'value'
+        },
+        series: [
+            {
+                name:'支付人数',
+                type:'line',
+                stack: '总量',
+                data:[{$data['pay_num']}]
+            },
+            {
+                name:'浏览人数',
+                type:'line',
+                stack: '总量',
+                data:[{$data['liu_num']}]
+            }
+        ]
+    };
+    if (option && typeof option === "object") {
+        myChart.setOption(option, true);
+    }
+</script>
+{/block}

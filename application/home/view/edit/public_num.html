@@ -1,0 +1,83 @@
+{extend name="common/base"/}
+{block name="title"}控制中心{/block}
+{block name='center'}
+<div class="content">
+    <div class="cLineB"><h4>编辑公众号信息<span class="FAQ"></span></h4></div>
+    <form method="post" action="{:url('home/edit/public_num')}" enctype="multipart/form-data">
+        <div class="msgWrap">
+            <table class="userinfoArea" border="0" cellspacing="0" cellpadding="0" width="100%">
+                <tbody>
+                <tr>
+                    <th><span class="red"></span><label for="QQ">AppID</label></th>
+                    <td>
+                        <input type="text" class="px" value="{$user.appId}" name="appId" style="width: 400px;height: 26px;">
+                        &nbsp;&nbsp;&nbsp;&nbsp;
+                        <span class="red">基本信息配置，在微信公众平台基本配置里面查看。</span>
+                    </td>
+                </tr>
+                <tr>
+                    <th><span class="red"></span><label for="QQ">AppSecret</label></th>
+                    <td>
+                        <input type="text" class="px" value="{$user.appSecret}" name="appSecret" style="width: 400px;height: 26px;">
+                    </td>
+                </tr>
+                <tr>
+                    <th><span class="red"></span><label for="QQ">微信支付商户号</label></th>
+                    <td>
+                        <input type="text" class="px" value="{$user.mchiD}" name="mchiD" style="width: 400px;height: 26px;">
+                        &nbsp;&nbsp;&nbsp;&nbsp;
+                        <span class="red">微信支付信息，在微信支付平台查看。</span>
+                    </td>
+                </tr>
+                <tr>
+                    <th><span class="red"></span><label for="QQ">微信支付密匙</label></th>
+                    <td>
+                        <input type="text" class="px" value="{$user.key}" name="key" style="width: 400px;height: 26px;">
+                    </td>
+                </tr>
+                <tr>
+                    <th><span class="red"></span><label for="QQ">报名成功模板ID</label></th>
+                    <td>
+                        <input type="text" class="px" value="{$user.bm_id}" name="bm_id" style="width: 400px;height: 26px;">
+                        &nbsp;&nbsp;&nbsp;&nbsp;
+                        <span class="red">公众号消息通知模板ID，在微信公众平台模板消息中添加后拿到模板ID。</span>
+                    </td>
+                </tr>
+                <tr>
+                    <th><span class="red"></span><label for="QQ">参团成功模板ID</label></th>
+                    <td>
+                        <input type="text" class="px" value="{$user.ct_id}" name="ct_id" style="width: 400px;height: 26px;">
+                    </td>
+                </tr>
+                <tr>
+                    <th><span class="red"></span><label for="QQ">砍价成功模板ID</label></th>
+                    <td>
+                        <input type="text" class="px" value="{$user.kj_id}" name="kj_id" style="width: 400px;height: 26px;">
+                    </td>
+                </tr>
+                <tr>
+                    <th><span class="red"></span><label for="QQ">支付成功模板ID</label></th>
+                    <td>
+                        <input type="text" class="px" value="{$user.zf_id}" name="zf_id" style="width: 400px;height: 26px;">
+                    </td>
+                </tr>
+                <tr>
+                    <th><span class="red"></span><label for="QQ">上传网页授权文件</label></th>
+                    <td>
+                        <input type="file" class="px" value="" name="file" style="width: 400px;height: 26px;">
+                    </td>
+                </tr>
+                <input type="hidden" name="user_name" value="{$user.user_name}">
+                <tr>
+                    <th></th>
+                    <td>
+                        <button type="submit" class="btnGreen">提交</button>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </form>
+</div>
+<div class="clr"></div>
+{/block}

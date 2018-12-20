@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>会员列表</title>
+    {include file="common/head"/}
+</head>
+<body class="layui-anim layui-anim-up">
+<div class="x-nav">
+    <a class="layui-btn layui-btn-small" style="line-height:1.6em;margin-top:3px;float:right"
+       href="javascript:location.replace(location.href);" title="刷新">
+        <i class="layui-icon" style="line-height:30px">ဂ</i></a>
+</div>
+<div class="x-body">
+    <div class="layui-row">
+        <form class="layui-form layui-col-md12 x-so" method="post" action="/my/packet/details">
+            <input type="text" name="searach" value="{$searach}" placeholder="ID或活动标题搜索" autocomplete="off"
+                   class="layui-input" style="width: 400px;">
+            <input name="appid" value="{$appid}" type="hidden">
+            <button class="layui-btn" lay-submit="" lay-filter="sreach"><i class="layui-icon">&#xe615;</i></button>
+        </form>
+    </div>
+    <xblock>
+        <a href="/my/packet/activity?appid={$appid}"><button class="layui-btn"><i class="layui-icon"></i>开通</button></a>
+        <a href="javascript:history.back(-1)"><button class="layui-btn layui-btn-danger">返回</button></a>
+        <span class="x-right" style="line-height:40px">共有数据：{$count} 条</span>
+    </xblock>
+    <table class="layui-table">
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>公众号原始ID</th>
+            <th>活动标题</th>
+            <th>活动介绍</th>
+            <th>开始时间</th>
+            <th>结束时间</th>
+            <th>活动状态</th>
+            <th>操作</th>
+        </tr>
+        </thead>
+        <tbody>
+        {volist name='user' id='u'}
+        <tr>
+            <td>{$u.id}</td>
+            <td>{$u.appid}</td>
+            <td>{$u.name}</td>
+            <td>{$u.intro}</td>
+           <td>{php}echo  str_replace("T"," ",$u['begin_time']);{/php}</td>
+            <td>{php}echo  str_replace("T"," ",$u['finish_time']);{/php}</td>
+            <td class="td-status">
+                {php}
+                $time = strtotime($u['finish_time'])-time();
+                echo $time>=0?'<span class="layui-btn layui-btn-normal layui-btn-mini">活动中</span>':'<span class="layui-btn layui-btn-normal layui-btn-mini layui-btn-disabled">已结束</span>';
+                {/php}
+            </td>
+            <td class="td-manage">
+                <a href="/my/packet/edit?appid={$u.appid}&id={$u.id}">
+                    <button class="layui-btn layui-btn layui-btn-xs">
+                        <i class="layui-icon">&#xe642;</i>编辑
+                    </button>
+                </a>
+                <button onclick="deletes('{$u.id}','{$u.appid}')" class="layui-btn-danger layui-btn layui-btn-xs">
+                    <i class="layui-icon">&#xe640;</i>删除
+                </button>
+                <button onclick="x_admin_show('投诉列表','/my/packet/ts?id={$u.id}')" class="layui-btn-danger layui-btn layui-btn-xs">
+                    <i class="layui-icon">&#xe641;</i>投诉
+                </button>
+            </td>
+        </tr>
+        {/volist}
+        </tbody>
+    </table>
+    <div class="page">
+        <div>
+            {$page|raw}
+        </div>
+    </div>
+</div>
+<script>
+    function deletes(id,appid) {
+        layer.confirm('确认要删除吗？',function(index){
+            $.post("{:url('/my/packet/deletes')}",{id:id,appid:appid},function (data) {
+                if(data.state == 0){
+                    layer.msg(data.message,{icon: 2,time:1000});
+                }else{
+                    layer.msg(data.message,{icon: 1,time:1000});
+                    setTimeout("window.location.reload()", 1000);
+                }
+            });
+        });
+    }
+</script>
+</body>
+</html>

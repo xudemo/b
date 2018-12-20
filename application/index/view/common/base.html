@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{block name="title"}{/block}</title>
+    <link type="text/css" rel="stylesheet" href="__STATIC__/index/css/style.css"/>
+    <link type="text/css" rel="stylesheet" href="__STATIC__/index/css/reset.css"/>
+    <link type="text/css" rel="stylesheet" href="__STATIC__/layer/theme/default/layer.css"/>
+    <script src="__STATIC__/index/js/jquery-1.8.3.min.js"></script>
+    <script src="__STATIC__/index/js/common.js"></script>
+    <script src="__STATIC__/index/js/jquery.slider.js"></script>
+    <script src="__STATIC__/index/js/jquery-runbanner.js"></script>
+    <script src="__STATIC__/index/js/turn4.1.min.js"></script>
+    <script src="__STATIC__/layer/layer.js"></script>
+    <style type="text/css">
+        #think_page_trace_open{display:none;}
+    </style>
+    {block name="style"}{/block}
+    {block name="script"}{/block}
+</head>
+<body>
+<div class="wrap_header">
+    <div class="header">
+        <div class="navigation">
+            <div class="logo">
+                <mig>
+                    <a href="/" style="background:url('__STATIC__/index/img/logo1.png') no-repeat; margin-left: 20px; margin-top: -10px;" ></a>
+                </mig>
+            </div>
+            <ul>
+                <li class="current">
+                    <a href="{:url('/')}">首页</a>
+                </li>
+                <li>
+                    <a href="{:url('/index/index/func')}">功能</a>
+                </li>
+                <li>
+                    <a href="{:url('/index/index/cases')}">案例</a>
+                </li>
+                <li>
+                    <a href="{:url('/index/index/contact')}">联系</a>
+                </li>
+            </ul>
+            <div class="login">
+                {if condition="empty(session('nowUser'))"}
+                    <a href="{:url('/index/login/index')}">登录</a>
+                    <a href="{:url('/index/register/index')}"/>注册</a>
+                {else/}
+                    <a href="{:url('/index/index/exits')}">注销</a>
+                    <a href="{:url('/home/index/index')}"/>控制中心</a>
+                {/if}
+            </div>
+        </div>
+    </div>
+</div>
+{block name="center"}{/block}
+<!---底部 begin--->
+<div class="joinLine">全国招商热线：0838-2515226</div>
+<div class="footer">
+    <div class="footer_con">
+        <div class="logo">
+            <a href="{:url('/')}" style="background:url('__STATIC__/index/img/logo.png') no-repeat; margin-left: -100px;"></a>
+        </div>
+        <div class="link">
+            <p>
+                <a href="{:url('/')}">返回首页</a> |
+                <a href="{:url('/index/index/func')}">功能介绍</a> |
+                <a href="{:url('/index/index/cases')}">成功案例</a> |
+                <a href="{:url('/index/index/contact')}">关于我们</a>
+            </p>
+            <p>
+                客服专线：0838-2515226
+            </p>
+            <p>地址：四川省德阳市旌阳区汇通大厦</p>
+        </div>
+        <div class="code"><img src="__STATIC__/index/img/two_code.png" width="124" height="124"/></div>
+    </div>
+</div>
+<div class="copyright">
+    Copyright © 2018 All Rights Reserved 视觉ZF 版权所有
+</div>
+<!---底部 begin--->
+</body>
+</html>

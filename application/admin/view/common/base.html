@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{block name='title'}{/block}</title>
+    <link type="text/css" rel="stylesheet" href="/static/admin/css/style.css"/>
+    <script src="__STATIC__/u-admin/common.js" type="text/javascript"></script>
+    <script src="__STATIC__/u-admin/jquery-1.10.2.min.js" type="text/javascript"></script>
+     <link href="/static/admin/style-1.css" rel="stylesheet" type="text/css">
+    <link href="__STATIC__/u-admin/left.css" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" type="text/css" href="__STATIC__/u-admin/style_2_common.css">
+    <script src="__STATIC__/u-admin/upyun.js"></script>
+    <link rel="stylesheet" href="__STATIC__/u-admin/default.css">
+    <script src="__STATIC__/u-admin/jquery.artDialog.js"></script>
+    <script src="__STATIC__/u-admin/iframeTools.js"></script>
+  
+  	<link rel="stylesheet" href="__STATIC__/x-admin/css/font.css">
+    <script type="text/javascript" src="__STATIC__/x-admin/js/jquery.min.js"></script>
+    <script src="__STATIC__/x-admin/lib/layui/layui.js" charset="utf-8"></script>
+    <script type="text/javascript" src="__STATIC__/x-admin/js/xadmin.js"></script>
+    {block name="style"}{/block}
+    {block name="script"}{/block}
+  	  <style>
+/*分页样式*/  
+.pagination{text-align:center;margin-top:20px;margin-bottom: 20px;}  
+.pagination li{margin:0px 10px; border:1px solid #e6e6e6;padding: 3px 8px;display: inline-block;}  
+.pagination .active{background-color: #46A3FF;color: #fff;}  
+.pagination .disabled{color:#aaa;} 
+
+#think_page_trace_open{display:none;}
+</style>
+    <script type="text/javascript">
+        $(function () {
+            $(function () {
+                $('.header ul li').removeClass('current');
+                $('.login a').removeClass('current');
+                $('.login a').eq(1).addClass('current');
+            });
+            $(document).ready(function () {
+                $(".nav-header").mouseover(function () {
+                    $(this).addClass('navHover');
+                }).mouseout(function () {
+                    $(this).removeClass('navHover');
+                }).click(function () {
+                    $(this).toggleClass('nav-header-current');
+                    $(this).next('.ckit').slideToggle();
+                })
+            });
+        })
+    </script>
+</head>
+<body>
+<div class="wrap_header">
+    <div class="header">
+        <div class="navigation">
+            <div class="logo">
+                <mig>
+                    <a href="{:url('/')}"
+                       style="background:url('__STATIC__/index/img/logo1.png') no-repeat;margin-top: -10px;"></a>
+                </mig>
+            </div>
+            <ul>
+                <li class="current">
+                    <a href="{:url('/')}">首页</a>
+                </li>
+                <li>
+                    <a href="{:url('/index/index/func')}">功能</a>
+                </li>
+                <li>
+                    <a href="{:url('/index/index/cases')}">案例</a>
+                </li>
+                <li>
+                    <a href="{:url('/index/index/contact')}">联系</a>
+                </li>
+            </ul>
+            <div class="login">
+                {if condition="empty(session('nowUser'))"}
+                <a href="{:url('/index/login/index')}">登录</a>
+                <a href="{:url('/index/register/index')}"/>注册</a>
+                {else/}
+                <a href="{:url('/index/index/exits')}">注销</a>
+                <a href="{:url('/home/index/index')}"/>控制中心</a>
+                {/if}
+            </div>
+        </div>
+    </div>
+</div>
+<div>
+    <div id="aaa"></div><!--中间内容-->
+    <div class="contentmanage">
+        <div class="developer">
+          <div class="appTitle normalTitle"><h2>管理平台</h2>
+                <div class="accountInfo"></div>
+                <div class="clr"></div>
+            </div>
+          <!--左侧功能菜单-->
+            <div class="tableContent"><!--左侧功能菜单123-->
+                <div class="sideBar" id="sideBar">
+                    <div class="catalogList">
+                        <ul id="menu">
+                            <a class="nav-header" style="border-top:none !important;"><b class="base"></b>基础设置</a>
+                            <ul class="ckit now">
+                                <li class="selected">
+                                    <a href="{:url('/index/index')}">关注时回复与帮助</a>
+                                </li>
+                                <li class="subCatalogList">
+                                    <a href="{:url('/index/text')}">微信－文本回复</a>
+                                </li>
+                                <li class="subCatalogList">
+                                    <a href="{:url('/index/img')}">微信－图片回复</a>
+                                </li>
+                                <li class="subCatalogList">
+                                    <a href="{:url('/index/menu')}">自定义菜单</a>
+                                </li>
+                            </ul>
+                            <a class="nav-header nav-header-current"><b class="active"></b>微活动</a>
+                            <ul class="ckit two" style="display:none">
+                                <li class="subCatalogList">
+                                    <a href="{:url('/kjlog/activity')}">砍价</a>
+                                    <span class="new"></span>
+                                </li>
+                                <li class="subCatalogList">
+                                    <a href="{:url('/packet/activity')}">红包</a>
+                                    <span class="new"></span>
+                                </li>
+                            </ul>
+                            <div style="clear:both"></div>
+                        </ul>
+                    </div>
+                </div>
+                {block name='center'}{/block}
+                <div class="clr"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- 底部css -->
+<div class="IndexFoot" style="height:58px;clear:both;padding-top:8px;">
+    <div class="foot">
+        <div class="foot_page"><a href="http://weixin.gycode.com/">视觉-国内最大的免费微信第三方平台</a></div>
+        <div id="copyright" style="color:#000;">视觉(c)版权所有
+            <a href="http://www.miibeian.gov.cn/" target="_blank" style="color:#000">冀ICP备13002191号</a>
+        </div>
+    </div>
+</div><!-- 帮助悬浮开始 --><!-- 帮助悬浮结束 -->
+<div style="display:none"></div>
+<div style="display: none; position: fixed; left: 0px; top: 0px; width: 100%; height: 100%; cursor: move; opacity: 0; background: rgb(255, 255, 255);"></div>
+</div>
+</body>
+</html>

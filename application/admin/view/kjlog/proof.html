@@ -1,0 +1,124 @@
+{extend name="common/base"/}
+{block name="title"}员工列表{/block}
+{block name="script"}
+<style>
+   #tags li {
+        background-color: #f9f9f9;
+        width: 120px;
+        height: 40px;
+        line-height: 40px;
+    }
+
+    #tags li a {
+        margin-left: 10px;
+    }
+</style>
+<script>
+    $(function () {
+        $('.selected').addClass('subCatalogList');
+        $('.selected').removeClass('selected');
+        $('.two li').eq(0).addClass('selected');
+        $('.now').hide();
+        $('.two').show();
+    })
+
+</script>
+{/block}
+{block name='center'}
+<div class="content">
+    <div class="cLineB"><h4 class="left">{$activity.name}</h4>
+        <div class="clr"></div>
+    </div>
+    <div class="msgWrap form">
+        <ul id="tags" style="width:100%">
+            <li><a href="/kjlog/index?id={$id}&appid={$appid}">用户列表</a></li>
+            <li><a href="/kjlog/apply?id={$id}&appid={$appid}">报名列表</a></li>
+            <li><a href="/kjlog/staff?id={$id}&appid={$appid}">员工列表</a></li>
+            <li><a href="/kjlog/pay?id={$id}&appid={$appid}">支付列表</a></li>
+            <li class="selectTag" style="background-color: #eee;"><a
+                    href="/kjlog/proof?id={$id}&appid={$appid}">凭证查询</a></li>
+          <li><a href="/kjlog/site?id={$id}&appid={$appid}">活动地址</a></li>
+           <li><a href="/kjlog/examples?id={$id}&appid={$appid}">折线图</a></li>
+            <div class="clr" style="height:1px;background:#eee;margin-bottom:20px;"></div>
+        </ul>
+    </div>
+    <div class="msgWrap">
+        <form method="post" action="/kjlog/proof">
+        <table class="userinfoArea" border="0" cellspacing="0" cellpadding="0" width="100%">
+            <tbody>
+            <tr>
+                <th><span class="red">*</span><label for="QQ">手机号</label></th>
+                <td>
+                    <input type="text" class="px" value="" required name="phone" style="width: 200px;">
+                </td>
+            </tr>
+            <tr>
+                <th><span class="red">&nbsp;&nbsp;</span><label for="QQ">凭&nbsp;&nbsp;&nbsp;证</label></th>
+                <td>
+                    <input type="text" class="px" value="" name="yzm" style="width: 200px;">&nbsp;&nbsp;&nbsp;&nbsp;
+                </td>
+            </tr>
+            <input type="hidden" name="id" value="{$id}">
+            <input type="hidden" name="appid" value="{$appid}">
+            <tr>
+                <th></th>
+                <td>
+                    <button type="submit" class="btnGreen">查询</button>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+        </form>
+    </div>
+    {php}if($member){{/php}
+    <table class="ListProduct" border="0" cellspacing="0" cellpadding="0" width="100%">
+        <thead>
+        <tr>
+            <th>微信号</th>
+            <th>报名姓名</th>
+            <th>电话</th>
+            <th>门店</th>
+            <th>是否支付</th>
+            <th>支付金额</th>
+            <th>支付时间</th>
+            <th>状态</th>
+            <th>操作</th>
+        </tr>
+        </thead>
+        <tbody>
+        {volist name='$member' id='m'}
+        <tr>
+            <td>{$m.nickname}</td>
+            <td>{$m.name}</td>
+            <td>{$m.phone}</td>
+            <td>{$m.shop_site}</td>
+            <td>
+                {eq name='$m.pay' value='0'}否{/eq}
+                {eq name='$m.pay' value='1'}是{/eq}
+            </td>
+            <td>{$m.order.money}</td>
+            <td>{$m.order.time}</td>
+            <td>
+                {eq name='$m.use' value='0'}未使用{/eq}
+                {eq name='$m.use' value='1'}已使用{/eq}
+            </td>
+            <td><a href="javascript:yes('{$m.id}','{$m.openid}')" class='btnGreen' title='设置'>确认使用</a></td>
+        </tr>
+        {/volist}
+        </tbody>
+    </table>
+    {php}}{/php}
+</div>
+<script>
+    function yes(id,openid) {
+        $.post('/kjlog/yes',{id:id,openid:openid},function (data) {
+            if(data.state == 0){
+                layer.msg(data.message, {icon: 2, time: 1500});
+            }else{
+                layer.msg(data.message, {icon: 1, time: 1500});
+                setTimeout("window.location.reload()", 1500);
+            }
+        });
+    }
+</script>
+{/block}

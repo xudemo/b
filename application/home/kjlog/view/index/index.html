@@ -1,0 +1,443 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>砍价首页</title>
+    <meta name="viewport"
+          content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
+    <link href="__STATIC__/kj/css/style.css" rel="stylesheet">
+    <link href="__STATIC__/kj/css/kj.css" rel="stylesheet">
+    <link href="__STATIC__/kj/css/swiper.min.css" rel="stylesheet">
+    <link href="__STATIC__/kj/layer/theme/default/layer.css" rel="stylesheet">
+    <script src="__STATIC__/x-admin/js/jquery.min.js"></script>
+    <script src="__STATIC__/kj/js/swiper.jquery.min.js"></script>
+    <script src="__STATIC__/kj/layer/layer.js" charset="utf-8"></script>
+    <script src="__STATIC__/kj/js/jweixin-1.4.0.js"></script>
+    <style>
+        .m {
+            color: red;
+        }
+
+        .main {
+            display: flex;
+            margin-top: 10px;
+        }
+
+        .main div:first-child {
+            float: left;
+            margin-left: 10px;
+        }
+
+        .main div:last-child {
+            float: right;
+            margin-right: 10px;
+        }
+
+        .main span {
+            flex: 1;
+            text-align: center;
+        }
+
+        .tu {
+            text-align: center;
+            margin-top: 10px;
+            font-size: 14px;
+            color: #858585;
+        }
+    </style>
+</head>
+<body>
+<div class="top">
+    <p class="top_state">当前已有{$bmnumber}人报名，围观群众{$wgnumber}人</p>
+    <img class="top_img" src="{$activity.scan_img}">
+    <p class="top_time">距活动结束倒计时仅有：<span class="times_day"></span>天<span class="times_hrs"></span>时<span
+            class="times_mins"></span>分<span class="times_secs"></span>秒</p>
+</div>
+
+<div class="middle">
+    <div class="middle_info">
+        <img class="middle_info_headimg" src="{$member.pic}">
+        <div class="middle_info_right">
+            <div class="middle_right_top">
+                <p class="middle_right_name">
+                    {$member.name}
+                    <small>
+                        {eq name='$member.state' value='1'}// 新生{/eq}
+                        {eq name='$member.state' value='2'}// 老生{/eq}
+                        {eq name='$member.state' value='3'}// 员工{/eq}
+                    </small>
+                </p>
+            </div>
+            {php}
+            if($state == 2 || $state == 4 || $state == 3){
+            {/php}
+            <div class="middle_right_foot">
+                已经有{$k_num}人帮{$member.name}省了￥<span class="k_money">{$k_money}</span>元。亲友来围观，省钱就是这么简单！赶紧行动吧!
+            </div>
+            {php}
+            }
+            {/php}
+        </div>
+    </div>
+    {php}
+    if($state == 2 || $state == 4 || $state == 3){
+    {/php}
+    <div class="middle_progress">
+        <div class="middle_progress_line">
+            <p class="middle_progress_ok" style="width: 21.702279202279%;"></p>
+        </div>
+        <div class="middle_progress_price">
+            <span class="middle_price_item">
+                原价￥
+                <font class="money">
+                    {eq name='$member.state' value='1'}{$activity.newly_money}{/eq}
+                    {eq name='$member.state' value='2'}{$activity.money}{/eq}
+                    {eq name='$member.state' value='3'}{$activity.money}{/eq}
+                </font>
+            </span>
+            <span class="middle_price_item">当前价￥<font>{$d_money}</font></span>
+            <span class="middle_price_item">
+                底价￥
+                <font>
+                    {eq name='$member.state' value='1'}{$activity.newly}{/eq}  <!--新生低价-->
+                    {eq name='$member.state' value='2'}{$activity.old}{/eq}  <!--老生低价-->
+                    {eq name='$member.state' value='3'}{$activity.old}{/eq} <!--员工低价-->
+                </font>
+            </span>
+        </div>
+    </div>
+    {php}
+    }
+    {/php}
+    <div class="middle_btn">
+        {eq name='$state' value='1'}   <!--活动刚开始没得上级id分享-->
+        <div class="middle_btn_item middle_btn_sign">我要报名</div>
+        {/eq}
+        {eq name='$state' value='2'}
+        <div class="middle_btn_item">立即支付</div>
+        <a class="middle_btn_item" href="/kjlog/index/onlooker">请人围观</a>
+        {/eq}
+        {eq name='$state' value='3'}
+        <div class="middle_btn_item" onclick="kj('{$member.id}','{$member.hid}')">帮他砍价</div>
+        <div class="middle_btn_item middle_btn_sign">我要报名</div>
+        {/eq}
+        {eq name='$state' value='4'}
+        <div class="middle_btn_item" onclick="kj('{$member.id}','{$member.hid}')">帮他砍价</div>
+        <a class="middle_btn_item" href="/kjlog/index/welcome?hid={$hid}">我的进度</a>
+        {/eq}
+    </div>
+</div>
+
+<div class="middle_line"></div>
+<div class="foot">
+    <div class="foot_tab">
+        <span class="foot_tab_item active" data-id="1">活动规则</span>
+        <span class="foot_tab_item" data-id="2">品牌介绍</span>
+        <span class="foot_tab_item" data-id="3">亲友团</span>
+    </div>
+    <div class="swiper-container">
+        <div class="swiper-wrapper" style="height: 131px;">
+            <div class="foot_tabs foot_tab1 swiper-slide">
+                <img src="{$activity.rule_img}" alt=""/></div>
+            <div class="foot_tabs foot_tab2 swiper-slide">
+                <img src="{$activity.intro_img}" alt=""/></div>
+            <div class="foot_tabs foot_tab3 swiper-slide">
+                <div class="foot_tab3_help">
+                    {php}if($state == 2){{/php}
+                    <p class="foot_new_title">我的团购</p>
+                    <div class="main">
+                        <div>全部({$num}人)</div>
+                        <span>已支付({$pay_num}人)</span>
+                        <div>未支付({$nopay_num}人)</div>
+                    </div>
+                    <div class="tu foot_new_title">您当前的团长是{$t_name}<span class="m"></span>，所在团购报名{$tnum}<span></span>人，已支付{$tpay_num}<span></span>人
+                    </div>
+                    {volist name='myMember' id='m'}
+                    <div class="foot_help_item">
+                        <img class="foot_item_headimg" src="{$m.pic}">
+                        <p class="foot_item_name">
+                            {$m.name}
+                            <span style="color:#cccccc;">&nbsp;&nbsp;&nbsp;当前价格：{$m.money}</span>
+                        </p>
+                        <p class="foot_item_time">
+                            {php}echo date('m-d H:i',$m['savedate']);{/php}
+                            {php}if($m['pay'] == 0){{/php}
+                            <a href="tel:{$m.phone}" class="foot_item_call foot_call_nopay">拨打TA的电话</a>
+                            </p>
+                            <p class="foot_item_money foot_money_nopay">未支付</p>
+                        {php}}else if($m['pay'] == 1){{/php}
+                            <a href="tel:{$m.phone}" class="foot_item_call">拨打TA的电话</a>
+                            </p>
+                            <p class="foot_item_money" style="color: #858585;">已支付</p>
+                        {php}}{/php}
+                    </div>
+                    {/volist}
+                    {php}}{/php}
+                    {php}if($state == 4 || $state == 3 || $state == 2 && $friend){{/php}
+                    <div class="middle_line"></div>
+                    <p class="foot_new_title">帮忙砍价用户</p>
+                    {volist name='friend' id='f'}
+                    <div class="foot_help_item">
+                        <img class="foot_item_headimg" src="{$f.member.pic}">
+                        <p class="foot_item_name">{$f.member.nickname}</p>
+                        <p class="foot_item_time">{$f.addtime}</p>
+                        <p class="foot_item_money">-￥{$f.money}</p>
+                    </div>
+                    {/volist}
+                    {php}}{/php}
+                </div>
+                <div class="middle_line"></div>
+                <div class="foot_tab3_new">
+                    <p class="foot_new_title">最新参与用户</p>
+                    <div class="foot_new_user"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="middle_line"></div>
+    <div class="copyright"><a href="">活动策划：zone</a></div>
+</div>
+<div style="height:0.1rem"></div>
+<div class="menu menu1" style="display: block;">
+    <div class="menu_item">
+        <a href="/kjlog/index/gl"><span class="icon_item">省钱攻略</span></a>
+    </div>
+    <div class="menu_item">
+        <a href="tel:{$activity.service_phone}"><span class="icon_item icon_help">拨打电话</span></a>
+    </div>
+    <div class="menu_item">
+        <a class="submenu_item show_ercode">客服微信</a>
+    </div>
+</div>
+<div class="submenu" style="display: none;">
+    <a class="submenu_item" href="#">省钱攻略</a>
+    <a class="submenu_item" href="tel:{$activity.service_phone}">拨打电话</a>
+    <a class="submenu_item show_ercode">客服微信</a>
+</div>
+<a class="complaint" href="/kjlog/ts/show?hid={$hid}">投诉</a>
+<div class="sign" style="display: none;margin-top: 30%;">
+    <div class="sign_main">
+        <p class="sign_desc">感谢你报名参加我们的活动，{$activity.intro}</p>
+        <p class="sign_desc2">
+            你正在加入
+            {php}
+                if(empty($member['name'])){
+                    echo $member['nickname'];
+                }else{
+                    echo $member['name'];
+                }
+            {/php}
+            的团购
+        </p>
+        <input class="sign_form_item" type="text" name="name" placeholder="请输入学员姓名">
+        <input class="sign_form_item" type="number" name="phone" placeholder="请输入您的手机号">
+        <select class="sign_form_item" name="store">
+            <option value="0">请选择您附近的门店</option>
+            {php}
+            $address = explode('|',$activity['address']);
+            {/php}
+            {volist name='$address' id='a'}
+            <option value="{$a}">{$a}</option>
+            {/volist}
+        </select>
+        {eq name='$activity.state' value='0'}
+        <div style="line-height: 1.8rem; text-align: left; margin-bottom: 0.3rem;">
+            <input type="radio" checked id="old" name="old" value="2">
+            <label for="old">我是老生</label>
+            <input type="radio" id="new" name="old" value="1">
+            <label for="old">我是新生</label>
+            <br>
+            <span style="display: none;">&nbsp;注：新生原价：￥<span class="m">{$activity.newly_money}</span>&nbsp;低价：￥<span
+                    class="m">{$activity.newly}</span></span>
+            <span style="display: none;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;老生原价：￥<span class="m">{$activity.money}</span>&nbsp;低价：￥<span
+                    class="m">{$activity.old}</span></span>
+        </div>
+        {/eq}
+        <input type="hidden" name="tid" value="{$member.id}">
+        <input type="hidden" name="masterid" value="{$member.masterid}">
+        <button class="sign_form_btn" type="button">确认报名</button>
+        <div class="sign_btn">
+            <a href="tel:{$activity.service_phone}" class="sign_btn_tel">电话咨询</a>
+            <button class="sign_btn_close" type="button">我再看看</button>
+        </div>
+    </div>
+</div>
+<div class="message" style="display: none;">
+    <div class="message_main">
+        <p class="message_money"></p>
+        <div class="message_desc"></div>
+        <button class="message_btn message_btn_primary" type="button"></button>
+        <button class="message_btn message_btn_info" type="button"></button>
+    </div>
+</div>
+<div class="ercode" style="display: none;">
+    <div class="ercode_main">
+        <p class="ercode_desc">长按识别下方二维码联系客服</p>
+        <img class="ercode_img" src="{$activity.service}">
+        <button class="ercode_close" type="button">关闭</button>
+    </div>
+</div>
+<audio id="music" style="display: none;" src="" autoplay="autoplay" loop="loop"></audio>
+<script>
+    var imgurl =  '{$activity.mian_img}';
+    wx.config({
+        debug: false, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
+        appId: '{$arr.appid}', // 必填，公众号的唯一标识
+        timestamp: '{$arr.timestamp}', // 必填，生成签名的时间戳
+        nonceStr: '{$arr.noncestr}', // 必填，生成签名的随机串
+        signature: '{$arr.signature}',// 必填，签名
+        jsApiList: ["updateAppMessageShareData","updateTimelineShareData"] // 必填，需要使用的JS接口列表
+    });
+    wx.ready(function () {
+        var data = {
+            title: "{$activity.name}",
+            desc: "{$member.name}在参加活动，打开帮他省钱！",
+            link: "http://xuxiaoer.cn/kjlog/index/index/hid/{$member.hid}/sid/{$member.id}",
+            imgUrl: "http://xuxiaoer.cn"+imgurl,
+            success: function () {
+                // 用户确认分享后执行的回调函数
+            },
+            cancel: function () {
+                // 用户取消分享后执行的回调函数
+            }
+        };
+        wx.updateAppMessageShareData(data);
+        wx.updateTimelineShareData(data);
+    });
+</script>
+<script type="text/javascript">
+    getfriend();
+    function getfriend() {
+        var id = '{$hid}';
+        $.post('/kjlog/index/friend', {id: id}, function (data) {
+            var img = '';
+            layer.closeAll();
+            for (var i = 0; i < data.length; i++) {
+                img += '<img class="foot_user_item" src="' + data[i].pic + '">';
+            }
+            $('.foot_new_user').html(img);
+        });
+        var money = $('.money').html();
+        var k_money = $('.k_money').html();
+        var rate = (k_money / money) * 100;
+        $('.middle_progress_line p').attr('style', 'width: ' + rate + '%');
+    }
+    //帮他砍价
+    function kj(id, hid) {
+        $.post('/kjlog/index/kj', {id: id, hid: hid}, function (data) {
+            if (data.state == 0) {
+                layer.msg(data.message, {icon: 2, time: 1500});
+            } else if (data.state == 1) {
+                layer.msg(data.message, {icon: 1, time: 1500});
+                setTimeout("window.location.reload()", 1500);
+            }
+        })
+    }
+    //确认报名
+    $('.sign_form_btn').click(function () {
+        var name = $('input[name="name"]').val();
+        var phone = $('input[name="phone"]').val();
+        var store = $('select[name="store"]').val();
+        var state = '{$activity.state}';
+        var tid = $('input[name="tid"]').val(); //团长id
+        var masterid = $('input[name="masterid"]').val(); //员工id
+        if (state == 0) {
+            var old = $('input:radio[name="old"]:checked').val();
+        } else {
+            var old = 2;
+        }
+        if (name == '') {
+            layer.msg('请输入您的姓名', {icon: 2, time: 1500});
+        } else if (!/^1[3-9]\d{9}$/.test(phone)) {
+            layer.msg('请输入正确的手机号', {icon: 2, time: 1500});
+        } else if (store == 0) {
+            layer.msg('请选择您附近的门店', {icon: 2, time: 1500});
+        } else {
+            $.post('/kjlog/index/apply', {
+                name: name,
+                phone: phone,
+                store: store,
+                old: old,
+                tid: tid,
+                masterid: masterid
+            }, function (data) {
+                if (data.state == 1) {
+                    layer.msg(data.message, {icon: 1, time: 1500});
+                    //setTimeout("location.href = '/kjlog/index/index?hid='+hid+'&sid'+sid;", 1000);
+                    setTimeout("window.location.reload()", 1500);
+                } else if (data.state == 0) {
+                    layer.msg(data.message, {icon: 2, time: 1500});
+                }
+            });
+        }
+    });
+    //点击我要报名
+    $('.middle_btn_sign').click(function () {
+        $('.sign').show();
+    });
+    //关闭报名窗口
+    $('.sign_btn_close').click(function () {
+        $('.sign').hide();
+    });
+    //触摸滑动切换标签
+    var mySwiper = new Swiper('.swiper-container', {
+        autoHeight: true,
+        observer: true,
+        observeParents: true,
+        onSlideChangeStart: function (swiper) {
+            $('.foot_tab_item').removeClass('active');
+            $('.foot_tab_item').eq(swiper.activeIndex).addClass('active');
+//            if (swiper.activeIndex == 2) {
+//                getfriend();
+//            }
+        }
+    });
+    //切换标签
+    $('.foot_tab_item').click(function () {
+        var tab_id = $(this).data('id');
+        mySwiper.slideTo(tab_id - 1);
+    });
+
+    //弹出立即咨询子菜单
+    $('.icon_concat').parent().click(function () {
+        $('.submenu').toggle();
+    });
+
+    //查看客服微信
+    $('.show_ercode').click(function () {
+        $('.ercode').show();
+        $('.submenu').hide();
+    });
+    //关闭客服微信弹层
+    $('.ercode_close').click(function () {
+        $('.ercode').hide();
+    });
+
+    //活动结束倒计时
+    var times = "{$time}";
+    timer(times);
+    function timer(intDiff) {
+        window.setInterval(function () {
+            var day = 0,
+                    hour = 0,
+                    minute = 0,
+                    second = 0;
+            if (intDiff > 0) {
+                day = parseInt(intDiff / 24 / 3600);
+                hour = parseInt(intDiff / 3600 % 24);
+                minute = parseInt(intDiff / 60 % 60);
+                second = parseInt(intDiff % 60);
+                if (hour <= 9) hour = '0' + hour;
+                if (minute <= 9) minute = '0' + minute;
+                if (second <= 9) second = '0' + second;
+                $('.times_day').html(day);
+                $('.times_hrs').html(hour);
+                $('.times_mins').html(minute);
+                $('.times_secs').html(second);
+                intDiff--;
+            }
+        }, 1000);
+    }
+</script>
+</body>
+</html>

@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>首页</title>
+    {include file="common/head"/}
+</head>
+<body>
+<!-- 顶部开始 -->
+<div class="container">
+    <div class="logo"><a href="./index.html">ZNOTE</a></div>
+    <div class="left_open">
+        <i title="展开左侧栏" class="iconfont">&#xe699;</i>
+    </div>
+    <ul class="layui-nav right" lay-filter="">
+        <li class="layui-nav-item">
+            <a href="javascript:;">{$Request.session.adminUser.name}</a>
+            <dl class="layui-nav-child"> <!-- 二级菜单 -->
+                <dd><a href="{:url('/my/login/index')}">切换帐号</a></dd>
+                <dd><a href="{:url('exits')}">退出</a></dd>
+            </dl>
+        </li>
+        <li class="layui-nav-item to-index"><a href="{:url('/')}">前台首页</a></li>
+    </ul>
+
+</div>
+<!-- 顶部结束 -->
+<!-- 左侧菜单开始 -->
+<div class="left-nav">
+    <div id="side-nav">
+        <ul id="nav">
+            <li>
+                <a href="javascript:;">
+                    <i class="iconfont">&#xe6b8;</i>
+                    <cite>会员管理</cite>
+                    <i class="iconfont nav_right">&#xe697;</i>
+                </a>
+                <ul class="sub-menu">
+                    <li>
+                        <a _href="{:url('/my/user/index')}">
+                            <i class="iconfont">&#xe6a7;</i>
+                            <cite>会员列表</cite>
+
+                        </a>
+                    </li >
+                </ul>
+            </li>
+          <li>
+                <a href="javascript:;">
+                    <i class="iconfont">&#xe6e4;</i>
+                    <cite>活动系统管理</cite>
+                    <i class="iconfont nav_right">&#xe697;</i>
+                </a>
+                <ul class="sub-menu">
+                    <li>
+                        <a _href="{:url('/my/kjlog/index')}">
+                            <i class="iconfont">&#xe6a7;</i>
+                            <cite>砍价系统</cite>
+                        </a>
+                    </li >
+                    <li>
+                        <a _href="{:url('/my/packet/index')}">
+                            <i class="iconfont">&#xe6a7;</i>
+                            <cite>红包系统</cite>
+                        </a>
+                    </li >
+                </ul>
+            </li>
+            <li>
+                <a href="javascript:;">
+                    <i class="iconfont">&#xe70a;</i>
+                    <cite>正在进行的活动</cite>
+                    <i class="iconfont nav_right">&#xe697;</i>
+                </a>
+                <ul class="sub-menu">
+                    <li>
+                        <a _href="{:url('/my/proceed/kjlog')}">
+                            <i class="iconfont">&#xe6a7;</i>
+                            <cite>砍价活动列表</cite>
+                        </a>
+                    </li >
+                    <li>
+                        <a _href="{:url('/my/proceed/packet')}">
+                            <i class="iconfont">&#xe6a7;</i>
+                            <cite>红包活动列表</cite>
+                        </a>
+                    </li>
+                </ul>
+            </li>
+            <li>
+                <a href="javascript:;">
+                    <i class="iconfont">&#xe83c;</i>
+                    <cite>财务统计</cite>
+                    <i class="iconfont nav_right">&#xe697;</i>
+                </a>
+                <ul class="sub-menu">
+                    <li>
+                        <a _href="{:url('/my/finance/kjlog')}">
+                            <i class="iconfont">&#xe6a7;</i>
+                            <cite>砍价活动统计</cite>
+                        </a>
+                    </li >
+                    <li>
+                        <a _href="{:url('/my/finance/packet')}">
+                            <i class="iconfont">&#xe6a7;</i>
+                            <cite>红包活动统计</cite>
+                        </a>
+                    </li >
+                </ul>
+            </li>
+            <li>
+                <a href="javascript:;">
+                    <i class="iconfont">&#xe726;</i>
+                    <cite>后台管理</cite>
+                    <i class="iconfont nav_right">&#xe697;</i>
+                </a>
+                <ul class="sub-menu">
+                    <li>
+                        <a _href="{:url('/my/admin/index')}">
+                            <i class="iconfont">&#xe6a7;</i>
+                            <cite>管理员列表</cite>
+                        </a>
+                    </li >
+                    <li>
+                        <a _href="{:url('/my/admin/add')}">
+                            <i class="iconfont">&#xe6a7;</i>
+                            <cite>添加管理员</cite>
+                        </a>
+                    </li >
+                    <li>
+                        <a _href="{:url('/my/menu/index')}">
+                            <i class="iconfont">&#xe6a7;</i>
+                            <cite>菜单管理</cite>
+                        </a>
+                    </li >
+                </ul>
+            </li>
+        </ul>
+    </div>
+</div>
+<!-- 左侧菜单结束 -->
+<!-- 右侧主体开始 -->
+<div class="page-content">
+    <div class="layui-tab tab" lay-filter="xbs_tab" lay-allowclose="false">
+        <ul class="layui-tab-title">
+            <li class="home"><i class="layui-icon">&#xe68e;</i>我的桌面</li>
+        </ul>
+        <div class="layui-tab-content">
+            <div class="layui-tab-item layui-show">
+                <iframe src="{:url('/my/index/welcome')}" frameborder="0" scrolling="yes" class="x-iframe"></iframe>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="page-content-bg"></div>
+<!-- 右侧主体结束 -->
+<!-- 中部结束 -->
+<!-- 底部开始 -->
+<div class="footer">
+    <div class="copyright">Welcome to use ZNOTE WeChat third-party platform</div>
+</div>
+<!-- 底部结束 -->
+</body>
+</html>

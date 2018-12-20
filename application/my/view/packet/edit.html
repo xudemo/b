@@ -1,0 +1,620 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>砍价活动设置</title>
+    {include file="common/head"/}
+    <link href="__STATIC__/kj/css/admin.css" rel="stylesheet">
+    <script src="__STATIC__/u-admin/jquery.artDialog.js"></script>
+    <style>
+        .center {
+            background-color: #f2f2f2;
+            width: 100%;
+            height: 2300px;
+            position: absolute;
+        }
+
+        .main {
+            background-color: #fff;
+            width: 98%;
+            margin: 0px auto;
+        }
+
+        .body {
+            margin-top: 10px;
+            display: flex;
+        }
+
+        .body .left {
+            width: 30%;
+            text-align: right;
+            margin: 10px 0px;
+            font-size: 16px;
+            position: relative;
+            top: 4px;
+            color: #726f6f;
+        }
+
+        .body .right {
+            width: 65%;
+            margin: 10px 0px;
+            margin-left: 50px;
+        }
+
+        .body .right input {
+            border-radius: 5%;
+            width: 600px;
+        }
+
+        textarea {
+            resize: none;
+        }
+
+        .md {
+            border-color: #d2d2d2;
+            width: 600px;
+            height: 90px;
+        }
+
+        .ts {
+            margin-left: 20px;
+            color: red;
+        }
+
+        .money {
+            width: 60px;
+        }
+
+        .public_img {
+            display: block;
+            margin-left: 20px;
+        }
+
+        .body .left {
+            width: 30%;
+            text-align: right;
+            margin: 10px 0px;
+            font-size: 16px;
+            position: relative;
+            top: 4px;
+            color: #726f6f;
+        }
+
+        .header {
+            font-size: 22px;
+            margin-left: 20px;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+<div class="layui-form">
+    <div class="header">砍价活动设置</div>
+    <div style="border-bottom: #eee solid 1px;margin-bottom: 10px;"></div>
+    <form method="post" action="/my/packet/edit">
+        <div class="center">
+            <div class="main">
+                <div class="body" style="margin-top: 22px;">
+                    <div class="left">活动标题：</div>
+                    <div class="right">
+                        <div class="layui-input-inline">
+                            <input type="text" name="name" lay-verify="required" value="{$activity.name}" placeholder="活动标题"
+                                   autocomplete="off"
+                                   class="layui-input input">
+                        </div>
+                    </div>
+                </div>
+                <div class="body">
+                    <div class="left">活动介绍：</div>
+                    <div class="right">
+                        <div class="layui-input-inline">
+                            <input type="text" name="intro" lay-verify="required" value="{$activity.intro}" placeholder="活动介绍"
+                                   autocomplete="off"
+                                   class="layui-input input">
+                        </div>
+                    </div>
+                </div>
+                <div class="body">
+                    <div class="left">活动门店：</div>
+                    <div class="right">
+                        <div class="layui-input-inline">
+                            <textarea class="md layui-input" name="address" placeholder="活动门店">{$activity.address}</textarea>
+                        </div>
+                        <span class="ts">*&nbsp;&nbsp;多个门店用 | 隔开</span>
+                    </div>
+                </div>
+                <div class="body">
+                    <div class="left">客服电话：</div>
+                    <div class="right">
+                        <div class="layui-input-inline">
+                            <input type="text" name="service_phone" lay-verify="required" value="{$activity.service_phone}" placeholder="客服电话"
+                                   autocomplete="off"
+                                   class="layui-input input">
+                        </div>
+                    </div>
+                </div>
+                <div class="body">
+                    <div class="left">支付地址：</div>
+                    <div class="right old">
+                        {eq name='$activity.pay_add' value='0'}
+                        <input type='radio' checked name='pay_add' value='0' style="width: 15px;height: 15px;position: relative;top: 2px;">&nbsp;
+                        <label for='man'>客服公众号</label>&nbsp;&nbsp;&nbsp;&nbsp;
+                        <input type='radio' name='pay_add' value='1' style="width: 15px;height: 15px;position: relative;top: 2px;">&nbsp;
+                        <label for='woman'>我方公众号</label>
+                        {/eq}
+                        {eq name='$activity.pay_add' value='1'}
+                        <input type='radio' name='pay_add' value='0' style="width: 15px;height: 15px;position: relative;top: 2px;">&nbsp;
+                        <label for='man'>客服公众号</label>&nbsp;&nbsp;&nbsp;&nbsp;
+                        <input type='radio' checked name='pay_add' value='1' style="width: 15px;height: 15px;position: relative;top: 2px;">&nbsp;
+                        <label for='woman'>我方公众号</label>
+                        {/eq}
+                    </div>
+                </div>
+                <div class="body">
+                    <div class="left">人数设置：</div>
+                    <div class="right" style="display: flex;">
+                        <span style="position: relative;top:5px;">浏览人数：</span>
+                        <input class="layui-input" name="liu_num" value="{$activity.liu_num}" style="width: 120px;">&nbsp;&nbsp;
+                        <span style="position: relative;top:5px;">支付人数：</span>
+                        <input class="layui-input" name="pay_num" value="{$activity.pay_num}" style="width: 120px;">
+                    </div>
+                </div>
+                <div class="body">
+                    <div class="left">商品设置：</div>
+                    <div class="right" style="display: flex;">
+                        <span style="position: relative;top:5px;">原价：</span>
+                        <input class="layui-input" name="money" value="{$activity.money}" style="width: 120px;">&nbsp;&nbsp;
+                    </div>
+                </div>
+                <div class="body">
+                    <div class="left">活动时间：</div>
+                    <div class="right" style="display: flex;">
+                        <span style="position: relative;top:5px;">开始时间：</span>
+                        <input class="layui-input" name="begin_time" value="{$activity.begin_time}" type="datetime-local" style="width: 220px;">&nbsp;&nbsp;
+                        <span style="position: relative;top:5px;">结束时间：</span>
+                        <input class="layui-input" name="finish_time" value="{$activity.finish_time}" type="datetime-local" style="width: 220px;">
+                    </div>
+                </div>
+                <div class="body">
+                    <div class="left">测试支付：</div>
+                    <div class="right" style="display: flex; width: 500px;">
+                        {eq name='$activity.code' value='0'}
+                        <input type="checkbox" name="code"  lay-text="开启|停用" lay-skin="switch">
+                        {/eq}
+                        {eq name='$activity.code' value='1'}
+                        <input type="checkbox" name="code"  lay-text="开启|停用" checked="" lay-skin="switch">
+                        {/eq}
+                    </div>
+                </div>
+                <div class="body">
+                    <div class="left">没支付是否有红包：</div>
+                    <div class="right" style="display: flex; width: 500px;">
+                        {eq name="$activity.no_pay" value="0"}
+                        <input type="checkbox" name="no_pay" checked lay-text="开启|停用" lay-skin="switch">
+                        {/eq}
+                        {eq name="$activity.no_pay" value="1"}
+                        <input type="checkbox" name="no_pay" lay-text="开启|停用" lay-skin="switch">
+                        {/eq}
+                    </div>
+                </div>
+                <div class="body">
+                    <div class="left">员工是否有红包：</div>
+                    <div class="right" style="display: flex; width: 500px;">
+                        {eq name="$activity.no_master" value="0"}
+                        <input type="checkbox" name="no_master" lay-text="开启|停用" checked lay-skin="switch">
+                        {/eq}
+                        {eq name="$activity.no_master" value="1"}
+                        <input type="checkbox" name="no_master" lay-text="开启|停用" lay-skin="switch">
+                        {/eq}
+                    </div>
+                </div>
+                <div class="body" style="margin-top: 22px;">
+                    <div class="left">红包名称：</div>
+                    <div class="right">
+                        <div class="layui-input-inline">
+                            <input type="text" name="hb_name" lay-verify="required" value="{$activity.hb_name}" placeholder="红包名称"
+                                   autocomplete="off"
+                                   class="layui-input input">
+                        </div>
+                    </div>
+                </div>
+                <div class="body" style="margin-top: 22px;">
+                    <div class="left">红包详情：</div>
+                    <div class="right">
+                        <div class="layui-input-inline">
+                            <input type="text" name="hb_intro" lay-verify="required" value="{$activity.hb_intro}" placeholder="红包详情"
+                                   autocomplete="off"
+                                   class="layui-input input">
+                        </div>
+                    </div>
+                </div>
+                <div class="body">
+                    <div class="left">上传图片：</div>
+                    <div class="right" style="display: flex;">
+                        <div class="img" style="width: 120px;">
+                            <img class="public_img" src="{$activity.public_img}" width="100%" height="120px;" style="margin-left: 4px;">
+                            <br>
+                            <br>
+                            <input name="public_img" value="{$activity.public_img}" type="hidden">
+                            <button type="button" class="layui-btn" id="public_img">
+                                <i class="layui-icon">&#xe67c;</i>分享小图
+                            </button>
+                        </div>
+                        <div class="img" style="width: 120px;margin-left: 60px;">
+                            <img class="mian_img" src="{$activity.mian_img}" width="100%" height="120px;" style="margin-left: 4px;">
+                            <br>
+                            <br>
+                            <br>
+                            <input name="mian_img" value="{$activity.mian_img}" type="hidden">
+                            <button type="button" class="layui-btn" id="mian_img">
+                                <i class="layui-icon">&#xe67c;</i>首页图片
+                            </button>
+                        </div>
+                        <div class="img" style="width: 120px;margin-left: 60px;">
+                            <img class="twocode" src="{$activity.twocode}" width="100%" height="120px;" style="margin-left: 4px;">
+                            <br>
+                            <br>
+                            <br>
+                            <input name="twocode" value="{$activity.twocode}" type="hidden">
+                            <button type="button" class="layui-btn" id="twocode">
+                                <i class="layui-icon">&#xe67c;</i>公众号二维码
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="body">
+                    <div class="left">海报图片：</div>
+                    <div class="right" style="display: flex;">
+                        <div class="img" style="width: 120px;">
+                            <img class="poster_img" src="{$activity.poster_img}" width="100%" height="120px;" style="margin-left: 4px;">
+                            <br>
+                            <br>
+                            <input name="poster_img" value="{$activity.poster_img}" type="hidden">
+                            <button type="button" class="layui-btn" id="poster_img">
+                                <i class="layui-icon">&#xe67c;</i>海报图片
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div class="body">
+                    <div class="left">海报设置：</div>
+                    <div class="right" style="display: flex;">
+                        <span style="position: relative;top:5px;">二维码宽度：</span>
+                        <input class="layui-input" name="two_width" value="{$activity.two_width}" style="width: 120px;">&nbsp;&nbsp;
+                        <span style="position: relative;top:5px;">二维码高度：</span>
+                        <input class="layui-input" name="two_height" value="{$activity.two_height}" style="width: 120px;">&nbsp;&nbsp;
+                        <span style="position: relative;top:5px;">二维码X轴：</span>
+                        <input class="layui-input" name="two_x" value="{$activity.two_x}" style="width: 120px;">&nbsp;&nbsp;
+                        <span style="position: relative;top:5px;">二维码Y轴：</span>
+                        <input class="layui-input" name="two_y" value="{$activity.two_y}" style="width: 120px;">
+                    </div>
+                </div>
+                <div class="body">
+                    <div class="left"></div>
+                    <div class="right" style="display: flex;">
+                        <span style="position: relative;top:5px;">头像宽度：</span>
+                        <input class="layui-input" name="pic_width" value="{$activity.pic_width}" style="width: 120px;">&nbsp;&nbsp;
+                        <span style="position: relative;top:5px;">头像高度：</span>
+                        <input class="layui-input" name="pic_height" value="{$activity.pic_height}" style="width: 120px;">&nbsp;&nbsp;
+                        <span style="position: relative;top:5px;">头像X轴：</span>
+                        <input class="layui-input" name="pic_x" value="{$activity.pic_x}" style="width: 120px;">&nbsp;&nbsp;
+                        <span style="position: relative;top:5px;">头像Y轴：</span>
+                        <input class="layui-input" name="pic_y" value="{$activity.pic_y}" style="width: 120px;">
+                    </div>
+                </div>
+                <div class="body">
+                    <div class="left"></div>
+                    <div class="right" style="display: flex;">
+                        <span style="position: relative;top:5px;">字体X轴：</span>
+                        <input class="layui-input" name="text_x" value="{$activity.text_x}" style="width: 120px;">&nbsp;&nbsp;
+                        <span style="position: relative;top:5px;">字体Y轴：</span>
+                        <input class="layui-input" name="text_y" value="{$activity.text_y}" style="width: 120px;">&nbsp;&nbsp;
+                    </div>
+                </div>
+                <div class="body">
+                    <div class="left"></div>
+                    <div class="right">
+                        <button type="button" onclick="viewPoster()">预览</button>
+                    </div>
+                </div>
+
+                <div class="body">
+                    <div class="left">活动详情：</div>
+                    <div class="right" style="display: flex;">
+                        <div class="img" style="width: 120px;">
+                            <img class="intro_img" src="{$activity.intro_img}" width="80%" height="220px;" style="margin-left: 4px;">
+                            <br>
+                            <br>
+                            <input name="intro_img" value="{$activity.intro_img}" type="hidden">
+                            <button type="button" class="layui-btn" id="intro_img">
+                                <i class="layui-icon">&#xe67c;</i>品牌介绍
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div class="body">
+                    <div class="left">咨询我们：</div>
+                    <div class="right" style="display: flex;">
+                        <div class="img" style="width: 120px;">
+                            <img class="service" src="{$activity.service}" width="100%" height="120px;" style="margin-left: 4px;">
+                            <br>
+                            <br>
+                            <input name="service" value="{$activity.service}" type="hidden">
+                            <button type="button" class="layui-btn" id="service">
+                                <i class="layui-icon">&#xe67c;</i>客服二维码
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div class="body">
+                    <div class="left">活动地址：</div>
+                    <div class="right old">
+                        {eq name="$activity['company']" value="1"}
+                        <input type='radio' checked name='company' value='1'
+                               style="width: 15px;height: 15px;">
+                        <label for='man'>四川</label>&nbsp;&nbsp;&nbsp;&nbsp;
+                        <input type='radio' name='company' value='2'
+                               style="width: 15px;height: 15px;">
+                        <label for='woman'>安微</label>
+                        {/eq}
+                        {eq name="$activity['company']" value="2"}
+                        <input type='radio' name='company' value='1'
+                               style="width: 15px;height: 15px;">
+                        <label for='man'>四川</label>&nbsp;&nbsp;&nbsp;&nbsp;
+                        <input type='radio' checked name='company' value='2'
+                               style="width: 15px;height: 15px;">
+                        <label for='woman'>安微</label>
+                        {/eq}
+                    </div>
+                </div>
+                <br>
+                <br>
+                <input name="appid" value="{$appid}" type="hidden">
+                <input name="id" value="{$id}" type="hidden">
+                <div class="body">
+                    <div class="left"></div>
+                    <div class="right" style="display: flex;">
+                        <button class="layui-btn">提交</button>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        <a href="javascript:history.back(-1)">
+                            <button type="button" class="layui-btn" style="background-color: #847c7c;">返回</button>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+<script>
+    //预览
+    function viewImg() {
+        var img = $("input[name='scan_img']").val();
+        var width = $("input[name='twocode_width']").val();
+        var height = $("input[name='twocode_height']").val();
+        var x = $("input[name='twocode_x']").val();
+        var y = $("input[name='twocode_y']").val();
+        $.post('/my/kjlog/img',{
+            img:img,
+            width:width,
+            height:height,
+            x:x,
+            y:y,
+            appid:'{$appid}'
+        },function (data) {
+            console.log(data);
+            var random = Math.random();
+            layer.open({
+                type: 1
+                , title: false
+                , closeBtn: 0
+                , skin: 'layui-layer-nobg'
+                , shadeClose: true
+                , content: '<img src="'+data +'?r='+random+'" style="max-height:600px;max-width:100%;position: fixed;top: 100px;left: 36%;">'
+                , scrollbar: false
+            })
+        });
+    }
+    //海报预览
+    function viewPoster() {
+        var poster_img = $("input[name='poster_img']").val();
+        var two_width = $("input[name='two_width']").val();
+        var two_height = $("input[name='two_height']").val();
+        var two_x = $("input[name='two_x']").val();
+        var two_y = $("input[name='two_y']").val();
+        var pic_width = $("input[name='pic_width']").val();
+        var pic_height = $("input[name='pic_height']").val();
+        var pic_x = $("input[name='pic_x']").val();
+        var pic_y = $("input[name='pic_y']").val();
+        var text_x = $("input[name='text_x']").val();
+        var text_y = $("input[name='text_y']").val();
+        $.post('/my/poster/index',{
+            poster_img:poster_img,
+            two_width:two_width,
+            two_height:two_height,
+            two_x:two_x,
+            two_y:two_y,
+            pic_width:pic_width,
+            pic_height:pic_height,
+            pic_x:pic_x,
+            pic_y:pic_y,
+            text_x:text_x,
+            text_y:text_y,
+            appid:'{$appid}'
+        },function (data) {
+            console.log(data);
+            var random = Math.random();
+            layer.open({
+                type: 1
+                , title: false
+                , closeBtn: 0
+                , skin: 'layui-layer-nobg'
+                , shadeClose: true
+                , content: '<img src="'+data +'?r='+random+'" style="max-height:600px;max-width:100%;position: fixed;top: 100px;left: 36%;">'
+                , scrollbar: false
+            })
+        });
+    }
+    layui.use('upload', function () {
+        var upload = layui.upload;
+        //执行实例
+        //公众号图片
+        var uploadInst = upload.render({
+            elem: '#public_img' //绑定元素
+            , url: '/my/kjlog/sc/' //上传接口
+            , done: function (data) {
+            	console.log(data);
+                if (data.state == 1) {
+                    layer.msg(data.message, {icon: 1, time: 1000});
+                    $("input[name='public_img']").val(data.data);
+                    $('.public_img').attr('src', data.data);
+                } else {
+                    layer.msg(data.message, {icon: 2, time: 1000});
+                }
+            }
+        });
+        //首页图片
+        var uploadInst = upload.render({
+            elem: '#mian_img' //绑定元素
+            , url: '/my/kjlog/sc/' //上传接口
+            , done: function (data) {
+                if (data.state == 1) {
+                    layer.msg(data.message, {icon: 1, time: 1000});
+                    $("input[name='mian_img']").val(data.data);
+                    $('.mian_img').attr('src', data.data);
+                } else {
+                    layer.msg(data.message, {icon: 2, time: 1000});
+                }
+            }
+        });
+        //扫码图片
+        var uploadInst = upload.render({
+            elem: '#scan_img' //绑定元素
+            , url: '/my/kjlog/sc/' //上传接口
+            , done: function (data) {
+                if (data.state == 1) {
+                    layer.msg(data.message, {icon: 1, time: 1000});
+                    $("input[name='scan_img']").val(data.data);
+                    $('.scan_img').attr('src', data.data);
+                } else {
+                    layer.msg(data.message, {icon: 2, time: 1000});
+                }
+            }
+        });
+        //品牌介绍
+        var uploadInst = upload.render({
+            elem: '#intro_img' //绑定元素
+            , url: '/my/kjlog/sc/' //上传接口
+            , done: function (data) {
+                if (data.state == 1) {
+                    layer.msg(data.message, {icon: 1, time: 1000});
+                    $("input[name='intro_img']").val(data.data);
+                    $('.intro_img').attr('src', data.data);
+                } else {
+                    layer.msg(data.message, {icon: 2, time: 1000});
+                }
+            }
+        });
+        //活动规则
+        var uploadInst = upload.render({
+            elem: '#rule_img' //绑定元素
+            , url: '/my/kjlog/sc/' //上传接口
+            , done: function (data) {
+                if (data.state == 1) {
+                    layer.msg(data.message, {icon: 1, time: 1000});
+                    $("input[name='rule_img']").val(data.data);
+                    $('.rule_img').attr('src', data.data);
+                } else {
+                    layer.msg(data.message, {icon: 2, time: 1000});
+                }
+            }
+        });
+        //客服二维码
+        var uploadInst = upload.render({
+            elem: '#service' //绑定元素
+            , url: '/my/kjlog/sc/' //上传接口
+            , done: function (data) {
+                if (data.state == 1) {
+                    layer.msg(data.message, {icon: 1, time: 1000});
+                    $("input[name='service']").val(data.data);
+                    $('.service').attr('src', data.data);
+                } else {
+                    layer.msg(data.message, {icon: 2, time: 1000});
+                }
+            }
+        });
+        //活动攻略
+        var uploadInst = upload.render({
+            elem: '#strategy' //绑定元素
+            , url: '/my/kjlog/sc/' //上传接口
+            , done: function (data) {
+                if (data.state == 1) {
+                    layer.msg(data.message, {icon: 1, time: 1000});
+                    $("input[name='strategy']").val(data.data);
+                    $('.strategy').attr('src', data.data);
+                } else {
+                    layer.msg(data.message, {icon: 2, time: 1000});
+                }
+            }
+        });
+        //公众号二维码
+        var uploadInst = upload.render({
+            elem: '#twocode' //绑定元素
+            , url: '/my/kjlog/sc/' //上传接口
+            , done: function (data) {
+                if (data.state == 1) {
+                    layer.msg(data.message, {icon: 1, time: 1000});
+                    $("input[name='twocode']").val(data.data);
+                    $('.twocode').attr('src', data.data);
+                } else {
+                    layer.msg(data.message, {icon: 2, time: 1000});
+                }
+            }
+        });
+        //海报图片
+        var uploadInst = upload.render({
+            elem: '#poster_img' //绑定元素
+            , url: '/my/kjlog/sc/' //上传接口
+            , done: function (data) {
+                if (data.state == 1) {
+                    layer.msg(data.message, {icon: 1, time: 1000});
+                    $("input[name='poster_img']").val(data.data);
+                    $('.poster_img').attr('src', data.data);
+                } else {
+                    layer.msg(data.message, {icon: 2, time: 1000});
+                }
+            }
+        });
+        //积分兑换
+        var uploadInst = upload.render({
+            elem: '#integral_img' //绑定元素
+            , url: '/my/kjlog/sc/' //上传接口
+            , done: function (data) {
+                if (data.state == 1) {
+                    layer.msg(data.message, {icon: 1, time: 1000});
+                    $("input[name='integral_img']").val(data.data);
+                    $('.integral_img').attr('src', data.data);
+                } else {
+                    layer.msg(data.message, {icon: 2, time: 1000});
+                }
+            }
+        });
+    });
+</script>
+{if condition="$data['state'] == 1"}
+<script>
+    layui.use('upload', function () {
+        layer.msg("{$data['message']}", {icon: 1, time: 1500});
+        setTimeout("location.href = '/my/packet/details?appid={$appid}';", 1500);
+    });
+</script>
+{/if}
+{if condition="$data['state'] == 2"}
+<script>
+    layui.use('upload', function () {
+        layer.msg("{$data['message']}", {icon: 2, time: 1500});
+    });
+</script>
+{/if}
+</body>
+</html>

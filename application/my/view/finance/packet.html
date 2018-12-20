@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>砍价活动列表</title>
+    {include file="common/head"/}
+</head>
+<body class="layui-anim layui-anim-up">
+<div class="x-nav">
+    <a class="layui-btn layui-btn-small" style="line-height:1.6em;margin-top:3px;float:right"
+       href="javascript:location.replace(location.href);" title="刷新">
+        <i class="layui-icon" style="line-height:30px">ဂ</i></a>
+</div>
+<div class="x-body">
+    <div class="layui-row">
+        <form class="layui-form layui-col-md12 x-so layui-form-pane" method="post" action="/my/finance/packet">
+            <div class="layui-input-inline">
+                <select name="company">
+                    <option value="">公司地区</option>
+                    <option value="1">四川</option>
+                    <option value="2">安微</option>
+                </select>
+            </div>
+            <input class="layui-input" placeholder="搜索" name="searach" value="{$searach}">
+            <button class="layui-btn" lay-submit="" lay-filter="sreach"><i class="layui-icon">&#xe615;</i></button>
+        </form>
+    </div>
+    <table class="layui-table">
+        <thead>
+        <tr>
+            <th>活动ID</th>
+            <th>活动名称</th>
+            <th>公众号名称</th>
+            <th>开始时间</th>
+            <th>结束时间</th>
+            <th>总支付数</th>
+            <th>总支付金额</th>
+            <th>公司地址</th>
+        </tr>
+        </thead>
+        <tbody>
+        {volist name="$list" id="l"}
+        <tr>
+            <td>{$l.id}</td>
+            <td>{$l.name}</td>
+            <td>{$l.nick_name}</td>
+            <td>{php}echo str_replace('T',' ',$l['begin_time']);{/php}</td>
+            <td>{php}echo str_replace('T',' ',$l['finish_time']);{/php}</td>
+            <td>{$l.pay_num}</td>
+            <td>￥{php} echo sprintf("%.2f", $l['pay_money']);{/php} <a href="javascript:x_admin_show('收支详情','/my/finance/pay_details?id={$l.id}');" style="color: #00b219;">收支详情</a></td>
+            <td>
+                {eq name="$l['company']" value="1"}四川{/eq}
+                {eq name="$l['company']" value="2"}安徽{/eq}
+            </td>
+        </tr>
+        {/volist}
+        </tbody>
+    </table>
+    <div class="page">
+        <div>
+
+        </div>
+    </div>
+</div>
+{php} if(!empty($company)){{/php}
+<script>
+    $("option[value='{$company}']").attr("selected","selected");
+</script>
+{php}}{/php}
+</body>
+</html>

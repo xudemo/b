@@ -1,0 +1,237 @@
+{extend name="common/base"/}
+{block name="title"}报名列表{/block}
+{block name="script"}
+<style>
+    #tags li {
+        background-color: #f9f9f9;
+        width: 120px;
+        height: 40px;
+        line-height: 40px;
+    }
+
+    #tags li a {
+        margin-left: 10px;
+    }
+    .center {
+        margin: 8px 0;
+    }
+
+    .left {
+        float: left;
+    }
+
+    .left button {
+        background-color: #00b219;
+        width: 60px;
+        height: 30px;
+        color: #fff;
+    }
+
+    .right {
+        float: right;
+        display: flex;
+    }
+
+    .right select {
+        height: 28px;
+        position: relative;
+        left: 8px;
+    }
+
+    .right input {
+        height: 26px;
+        width: 180px;
+        position: relative;
+        left: 4px;
+    }
+
+    .right button {
+        background-color: #00b219;
+        width: 50px;
+        height: 28px;
+        color: #fff;
+    }
+    .right div{
+        background-color: #eee;
+        width: 40px;
+        height: 28px;
+        line-height: 28px;
+        color: #fff;
+        text-align: center;
+        margin-right: 4px;
+    }
+    .right a{
+        text-decoration: none;
+    }
+    #b{
+        background-color: #00b219;
+        color: #fff;
+    }
+    #b a{
+        color: #fff;
+    }
+</style>
+<script>
+    $(function () {
+        $('.selected').addClass('subCatalogList');
+        $('.selected').removeClass('selected');
+        $('.two li').eq(1).addClass('selected');
+        $('.now').hide();
+        $('.two').show();
+    })
+</script>
+{/block}
+{block name='center'}
+<div class="content">
+    <div class="cLineB"><h4 class="left">{$activity.name}</h4>
+        <div class="clr"></div>
+    </div>
+    <div class="msgWrap form">
+        <ul id="tags" style="width:100%">
+            <li><a href="/packet/index?id={$id}&appid={$appid}">用户列表</a></li>
+            <li class="selectTag" style="background-color: #eee;"><a href="/packet/apply?id={$id}&appid={$appid}">参与用户</a></li>
+                        <li><a href="/packet/staff?id={$id}&appid={$appid}">员工列表</a></li>
+            <li><a href="/packet/pay?id={$id}&appid={$appid}">支付列表</a></li>
+            <li><a href="/packet/hb?id={$id}&appid={$appid}">红包列表</a></li>
+            <li><a href="/packet/proof?id={$id}&appid={$appid}">凭证查询</a></li>
+            <li><a href="/packet/site?id={$id}&appid={$appid}">活动地址</a></li>
+            <li><a href="/packet/examples?id={$id}&appid={$appid}">折线图</a></li>
+            <div class="clr" style="height:1px;background:#eee;margin-bottom:20px;"></div>
+        </ul>
+    </div>
+    <div class="center">
+        <div class="left">
+            <a href="/excel/packet?id={$id}&appid={$appid}&payexcel={$pay}">
+                <button type="button">导出Excel</button>
+            </a>
+        </div>
+        <div class="right">
+        	<div id="b">
+                <a href="/packet/apply?id={$id}&appid={$appid}">全部</a>
+            </div>
+            <div class="0">
+                <a href="/packet/apply?id={$id}&appid={$appid}&pay=0&search={$search}">未支付</a>
+            </div>
+            <div class="1">
+                <a href="/packet/apply?id={$id}&appid={$appid}&pay=1&search={$search}">已支付</a>
+            </div>
+            <form method="post" action="/packet/apply">
+            	 <!--<select name="pay">
+                    <option value="">全部</option>
+                    <option value="0">未支付</option>
+                    <option value="1">已支付</option>
+                </select>-->
+                <input name="search" value="{$search}" placeholder="搜索">
+                <input name="id" value="{$id}" type="hidden">
+                <input name="appid" value="{$appid}" type="hidden">
+                <input name="pay" value="{$pay}" type="hidden">
+                <button>搜索</button>
+            </form>
+        </div>
+        <div style="clear: both;"></div>
+    </div>
+    <table class="ListProduct" border="0" cellspacing="0" cellpadding="0" width="100%">
+        <thead>
+        <tr>
+        	<th></th>
+            <th>微信名</th>
+            <th>推广人数</th>
+            <th>推广支付数</th>
+            <th>指向员工</th>
+            <th>是否支付</th>
+            <th>信息</th>
+            <th>状态</th>
+            <th>累计红包</th>
+            <th>注册时间</th>
+        </tr>
+        </thead>
+        <tbody>
+        {volist name='member' id='m'}
+        <tr>
+        	<td>
+                {php} if(empty($m['node'])){ {/php}
+                <input name="node" type="checkbox" class="checkbox" onchange="ondeShow('{$m.id}')">
+                {php} }else{ {/php}
+                <input name="node" type="checkbox" class="checkbox" checked onchange="ondeShow('{$m.id}')">
+                {php} } {/php}
+            </td>
+            <td>{php} echo mb_strlen($m['nickname'])>6?mb_substr($m['nickname'],0,6).'...':$m['nickname'];{/php}</td>
+            <td>{$m.t_num}</td>
+            <td>{$m.pay_num}</td>
+            <td>{php} echo mb_strlen($m['master'])>7?mb_substr($m['master'],0,2).'...'.mb_substr($m['master'],mb_strlen($m['master'])-3,3):$m['master'];{/php}</td>
+            <td>{eq name='$m.pay' value='0'}未支付{/eq}
+                {eq name='$m.pay' value='1'}已支付{/eq}
+            </td>
+            <td>{$m.name}-{$m.phone}</td>
+            <td>
+                {eq name='$m.state' value='0'}游客{/eq}
+                {eq name='$m.state' value='1'}已参与{/eq}
+                {eq name='$m.state' value='2'}员工{/eq}
+                {eq name='$m.state' value='3'}新生{/eq}
+                {eq name='$m.state' value='4'}老生{/eq}
+            </td>
+            <td>￥{$m.new_integral} <a href="javascript:showMember('{$m.id}');" style="color: #00b219">红包信息</a></td>
+            <td>
+                {php}echo date('Y-m-d H:i:s', $m['savedate']);{/php}
+            </td>
+        </tr>
+         {php} if(empty($m['node'])){ {/php}
+        <tr>
+            <td colspan="12" data-pid="{$m.id}" style="display: none;">
+                <input data-id="{$m.id}" onchange="nodes('{$m.id}')" style="width: 100%;height:30px;" placeholder="备注" value="{$m.node}"/>
+            </td>
+        </tr>
+        {php} }else{ {/php}
+        <tr>
+            <td colspan="12" data-pid="{$m.id}">
+                <input data-id="{$m.id}" onchange="nodes('{$m.id}')" style="width: 100%;height:30px;" placeholder="备注" value="{$m.node}"/>
+            </td>
+        </tr>
+        {php} } {/php}
+        {/volist}
+        </tbody>
+    </table>
+    <div class="page">
+        {$page|raw}
+    </div>
+</div>
+{php}if($pay != ''){{/php}
+<script>
+	$("option[value={$pay}]").attr("selected","selected");
+	$('#b').attr('id','');
+    $(".{$pay}").attr('id','b');
+</script>
+{php}}{/php}
+<script>
+    function nodes(id) {
+    	  var value = $("[data-id="+id+"]").val();
+       $.post('/packet/nodes',{id:id,data:value},function (data) {
+           if(data.state == 1){
+               layer.msg(data.message,{icon: 1,time:1000});
+               setTimeout("window.location.reload()", 1000);
+           } else if(data.state == 0){
+               layer.msg(data.message,{icon: 2,time:1000});
+           }
+       });
+   }
+    //积分消息
+    function showMember(id) {
+        console.log(id);
+        art.dialog.open('/packet/integ?id=' + id,{
+            lock: true,
+            title: '红包消息',
+            width: 800,
+            height: 470,
+            yesText: '关闭',
+            background: '#000',
+            opacity: 0.45,
+            close: function (a) {
+                //$('#'+domid).val(art.dialog.data('aa'));
+            }
+        });
+    }
+    function ondeShow(id) {
+        $("[data-pid=" + id + "]").toggle();
+    }
+</script>
+{/block}

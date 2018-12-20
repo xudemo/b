@@ -1,0 +1,291 @@
+{extend name="common/base"/}
+{block name="title"}关注回复{/block}
+{block name="script"}
+<style>
+    .son {
+        border-left: #bbb solid 1px;
+        height: 10px;
+        margin-left: 10px;
+
+    }
+
+    .son2 {
+        display: inline-block;
+        border-bottom: #bbb solid 1px;
+        width: 30px;
+        margin-bottom: 5px;
+    }
+
+    .main {
+        width: 260px;
+        margin: 0px auto;
+        text-align: center;
+        border-left: #fff solid 1px;
+        height: 44px;
+    }
+
+    .td {
+        border-right: #fff solid 1px;
+    }
+
+    .td ul {
+        position: absolute;
+        bottom: 45px;
+        display: none;
+    }
+
+    .td ul li {
+        background-color: #dedede;
+        height: 40px;
+        line-height: 40px;
+        margin: 1px 0px;
+    }
+
+    .main td:hover {
+        background-color: #eee;
+
+    }
+
+    .td ul li:hover {
+        background-color: #eee;
+    }
+</style>
+<script>
+    $(function () {
+        $('.selected').addClass('subCatalogList');
+        $('.selected').removeClass('selected');
+        $('.ckit li').eq(3).addClass('selected');
+
+        $('.td ul li').width($('.main td').width());
+
+        $('.main td').hover(function () {
+            $(this).find('ul').show();
+        }, function () {
+            $(this).find('ul').hide();
+        });
+    })
+    function delete_f_menu(code) {
+        layer.confirm('确认要删除吗？',function(index){
+            $.post('/edit/delete_f_menu',{'code':code},function (data) {
+                if(data.state == 0){
+                    layer.msg(data.message,{icon: 2,time:1000});
+                }else{
+                    layer.msg(data.message,{icon: 1,time:1000});
+                    setTimeout("location.href='/index/menu'", 1000);
+                }
+            });
+        });
+    }
+    function delete_son_menu(code) {
+        layer.confirm('确认要删除吗？',function(index){
+            $.post('/edit/delete_son_menu',{'code':code},function (data) {
+                if(data.state == 0){
+                    layer.msg(data.message,{icon: 2,time:1000});
+                }else{
+                    layer.msg(data.message,{icon: 1,time:1000});
+                    setTimeout("location.href='/index/menu'", 1000);
+                }
+            });
+        });
+    }
+</script>
+{/block}
+{block name='center'}
+<link rel="stylesheet" type="text/css" href="__STATIC__/u-admin/cymain.css">
+<link rel="stylesheet" type="text/css" href="__STATIC__/u-admin/menu.css">
+<script type="text/javascript" src="__STATIC__/u-admin/yyucadapter.js"></script>
+<script type="text/javascript" src="__STATIC__/u-admin/diymen.js"></script>
+<div class="content">
+    <div class="cLineB">
+        <h4>
+            <span>
+                <h1>自定义菜单</h1>
+        </h4>
+    </div>
+    <a name="main"></a>
+    <div class="ftip" style="margin:10px auto;">
+        1. 微信端最多创建<span class="red bold">3 个一级菜单</span>，每个一级菜单下最多可以创建 <span class="red bold">5 个二级菜单</span>，菜单<span class="red bold">最多支持两层</span>。（多出部分会生成前3个一级菜单）<br>
+        2.添加好自定义菜单后点击生成微信端自定义菜单，重新关注即时生效，默认24小时生效。<br>
+        3.每次修改后需要再次点击生成微信端自定义菜单。<br>
+        4.删除一级菜单里面的二级菜单同时会被删除。<br>
+        <span class="red bold">注意：未认证的订阅号登录<a href="https://mp.weixin.qq.com/" target="blank">微信公众平台</a>配置自定义菜单，授权绑定时点击自定义授权，取消自定义菜单权限。</span>
+    </div>
+    <table>
+        <tbody>
+        <tr>
+            <td>
+                <div style="background-image: url('__STATIC__/u-admin/3CustomLt1.png');width: 344px;height: 623px;position: relative;"
+                     class="bgdpng">
+                    <div style="position: absolute;bottom: 122px;left: 43px;">
+                        <table class="main" style="border: none;" cellpadding="0" cellspacing="0" class="caiduannum">
+                            <tr>
+                                {volist name='menu' id='m' key='i'}
+                                <td class="td" cursor='hand'>
+                                    {$m.f_name}
+                                    <ul>
+                                        {volist name='m.0' id='son'}
+                                        <li cursor='hand'>{$son.son_name}</li>
+                                        {/volist}
+                                    </ul>
+                                </td>
+                                {/volist}
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </td>
+            <td valign="top"><br>
+                <div style="text-align:right;position: relative;width: 100%">
+                    <a class="btnGreen" style="line-height:30px;" href="{:url('/index/menu')}">① 新增菜单</a>
+                </div>
+                <br>
+                <form action="{:url('/edit/edit_f_menu')}" id="form" method="post">
+                    <div id="czselarea">
+                        <div id="top" class="alert alert-info" style="line-height: 16px;padding-bottom:0px;">
+                            菜单名称：
+                            <input type="text" id="cdmcinpo" name="name" value="{$data.f_name}" style="margin-top: 6px;">
+                            <span style="color:red">一级菜单最多4个汉字</span>
+                        </div>
+                        <div class="alert alert-info" style="line-height: 16px;padding-bottom:0px;">
+                            排　　序：
+                            <input id="sortid" name="rank" title="排序" value="{$data.rank}" type="text">
+                            <span style="color:red">数字大的排在前面（不填默认为0）</span>
+                        </div>
+                        <div class="system l"></div>
+                        <div class="control-group alert alert-info">
+                            <label class="control-label" for="answertype">菜单类型:</label>
+                            <div class="controls">
+                                <select name="menu_type" class="menu_type" id="answertype">
+                                    {eq name='$data.f_type' value='1'}<option value="1" selected="selected">关键词回复菜单</option>{/eq}
+                                    {eq name='$data.f_type' value='2'}<option value="2" selected="selected">url链接菜单</option>{/eq}
+                                    <option value="1">关键词回复菜单</option>
+                                    <option value="2">url链接菜单</option>
+                                    <!--<option value="3">微信扩展菜单</option>-->
+                                    <!--<option value="4">一键拨号菜单</option>-->
+                                    <!--<option value="5">一键导航</option>-->
+                                </select>
+                            </div>
+                        </div><!-- 关键字  -->
+                        <div class="szcjbt alert alert-info" style="display: block;" id="res_1">
+                            要触发的关键词：
+                            <input type="text" name="keyword" value="{$data.f_text}" id="menu_keyword" placeholder="请输入已添加的关键词">
+                        </div><!-- url  -->
+                        <div class="szcjbt alert alert-info" id="res_2" style="display: none;">
+                            要链接到的URL地址：
+                            <input type="text" id="menu_key" value="{$data.f_url}" name="url">
+                        </div><!-- 扩展菜单  -->
+                        <!--<div class="szcjbt alert alert-info" id="res_3" style="display: none;"> 扩展菜单：-->
+                        <!--<div class="mr15 l">-->
+                        <!--<select name="wxsys">-->
+                        <!--<option value="扫码带提示">扫码带提示</option>-->
+                        <!--<option value="扫码推事件">扫码推事件</option>-->
+                        <!--<option value="系统拍照发图">系统拍照发图</option>-->
+                        <!--<option value="拍照或者相册发图">拍照或者相册发图</option>-->
+                        <!--<option value="微信相册发图">微信相册发图</option>-->
+                        <!--<option value="发送位置">发送位置</option>-->
+                        <!--</select>-->
+                        <!--</div>-->
+                        <!--</div>&lt;!&ndash; 一键拨号 &ndash;&gt;-->
+                        <!--<div class="szcjbt alert alert-info" id="res_4" style="display: none;">-->
+                        <!--一键拨号：-->
+                        <!--<input type="text" name="tel"><br>-->
+                        <!--<span style="color:red">格式：0551-65371998 或 13912345678</span>-->
+                        <!--</div>&lt;!&ndash; 一键导航 &ndash;&gt;-->
+                        <!--<div class="szcjbt alert alert-info" id="res_5" style="display: none;">-->
+                        <!--一键导航：-->
+                        <!--<input type="text" name="longitude" id="longitude" style="width:80px;">-->
+                        <!--<input style="width:80px;" type="text" name="latitude" id="latitude">-->
+                        <!--<a href=""-->
+                        <!--onclick="setlatlng($(&#39;#longitude&#39;).val(),$(&#39;#latitude&#39;).val())">在地图中查看/设置</a><br>-->
+                        <!--</div>-->
+                        <input type="hidden" name="code" value="{$data.code}">
+                        <input type="hidden" name="eid" value="{$data.id}">
+                        <p style="text-align:center;">
+                            <button class="btnGreen" style="width:80px;line-height:30px;margin-top:10px;" type="submit">
+                                ② 修改
+                            </button>
+                        </p>
+                    </div>
+                </form>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+    <p style="margin-bottom:20px;margin-left:90px;">
+        <a class="btnGreen" href="{:url('/index/setweimenu')}"
+           title="1.级菜单最多只能开启3个，2级子菜单最多开启5个
+                  2.一级菜单最多4个汉字，二级菜单最多7个汉字">
+            ③ 生成微信端自定义菜单
+        </a>&nbsp;&nbsp;&nbsp;&nbsp;
+    </p><!-- 列表 -->
+    <table width="100%" cellspacing="0" cellpadding="0" border="0" class="ListProduct">
+        <thead>
+        <tr>
+            <th style=" width:60px;">显示顺序</th>
+            <th style=" width:220px;">主菜单名称</th>
+            <th style=" width:170px;">菜单类型</th>
+            <th>类型数值</th>
+            <th class="norightborder" style=" width:160px;">操作</th>
+        </tr>
+        </thead>
+        <tbody>
+        {volist name='menu' id='m' key='i'}
+        <tr class="hover">
+            <td class="td25"><span>{$m.rank}</span></td>
+            <td>
+                <div><span>{$m.f_name}</span></div>
+            </td>
+            <td>
+                <span>
+                    顶级菜单-【
+                    {eq name='$m.f_type' value='1'}关键词回复菜单{/eq}
+                    {eq name='$m.f_type' value='2'}url链接菜单{/eq}
+                    】
+                </span>
+            </td>
+            <td>
+                <span>
+                    {eq name='$m.f_type' value='1'}{$m.f_text}{/eq}
+                    {eq name='$m.f_type' value='2'}{$m.f_url}{/eq}
+                </span>
+            </td>
+            <td>
+                <a class="ajax btnGreen  cboxElement edit-menu" href="{:url('/edit/edit_f_menu',array('code'=>$m.code))}" data-id="81015" title="修改主菜单">修改</a>
+                <a class=" btnGreen " href="javascript:delete_f_menu('{$m.code}')">删除</a>
+            </td>
+        </tr>
+        {volist name='m.0' id='son'}
+        <tr class="td29">
+            <td class="td25" colspan="1">
+                <span>{$son.son_rank}</span>
+            </td>
+            <td colspan="1">
+                <div class="board">
+                    <span class="son"></span>
+                    <span class="son2"></span>
+                    <span>{$son.son_name}</span>
+                </div>
+            </td>
+            <td colspan="1">
+                <span>
+                    {eq name='$son.son_type' value='1'}关键词回复菜单{/eq}
+                    {eq name='$son.son_type' value='2'}url链接菜单{/eq}
+                </span>
+            </td>
+            <td>
+                <span>
+                    {eq name='$son.son_type' value='1'}{$son.son_text}{/eq}
+                    {eq name='$son.son_type' value='2'}{$son.son_url}{/eq}
+                </span>
+            </td>
+            <td colspan="1">
+                <a class="ajax btnGreen cboxElement edit-menu" data-id="80943" href="{:url('/edit/edit_son_menu',array('code'=>$son.code))}" title="修改子菜单">修改</a>
+                <a class=" btnGreen " href="javascript:delete_son_menu('{$son.code}')">删除</a>
+            </td>
+        </tr>
+        {/volist}
+        {/volist}
+        </tbody>
+    </table>
+</div>
+{/block}

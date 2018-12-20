@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>红包活动列表</title>
+    {include file="common/head"/}
+</head>
+<body class="layui-anim layui-anim-up">
+<div class="x-nav">
+    <a class="layui-btn layui-btn-small" style="line-height:1.6em;margin-top:3px;float:right"
+       href="javascript:location.replace(location.href);" title="刷新">
+        <i class="layui-icon" style="line-height:30px">ဂ</i></a>
+</div>
+<div class="x-body">
+    <div class="layui-row">
+        <form class="layui-form layui-col-md12 x-so" method="post" action="/my/proceed/packet">
+            <input type="text" name="searach" value="{$searach}" placeholder="搜索" autocomplete="off"
+                   class="layui-input" style="width: 400px;">
+            <button class="layui-btn" lay-submit="" lay-filter="sreach"><i class="layui-icon">&#xe615;</i></button>
+        </form>
+    </div>
+    <table class="layui-table">
+        <thead>
+        <tr>
+            <th>活动ID</th>
+            <th>活动名称</th>
+            <th>公众号名称</th>
+            <th>开始时间</th>
+            <th>结束时间</th>
+            <th>总浏览数</th>
+            <th>总支付数</th>
+            <th>总支付金额</th>
+            <th>总投诉数</th>
+            <th>操作</th>
+        </tr>
+        </thead>
+        <tbody>
+        {volist name="$list" id="l"}
+        <tr>
+            <td>{$l.id}</td>
+            <td>{$l.name}</td>
+            <td>{$l.nick_name}</td>
+            <td>{php} echo str_replace('T',' ',$l['begin_time']);{/php}</td>
+            <td>{php} echo str_replace('T',' ',$l['finish_time']);{/php}</td>
+            <td>{$l.browseNum}</td>
+            <td>{$l.pay_num}</td>
+            <td>{$l.money}</td>
+            <td>{$l.tsNum}</td>
+            <td class="td-manage">
+                <button onclick="finish('{$l.id}','hb')" class="layui-btn-danger layui-btn layui-btn-xs">
+                    <i class="layui-icon">&#xe640;</i>结束活动
+                </button>
+                <button onclick="x_admin_show('投诉列表','/my/ts/table?id={$l.id}&type=hb')" class="layui-btn-danger layui-btn layui-btn-xs">
+                    <i class="layui-icon">&#xe641;</i>投诉
+                </button>
+                <a href="/my/index/main?appid={$l.appid}" target="_blank">
+                    <button class="layui-btn layui-btn layui-btn-xs" style="background-color: #ad9b9b;" type="button">
+                        <i class="layui-icon">&#xe641;</i>前台
+                    </button>
+                </a>
+            </td>
+        </tr>
+        {/volist}
+        </tbody>
+    </table>
+    <div class="page">
+        <div>
+            {$page|raw}
+        </div>
+    </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,118 @@
+{extend name="common/base"/}
+{block name="title"}红包列表{/block}
+{block name="script"}
+<style>
+    #tags li {
+        background-color: #f9f9f9;
+        width: 120px;
+        height: 40px;
+        line-height: 40px;
+    }
+    #tags li a {
+        margin-left: 10px;
+    }
+    .center {
+        margin: 8px 0;
+    }
+
+    .left {
+        float: left;
+    }
+
+    .left button {
+        background-color: #00b219;
+        width: 80px;
+        height: 30px;
+        color: #fff;
+    }
+
+    .right {
+        float: right;
+        display: flex;
+    }
+</style>
+{/block}
+{block name='center'}
+<div class="content">
+    <div class="cLineB"><h4 class="left">{$activity.name}</h4>
+        <div class="clr"></div>
+    </div>
+    <div class="msgWrap form">
+        <ul id="tags" style="width:100%">
+            <li><a href="/packet/index?id={$id}&appid={$appid}">用户列表</a></li>
+            <li><a href="/packet/apply?id={$id}&appid={$appid}">参与用户</a></li>
+             <li><a href="/packet/staff?id={$id}&appid={$appid}">员工列表</a></li>
+            <li><a href="/packet/pay?id={$id}&appid={$appid}">支付列表</a></li>
+            <li class="selectTag" style="background-color: #eee;"><a href="/packet/hb?id={$id}&appid={$appid}">红包列表</a></li>
+            <li><a href="/packet/proof?id={$id}&appid={$appid}">凭证查询</a></li>
+            <li><a href="/packet/site?id={$id}&appid={$appid}">活动地址</a></li>
+            <li><a href="/packet/examples?id={$id}&appid={$appid}">折线图</a></li>
+            <div class="clr" style="height:1px;background:#eee;margin-bottom:20px;"></div>
+        </ul>
+    </div>
+    <div class="center">
+        <div class="left">
+            <a href="javascript:setHb('{$id}','{$appid}');">
+                <button type="button">更新红包状态</button>
+            </a>
+        </div>
+        <div class="right"></div>
+        <div style="clear: both;"></div>
+    </div>
+    <table class="ListProduct" border="0" cellspacing="0" cellpadding="0" width="100%">
+        <thead>
+        <tr>
+            <th>微信名</th>
+            <th>红包总个数</th>
+            <th>红包总金额</th>
+            <th>操作</th>
+        </tr>
+        </thead>
+        <tbody>
+        {volist name='member' id='m'}
+        <tr>
+            <td>{$m.nickname}</td>
+            <td>{$m.hNum}</td>
+            <td>{$m.money}</td>
+            <td>
+                <a href="javascript:showMember('{$m.id}');" style="color: #00b219">红包信息</a>
+            </td>
+        </tr>
+        {/volist}
+        </tbody>
+    </table>
+    <div class="page">
+        {$page|raw}
+    </div>
+</div>
+<script>
+    //积分消息
+    function showMember(id) {
+        console.log(id);
+        art.dialog.open('/packet/integ?id=' + id,{
+            lock: true,
+            title: '红包消息',
+            width: 800,
+            height: 470,
+            yesText: '关闭',
+            background: '#000',
+            opacity: 0.45,
+            close: function (a) {
+                //$('#'+domid).val(art.dialog.data('aa'));
+            }
+        });
+    }
+    //更新红包状态
+    function setHb(id, appid) {
+        layer.load(2, {shade: [0.3,'#eee']});
+        $.post('/packet/set_hb',{id:id,appid:appid},function (data) {
+            if(data.state == 1){
+                layer.msg(data.message,{icon: 1, time: 1000});
+                setTimeout("window.location.reload()", 1000);
+            }else{
+                layer.msg(data.message,{icon: 2, time: 1000});
+            }
+        });
+    }
+</script>
+{/block}

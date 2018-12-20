@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="__STATIC__/x-admin/css/bootstrap.min.css">
+    <link rel="stylesheet" href="__STATIC__/x-admin/css/font.css">
+    <link rel="stylesheet" href="__STATIC__/x-admin/css/xadmin.css">
+    <link rel="stylesheet" href="__STATIC__/layui/css/layui.css">
+    <script type="text/javascript" src="__STATIC__/x-admin/js/jquery.min.js"></script>
+    <script src="__STATIC__/x-admin/lib/layui/layui.js" charset="utf-8"></script>
+    <script type="text/javascript" src="__STATIC__/x-admin/js/xadmin.js"></script>
+    <script type="text/javascript" src="__STATIC__/x-admin/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="__STATIC__/x-admin/js/bootstrap-filestyle.js"></script>
+</head>
+<body>
+<table class="layui-table">
+    <thead>
+    <tr>
+        <th>微信名</th>
+        <th>信息</th>
+        <th>支付金额</th>
+        <th>支付时间</th>
+    </tr>
+    </thead>
+    <tbody>
+        {volist name="$list" id="l"}
+        <tr>
+            <td>{$l.nickname}</td>
+            <td>{$l.name}-{$l.phone}</td>
+            <td>{$l.money}</td>
+            <td>{$l.time}</td>
+        </tr>
+        {/volist}
+    </tbody>
+</table>
+</body>
+</html>

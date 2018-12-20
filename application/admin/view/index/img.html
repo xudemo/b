@@ -1,0 +1,116 @@
+{extend name="common/base"/}
+{block name="title"}关注回复{/block}
+{block name="script"}
+<script>
+    $(function () {
+       $('.selected').addClass('subCatalogList');
+        $('.selected').removeClass('selected');
+        $('.now li').eq(2).addClass('selected');
+      
+      	 $('#btn').click(function () {
+            $.post('/index/img',$('form').serialize(),function (data) {
+                if(data.state == 0){
+                      layer.msg(data.message,{icon: 2, time: 1000});
+                  }else{
+                    	layer.msg(data.message,{icon: 1, time: 1000});
+                      setTimeout("window.location.reload()", 1000);
+                  }
+            });
+        });
+    })
+  function delete_img(code) {
+        layer.confirm('确认要删除吗？',function(index){
+            $.post('/edit/delete_img',{'code':code},function (data) {
+                if(data.state == 0){
+                    layer.msg(data.message,{icon: 2,time:1000});
+                }else{
+                    layer.msg(data.message,{icon: 1,time:1000});
+                    setTimeout("location.href='/index/img'", 1000);
+                }
+            });
+        });
+    }
+</script>
+{/block}
+{block name='center'}
+<div class="content">
+    <div class="cLineB">
+        <h4> 编辑图片自定义内容</h4>
+    </div>
+    <div class="msgWrap bgfc">
+        <form class="form" method="post" action="{:url('/index/img')}" target="_top" enctype="multipart/form-data" name="myForm"
+              id="picreply">
+            <table class="userinfoArea" style=" margin:0;" border="0" cellspacing="0" cellpadding="0" width="100%">
+                <tbody>
+                <tr>
+                    <th width="120"><span class="red">*</span>关键词：</th>
+                    <td>
+                        <input type="text" name="keyword" id="keyword" value="" class="px" style="width:350px;">
+                    </td>
+                </tr>
+                <tr>
+                    <th width="120">匹配类型：</th>
+                    <td>
+                        <input class="radio" id="radio2" type="radio" name="type" value="1" checked="checked">
+                        <label for="radio2">包含匹配（当此关键词包含粉丝输入关键词时有效）</label>
+                        <br>
+                        <input id="radio1" class="radio" type="radio" name="type" value="2">
+                        <label for="radio1">完全匹配 （当此关键词和粉丝输入关键词完全相同时有效）</label>
+                    </td>
+                </tr>
+                <tr>
+                    <th width="120"><span class="red">*</span>上传图片：</th>
+                    <td>
+                      	<input type="hidden" name="media_id" id='media_id' value="">
+                        <input type="text" name="pic" value="" id="pic" class="px" style="width:350px;">
+                        <a href="#" onclick="upyunPicUpload()"
+                           class="a_upload">上传</a>
+                        <a href="#" onclick="viewImg('pic')" class="a_upload">预览</a>&nbsp;&nbsp;&nbsp;(图片最佳尺寸700px*420px)
+                    </td>
+                </tr>
+                <tr>
+                    <th>&nbsp;</th>
+                    <td>
+                        <button type="button" id="btn" class="btnGreen sub">保存</button>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+    </div>
+    <!--列表-->
+    <table class="ListProduct" border="0" cellspacing="0" cellpadding="0" width="100%">
+        <thead>
+        <tr>
+            <th width="80px">编号</th>
+            <th width="130px">关键词</th>
+            <th width="200px">图片缩略图</th>
+            <th width="120px">匹配类型</th>
+            <th width="120px">添加时间</th>
+            <th>操作</th>
+        </tr>
+        </thead>
+        <tbody>
+           {volist name='$data' id='d'}
+        <tr>
+            <td>{$d.id}</td>
+            <td>{$d.keyword}</td>
+            <td>
+                <img src="{$d.img_url}" width="50px" height="50px">
+            </td>
+            <td>
+              	{eq name='$d.type' value='1'}包含匹配{/eq}
+                {eq name='$d.type' value='2'}完全匹配{/eq}
+          	</td>
+            <td>{$d.set_time}</td>
+            <td>
+                <a href="javascript:delete_img('{$d.code}')" class="btnGreen">删除</a>
+            </td>
+        </tr>
+          {/volist}
+        </tbody>
+    </table>
+      <div class="page">
+      {$page|raw}
+    </div>
+</div>
+{/block}

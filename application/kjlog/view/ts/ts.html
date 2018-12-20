@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8">
+    <meta content="ie=edge" http-equiv="x-ua-compatible">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="format-detection" content="telephone=no, email=no">
+    <title>投诉</title>
+    <link href="http://cdn.s.shangjiadao.cn/source/css/activity/common/font-awesome.min.css" rel="stylesheet">
+    <link href="http://cdn.s.shangjiadao.cn/source/css/activity/common/weui.min.css" rel="stylesheet">
+    <link href="http://cdn.s.shangjiadao.cn/source/css/activity/common/animate.min.css" rel="stylesheet">
+    <link href="__STATIC__/kj/layer/theme/default/layer.css" rel="stylesheet">
+    <script src="__STATIC__/x-admin/js/jquery.min.js"></script>
+    <script src="__STATIC__/kj/layer/layer.js" charset="utf-8"></script>
+    <style type="text/css">
+          #think_page_trace_open{display:none;}
+    </style>
+</head>
+<body>
+<div class="container complaint">
+    <form role="form">
+        <div class="complaint-reason">
+            <div class="weui_cells_title">请选择投诉原因</div>
+            <div class="weui_cells weui_cells_radio">
+                <label class="weui_cell weui_check_label" for="reason1">
+                    <div class="weui_cell_bd weui_cell_primary item">虚假活动、活动不真实</div>
+                    <div class="weui_cell_ft">
+                        <input class="weui_check input_item" name="reason" type="radio" id="reason1"
+                               value="虚假活动、活动不真实"><i class="weui_icon_checked"></i>
+                    </div>
+                </label>
+                <label class="weui_cell weui_check_label" for="reason2">
+                    <div class="weui_cell_bd weui_cell_primary item">诱导分享、诱导关注</div>
+                    <div class="weui_cell_ft">
+                        <input class="weui_check input_item" name="reason" type="radio" id="reason2"
+                               value="诱导分享、诱导关注"><i class="weui_icon_checked"></i>
+                    </div>
+                </label>
+                <label class="weui_cell weui_check_label" for="reason3">
+                    <div class="weui_cell_bd weui_cell_primary item">欺诈、违法</div>
+                    <div class="weui_cell_ft">
+                        <input class="weui_check input_item" name="reason" type="radio" id="reason3" value="欺诈、违法"><i
+                            class="weui_icon_checked"></i>
+                    </div>
+                </label>
+                <label class="weui_cell weui_check_label" for="reason4">
+                    <div class="weui_cell_bd weui_cell_primary item">色情、暴力</div>
+                    <div class="weui_cell_ft">
+                        <input class="weui_check input_item" name="reason" type="radio" id="reason4" value="色情、暴力"><i
+                            class="weui_icon_checked"></i>
+                    </div>
+                </label>
+                <label class="weui_cell weui_check_label" for="reason5">
+                    <div class="weui_cell_bd weui_cell_primary item">其他</div>
+                    <div class="weui_cell_ft">
+                        <input class="weui_check input_item" name="reason" type="radio" id="reason5" value="其他"><i
+                            class="weui_icon_checked"></i>
+                    </div>
+                </label>
+            </div>
+            <div class="weui_cells_title">
+                <a href="http://mp.weixin.qq.com/s/TbX1CcZhQNReneXVc3At9Q">遇到网页流量被劫持怎么办?</a>
+            </div>
+            <div class="weui_btn_area">
+                <button class="weui_btn weui_btn_primary next_step" type="button">下一步</button>
+            </div>
+        </div>
+        <div class="complaint-description" style="display: none;">
+            <div class="weui_cells_title">投诉描述</div>
+            <div class="weui_cells weui_cells_form">
+                <div class="weui_cell">
+                    <div class="weui_cell_bd weui_cell_primary">
+                        <textarea name="describe" class="weui_textarea" maxlength="200" required="" rows="3"></textarea>
+                    </div>
+                </div>
+            </div>
+            <div class="weui_cells_title">联系方式</div>
+            <div class="weui_cells weui_cells_form">
+                <div class="weui_cell">
+                    <div class="weui_cell_bd weui_cell_primary">
+                        <input name="contact" class="weui_input" type="tel" placeholder="请填写您的联系方式，以便联系">
+                    </div>
+                </div>
+            </div>
+            <div class="weui_btn_area">
+                <button class="weui_btn weui_btn_primary" type="submit">提交</button>
+                <button class="weui_btn weui_btn_default prev_step" type="button">上一步</button>
+            </div>
+        </div>
+        <input type="hidden" name="hid" value="{$hid}">
+    </form>
+</div>
+<script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+<script>wx.config({
+    debug: false,
+    appId: "wx2b41a5c64695ca5c",
+    timestamp: 1529340333,
+    nonceStr: "4orDqaZ18VKKPYBd",
+    signature: "2d06a628a5834499ffce2bab9379e4e731f1006a",
+    jsApiList: ["onMenuShareTimeline", "onMenuShareAppMessage", "onMenuShareQQ", "onMenuShareWeibo", "previewImage", "hideMenuItems"]
+});
+wx.ready(function () {
+    var data = {
+        title: "投诉", desc: "投诉", link: "http://www.onweixin.cn", imgUrl: "", success: function () {
+        }, cancel: function () {
+        }
+    };
+    wx.onMenuShareTimeline(data);
+    wx.onMenuShareAppMessage(data);
+    wx.onMenuShareQQ(data);
+    wx.onMenuShareWeibo(data);
+    wx.hideMenuItems({menuList: ["menuItem:share:timeline"]});
+});</script>
+<script type="text/javascript">
+    $('.item').click(function () {
+        $('.input_item').attr('checked', false);
+    });
+    $('.next_step').click(function () {
+        $('.complaint-reason').hide();
+        $('.complaint-description').show();
+    });
+
+    $('.prev_step').click(function () {
+        $('.complaint-reason').show();
+        $('.complaint-description').hide();
+    });
+
+    $('form').submit(function () {
+        $.post('/kjlog/ts/up', $('form').serialize(), function (data) {
+            if (data.state == 1) {
+                layer.alert(data.message, {icon: 1, skin: 'layer-ext-moon'}, function () {
+                    wx.closeWindow();
+                });
+            } else if (data.state == 0) {
+                layer.alert(data.message, {icon: 2, skin: 'layer-ext-moon'}, function () {
+                    wx.closeWindow();
+                });
+            }
+        });
+        return false;
+    });
+</script>
+</body>
+</html>

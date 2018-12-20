@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
+    <title>围观</title>
+    <link href="__STATIC__/kj/css/style.css" rel="stylesheet">
+    <style>
+        .top div{display: flex;margin: 4px 4px;}
+        .top div div:first-child{position: relative;top: 4px;}
+        .top div div:last-child{background-color: #6513c5; width: 100px; height: 30px;line-height: 30px;display: block;text-align: center;border-radius: 5%;}
+        .top div div a{text-decoration: none;color: #fff;}
+        .top div span{ flex: 1;}
+          #think_page_trace_open{display:none;}
+    </style>
+</head>
+<body>
+<div class="top">
+    <div>
+        <div>请将此图片截图或长按保存</div>
+        <span></span>
+        <div><a href="/kjlog/index/onlooker?id={$id}">重新生成</a></div>
+    </div>
+    <img class="top_img" src="/img/{$id}bj.jpg">
+</div>
+</body>
+</html>

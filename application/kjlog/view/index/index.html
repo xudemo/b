@@ -1,0 +1,1180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,initial-scale=1.0,width=device-width" />
+    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+    <title>{$activity.name}</title>
+    <link rel="stylesheet" href="__STATIC__/kjvue/css/api.css">
+    <link rel="stylesheet" href="__STATIC__/kjvue/css/swiper-4.3.5.min.css">
+    <link rel="stylesheet" href="__STATIC__/kjvue/index.css">
+    <link rel="stylesheet" href="__STATIC__/kjvue/kj.css">
+    <style>
+    	body{
+     min-height: 2rem;
+}
+        .copyright, .copyright a {
+            text-align: center;
+            color: #666;
+            font-size: 0.8rem;
+            line-height: 2;
+        }
+        .bottom-tab p a{
+            color: #fff;
+        }
+        .sign_form_item {
+            margin-top: 30px;
+            width: 100%;
+            height: 1.8rem;
+            border-radius: 0.1rem;
+            border: 1px solid #ccc;
+            text-indent: 0.6rem;
+            margin-bottom: 0.5rem;
+            font-size: 1rem;
+        }
+        button a{
+            color: #fff;
+        }
+        #page li span{
+            width: 120px;
+            height: 40px;
+            line-height: 40px;
+            background-color: #eee;
+            font-size: 14px;
+        }
+        #page li a{
+            width: 120px;
+            height: 40px;
+            line-height: 40px;
+            background-color: #eee;
+            font-size: 14px;
+        }
+        .complaint2 {
+            width: 2.2rem;
+            height: 2.2rem;
+            line-height: 2.2rem;
+            border-radius: 1.1rem;
+            display: block;
+            background: rgba(255, 255, 255, 0.65);
+            position: fixed;
+            right: 0.6rem;
+            top: 9rem;
+            text-decoration: none;
+            font-size: 0.8rem;
+            text-align: center;
+            color: #000;
+            z-index: 100;
+        }
+        .complaint {
+            width: 2.2rem;
+            height: 2.2rem;
+            line-height: 2.2rem;
+            border-radius: 1.1rem;
+            display: block;
+            background: rgba(255, 255, 255, 0.65);
+            position: fixed;
+            right: 0.6rem;
+            top: 4rem;
+            text-decoration: none;
+            font-size: 0.8rem;
+            text-align: center;
+            color: #000;
+            z-index: 100;
+        }
+        .master-box .box2 .tipContent{
+            max-height: 20rem;
+        }
+        .chat-page .wrapper .active-wrapper .activeBox .reslse .tips{
+            margin-left: {$data['rate']}%;
+        }
+    </style>
+</head>
+<body>
+<section id="app">
+    <div class="chat-page">
+        <scroller ref="myscroller">
+            <div class="wrapper">
+                <div class="banner">
+                    {php}if($member['state'] == 0 || $member['name']==''){{/php}
+                    <img src="{$activity.mian_img}" alt="">
+                    {php}}else{{/php}
+                    <img src="/img/{$member.id}bj.jpg" alt="">
+                    {php}}{/php}
+                </div>
+                <div class="active-wrapper">
+                    <div class="time-wrapper">
+                        <span>距离活动结束仅剩</span>
+                        <div class="day" v-for="(item, index) in day" :key="index">{{item}}</div>
+                        <span>天</span>
+                        <div class="hours" v-for="(item, index) in hours" :key="index">{{item}}</div>
+                        <span>:</span>
+                        <div class="hours" v-for="(item, index) in minutes" :key="index">{{item}}</div>
+                        <span>:</span>
+                        <div class="hours" v-for="(item, index) in second" :key="index">{{item}}</div>
+                    </div>
+                    <div class="activeBox">
+                        <div class="info-box">
+                            <img src="{$member.pic}" alt="">
+                            <span>
+                                {$member.nickname}
+                            </span>
+                            <span>
+                                {eq name='$member.state' value='0'}游客{/eq}
+                                {eq name='$member.state' value='1'}新生{/eq}
+                                {eq name='$member.state' value='2'}老生{/eq}
+                                {eq name='$member.state' value='3'}员工{/eq}
+                            </span>
+                        </div>
+                        {php} if($state == 2 || $state == 4 || $state == 3 || $state == 5){ {/php}
+                        <div class="text-box">
+                            <p>已经有<span>{$data.k_num}</span>人帮{$member.name}省了 <span>￥{$data.k_money}</span>元</p>
+                            <p>亲友来围观，省钱就是那么简单！赶紧行动吧！</p>
+                        </div>
+                        <div class="reslse">
+                            <span class="tips">
+                                <span>当前价:</span><span>￥{{dMoney}}</span>
+                            </span>
+                            <div class="line"></div>
+                            <div class="price-box">
+                                <span>
+                                    原价:￥
+                                    {eq name='$member.state' value='1'}{$activity.newly_money}{/eq}
+                                    {eq name='$member.state' value='2'}{$activity.money}{/eq}
+                                    {eq name='$member.state' value='3'}{$activity.money}{/eq}
+                                </span>
+                                <span>
+                                    底价:￥
+                                    {eq name='$member.state' value='1'}{$activity.newly}{/eq}  <!--新生低价-->
+                                    {eq name='$member.state' value='2'}{$activity.old}{/eq}  <!--老生低价-->
+                                    {eq name='$member.state' value='3'}{$activity.old}{/eq} <!--员工低价-->
+                                </span>
+                            </div>
+                        </div>
+                        {php} } {/php}
+                        <div class="btn-box" ref="box">
+                            {eq name='$state' value='1'}   <!--活动刚开始没得上级id分享-->
+                                <button @click="applysShow()">我要报名</button>
+                            {/eq}
+                            {eq name='$state' value='2'}
+                                <button @click="btnPay=true">立即支付</button>
+                                <button @click="share()">请人围观</button>
+                            {/eq}
+                            {eq name='$state' value='3'}
+                                <button @click="save({$member.id},{$member.hid})">帮TA省钱</button>
+                                <button @click="applysShow()">加入TA的团购</button>
+                            {/eq}
+                            {eq name='$state' value='4'}
+                                <button @click="save({$member.id},{$member.hid})">帮TA省钱</button>
+                                <button><a href="/kjlog/index/welcome/hid/{$hid}">我的进度</a></button>
+                            {/eq}
+                            {eq name='$state' value='5'}
+                                <button @click="showmsg('支付凭证','<div style=color:red;text-align:center;font-size:34px;letter-spacing:10px;>{$member.yzm}</div>')">支付凭证</button>
+                                <button @click="share()">请人围观</button>
+                            {/eq}
+                        </div>
+                    </div>
+                </div>
+                <div class="swiper-container" id="container" style="text-align: center;margin: 0 auto;font-size: 20px;">
+                    <!-- tab -->
+                    <div class="swiper-paginations"></div>
+                    <div class="swiper-wrapper">
+                        <div class="swiper-slide">
+                            {php}if($state == 2 || $state == 5){{/php}
+                                <div class="team-box">
+                                    <p class="title">我的团购</p>
+                                    <div class="tab-head">
+                                        <p>全部（{$data.num}人）</p>
+                                        <p>已支付（{$data.pay_num}人）</p>
+                                        <p>未支付（{$data.nopay_num}）</p>
+                                    </div>
+                                    <div class="text-box">您当前的团长是{$data.t_name}，所在团购报名{$data.tnum}人，已经支付{$data.tpay_num}人</div>
+                                    {volist name='data.myMember' id='m'}
+                                    <ul class="list">
+                                        <li>
+                                            <img src="{$m.pic}" alt="">
+                                            <div class="name-box">
+                                                <div class="name">
+                                                    <a href="tel:{$m.phone}"><span>{$m.name}</span>
+                                                    <i><a href="tel:{$m.phone}"></a></i></a>
+                                                </div>
+                                                <div class="time">{php}echo date('Y-m-d H:i:s',$m['savedate']);{/php}</div>
+                                            </div>
+                                            <div class="right-list">
+                                                <p>当前价格：￥{$m.money}元</p>
+                                                <p>
+                                                    {php}if($m['pay'] == 0){{/php}
+                                                        未支付
+                                                    {php}}else if($m['pay'] == 1){{/php}
+                                                        已支付
+                                                    {php}}{/php}
+                                                </p>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                    {/volist}
+                                    <ul class="pagination" id="page">
+                                        {$data['page']|raw}
+                                    </ul>
+                                </div>
+                            {php}}{/php}
+                            <!--最近参与-->
+                            <div class="team-box" style="padding: 1.34375rem 0 0.9375rem 0;">
+                                <p class="title">最新参与的用户</p>
+                                <div class="tab-head">
+                                    <p>报名人数（{$bmnumber}人）</p>
+                                    <p>浏览人数（{$wgnumber}人）</p>
+                                </div>
+                                <div class="newest">
+                                    {volist name='pic' id='m'}
+                                    <span>
+                                        <img src="{$m.pic}">
+                                        <span>{php} echo mb_strlen($m['nickname'])>10?mb_substr($m['nickname'],0,10).'...':$m['nickname'];{/php}</span>
+                                </span>
+                                    {/volist}
+                                </div>
+                            </div>
+                            <!--砍价-->
+                            {php}if($state == 4 || $state == 3 || $state == 2 || $state == 5){{/php}
+                            {php}if($data['friend']){{/php}
+                            <div class="team-box">
+                                <p class="title">帮忙砍价用户</p>
+                                {volist name='data.friend' id='f'}
+                                <ul class="list">
+                                    <li>
+                                        <img src="{$f.pic}" alt="">
+                                        <div class="name-box">
+                                            <div class="name">
+                                                <span>{$f.nickname}</span>
+                                            </div>
+                                            <div class="time">{$f.addtime}</div>
+                                        </div>
+                                        <div class="right-list">
+                                            <p>-￥{$f.money}元</p>
+                                        </div>
+                                    </li>
+                                </ul>
+                                {/volist}
+                            </div>
+                            {php}}{/php}
+                            {php}}{/php}
+                            
+                        </div>
+                        <div class="swiper-slide">
+                            <img class="imgs" src="{$activity.rule_img}" alt="">
+                        </div>
+                        <div class="swiper-slide">
+                            <img class="imgs" src="{$activity.intro_img}" alt="">
+                        </div>
+                        
+                    </div>
+                </div>
+            </div>
+            <div class="copyright" style="background-color: #eee;">
+                <br>
+                <a href="/kjlog/index/ch?type=kj">招生咨询&活动策划：Znote</a>
+                <br>
+            </div>
+        </scroller>
+        {eq name='$state' value='1'}
+        <div class="bottom-tab">
+            <p><a href="tel:{$activity.service_phone}">拨打电话</a></p>
+            <p>
+                {eq name='$state' value='1'}<span @click="applysShow()">我要报名</span>{/eq}   <!--活动刚开始没得上级id分享-->
+                {eq name='$state' value='2'}<span @click="btnPay=true">立即支付</span>{/eq}
+                {php}if($state == 4 || $state == 3){{/php}<span @click="save({$member.id},{$member.hid})">帮TA省钱</span>{php}}{/php}
+                {eq name='$state' value='5'}<span
+                    @click="showmsg('支付凭证','<div style=color:red;text-align:center;font-size:34px;letter-spacing:10px;>{$member.yzm}</div>')">支付凭证</span>{/eq}
+            </p>
+            <p @click="showmsg('客服微信','<img src={$activity.service}>')">客服微信</p>
+        </div>
+        {/eq}
+        {php}if($state == 2 || $state == 3 || $state == 4 || $state == 5){{/php}
+        <div class="bottom-tab">
+            <p id="lianxi" @click="lianxi()">联系客服</p>
+            {eq name='$state' value='2'}
+            <p><span @click="btnPay=true">立即支付</span></p>
+            <p><span @click="share()">请人围观</span></p>
+            {/eq}
+            {eq name='$state' value='3'}
+            <p><span @click="save({$member.id},{$member.hid})">帮TA省钱</span></p>
+            <p><span @click="applysShow()">我要报名</span></p>
+            {/eq}
+            {eq name='$state' value='4'}
+            <p><span @click="save({$member.id},{$member.hid})">帮TA省钱</span></p>
+            <p><a href="/kjlog/index/welcome/hid/{$hid}">我的进度</a></p>
+            {/eq}
+            {eq name='$state' value='5'}
+            <p><span
+                    @click="showmsg('支付凭证','<div style=color:red;text-align:center;font-size:34px;letter-spacing:10px;>{$member.yzm}</div>')">支付凭证</span>
+            </p>
+            <p><span @click="share()">请人围观</span></p>
+            {/eq}
+        </div>
+        {php}}{/php}
+        <ul id="contact" v-if="contact">
+            <li><a href="/kjlog/index/gl?hid={$hid}">省钱攻略</a></li>
+            <li @click="showmsg('客服微信','<img src={$activity.service}>')">客服微信</li>
+            <li><a href="tel:{$activity.service_phone}">拨打电话</a></li>
+        </ul>
+    </div>
+     <!--支付提示-->
+    <transition>
+        <div class="pay" v-if="btnPay">
+            <div class="bady">
+                <div class="msg">￥{$member.money}</div>
+                <div style="border-bottom: #c45cff solid 1px; width: 90%;margin: 0 auto"></div>
+                <div class="intro">{$activity.intro}</div>
+                <div class="btn">
+                    <button type="button" @click="payShow({$member.id},{$hid})">确认支付</button>
+                    <button type="button" @click="share()">请人围观</button>
+                </div>
+                <div class="close" @click="btnPay=false"><img src="__STATIC__/kjvue/images/demo2/close_03.png"></div>
+            </div>
+        </div>
+    </transition>
+    <!--报名-->
+    <transition name="fade">
+        <div class="master-box" v-if="addShow">
+            <div class="master"></div>
+            <div class="box">
+                <div class="top-tip">
+                    <p>
+                        感谢您报名参加我们的活动<br>
+                        {$activity.intro}
+                    </p>
+                </div>
+                <div class="content">
+                    <div class="title">您正在加入{$member['nickname']}的团购</div>
+                    <div class="input-box">
+                        <input type="text" v-model="name" placeholder="请输入您的名字">
+                    </div>
+                    <div class="input-box">
+                        <input type="text" v-model="phone" placeholder="请输入您的手机号">
+                    </div>
+                    <div>
+                        <select class="sign_form_item" v-model="store">
+                            <option :selected="isSelect">请选择您附近的门店</option>
+                            {php}
+                            $address = explode('|',$activity['address']);
+                            {/php}
+                            {volist name='$address' id='a'}
+                            <option value="{$a}">{$a}</option>
+                            {/volist}
+                        </select>
+                    </div>
+                    {eq name='$activity.state' value='0'}
+                    <ul class="radio-list">
+                        <li v-for="(item,index) in radioList" :key="index" @click="change(item)">
+                            <i><i v-if="radioValue==item.value"></i></i>
+                            <span>{{item.name}}</span>
+                        </li>
+                    </ul>
+                    {/eq}
+                    <button class="submits" @click="apply()">确定报名</button>
+                </div>
+                <div class="close" @click="addShow=false"></div>
+            </div>
+        </div>
+    </transition>
+    <!--报名②-->
+    <transition name="fade">
+        <div class="master" v-if="addShow2">
+            <div class="box">
+                <div class="top-box">
+                    <p>感谢您报名参加我们的活动<br>
+                        {$activity.intro}</p>
+                </div>
+                <div class="footer-box">
+                    <div class="name">
+                        	您正在加入{php} echo mb_strlen($member['nickname'])>4?mb_substr($member['nickname'],0,4).'...':$member['nickname'];{/php}的团购
+                    </div>
+                    <div class="input" style="padding-top: 12px;">
+                        <input type="text" v-model="name" placeholder="请输入您的名字">
+                    </div>
+                    <div class="input" style="padding-top: 10px;">
+                        <input type="text" v-model="phone" placeholder="请输入您的手机号">
+                    </div>
+                    <div class="select">
+                        <select class="sign_form_item" v-model="store">
+                            <option :selected="isSelect">请选择您附近的门店</option>
+                            {php}
+                            $address = explode('|',$activity['address']);
+                            {/php}
+                            {volist name='$address' id='a'}
+                            <option value="{$a}">{$a}</option>
+                            {/volist}
+                        </select>
+                    </div>
+                    {eq name='$activity.state' value='0'}
+                    <div class="radio">
+                        <input type="radio" name="state" v-model="radio" value="1" id="0"><label for="0">我是新生</label>
+                        <input type="radio" name="state" v-model="radio" value="2" id="1"> <label for="1">我是老生</label>
+                    </div>
+                    {/eq}
+                    <button type="button" @click="apply2()">确认报名</button>
+                </div>
+                <div class="close" @click="addShow2=false"><img src="__STATIC__/kjvue/images/demo2/close_03.png"></div>
+            </div>
+            
+        </div>
+    </transition>
+    <!--引导-->
+    <transition name="fades">
+        <div class="lead-box" v-if="leadShow ===false" style="display: none;">
+            <div class="box">
+                <img @click="down" class="img" src="__STATIC__/kjvue/images/demo2/help.png" alt="">
+                <img @click="leadShow=false"  class="img" src="__STATIC__/kjvue/images/demo2/share.png" alt="">
+                <img v-if="no1" class="img2" src="__STATIC__/kjvue/images/demo2/img3.png" alt="">
+                <img v-if="no2"  class="img3" src="__STATIC__/kjvue/images/demo2/img1.png" alt="">
+            </div>
+        </div>
+    </transition>
+    <!--我要报名引导-->
+    {eq name='$state' value='1'}
+    <transition name="fades">
+        <div class="lead-box" v-if="applyGuide">
+            <div class="box">
+                <img @click="applys()" class="img" src="__STATIC__/kjvue/images/apply.png" alt="">
+                <img class="img2" src="__STATIC__/kjvue/images/baom.png" alt="">
+            </div>
+        </div>
+    </transition>
+    {/eq}
+    <!--报名成功后引导-->
+    {php}if($state == 4 || $state == 3 || $state == 2 || $state == 5){{/php}
+    <transition name="fades">
+        <div class="lead-box" v-if="payGuide === true">
+            <div class="box">
+                {eq name='$state' value='2'}
+                <img @click="pays()" class="img" src="__STATIC__/kjvue/images/pay.png">
+                <img @click="onlooker(2)" class="img" src="__STATIC__/kjvue/images/q.png">
+                <img v-if="leftGuide" class="img2" src="__STATIC__/kjvue/images/lipay.png" alt="">
+                <img v-if="rightGuide"  class="img3" src="__STATIC__/kjvue/images/fenxiang.png" alt="">
+                {/eq}
+                {eq name='$state' value='5'}
+                <img @click="pays()" class="img" src="__STATIC__/kjvue/images/paypz.png">
+                <img @click="onlooker(5)" class="img" src="__STATIC__/kjvue/images/q.png">
+                <img v-if="leftGuide" class="img2" src="__STATIC__/kjvue/images/pz.png" alt="">
+                <img v-if="rightGuide"  class="img3" src="__STATIC__/kjvue/images/fenxiang.png" alt="">
+                {/eq}
+                {eq name='$state' value='4'}
+                <img @click="pays()" class="img" src="__STATIC__/kjvue/images/bang.png">
+                <img @click="onlooker(4)" class="img" src="__STATIC__/kjvue/images/my.png">
+                <img v-if="leftGuide" class="img2" src="__STATIC__/kjvue/images/sq.png" alt="">
+                <img v-if="rightGuide"  class="img3" src="__STATIC__/kjvue/images/jd.png" alt="">
+                {/eq}
+                {eq name='$state' value='3'}
+                <img @click="pays()" class="img" src="__STATIC__/kjvue/images/bang.png">
+                <img @click="onlooker(3)" class="img" src="__STATIC__/kjvue/images/apply.png">
+                <img v-if="leftGuide" class="img2" src="__STATIC__/kjvue/images/sq.png" alt="">
+                <img v-if="rightGuide"  class="img3" src="__STATIC__/kjvue/images/baom2.png" alt="">
+                {/eq}
+            </div>
+        </div>
+    </transition>
+    {php}}{/php}
+    <!--分享-->
+    <transition name="fades">
+        <div class="lead-box" v-if="shareShow" @click="shareShow=false">
+            <img class="shareImg" src="__STATIC__/kjvue/images/demo2/img2.png" alt="">
+        </div>
+    </transition>
+    <!--提示弹窗-->
+    <transition name="fade">
+        <div class="master-box" v-if="tipsShow">
+            <div class="master"></div>
+            <div class="box2">
+                <div class="top-tip" style="text-align: center;">
+                    <p>
+                        {{title}}
+                    </p>
+                </div>
+                <div class="content tipContent" v-html="content">
+                </div>
+                <div class="close" @click="tipsShow=false"></div>
+            </div>
+        </div>
+    </transition>
+    <!-- ①恭喜砍价成功 -->
+    <transition name="fades" >
+        <div class="kj" v-if="kjMsg" @click="kjMsg=false">
+            <div class="jt">
+                <img src="__STATIC__/kjvue/images/jt.png">
+            </div>
+            <div class="gx">
+                <img src="__STATIC__/kjvue/images/gx.png">
+                <div class="msg">
+                    <div class="k_mon">你已砍了&nbsp;<span class="m">{{money}}元</span></div>
+                    <div class="info">点击右上角，分享{{info}}</div>
+                    <div v-html="more"></div>
+                </div>
+            </div>
+        </div>
+    </transition>
+    <!--②恭喜砍价成功-->
+    <transition name="fades">
+        <div class="kj" v-if="kjMsg2" @click="kjMsg2=false">
+            <div class="jt">
+                <img src="__STATIC__/kjvue/images/jt.png">
+            </div>
+            <div class="center">
+                <div class="top">{{fxMsg}}</div>
+                <div class="buttom">
+                    <div class="fen_msg">
+                        继续分享<span>2个</span>群聊
+                        <img src="__STATIC__/kjvue/images/weixin.png">
+                        ，可以<span>再砍一刀</span>
+                    </div>
+                    <div class="progress">
+                        分享群聊进度：<span>{{x_num}}</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </transition>
+    <!--分享提示框-->
+    <transition name="fades">
+        <div class="kj" v-if="kjMsg3" @click="kjMsg3=false">
+            <div class="jt">
+                <img src="__STATIC__/kjvue/images/jt.png">
+            </div>
+            <div class="center">
+                <div class="top">{{shareMsg}}</div>
+                <div class="buttom">
+                    <div class="fen_msg">
+                        {{site1}}
+                    </div>
+                    <div class="progress">
+                        {{site2}}<span>{{num}}</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </transition>
+    <transition name="fades">
+        <div class="hint" v-if="hintMsg" @click="hintMsg=false" style="display: none;">
+            <div class="hintMsg">
+                <div class="top">温馨提示</div>
+                <div class="center">知道错了吗？</div>
+                <img src="__STATIC__/kjvue/images/timg.jpg" width="80" height="80">
+                <button type="button" @click="hintMsg=false">知道了</button>
+                <br>
+            </div>
+        </div>
+    </transition>
+    <!-- 砍至最低价提示 -->
+    <transition name="fades">
+        <div class="kj" v-if="lowMsg" @click="lowMsg=false">
+            <div class="gx">
+                <img src="__STATIC__/kjvue/images/gx.png">
+                <div class="msg">
+                    恭喜你已砍至最低价
+                    <br>
+                    <br>
+                    <div style="color: red;">请尽快支付</div>
+                </div>
+            </div>
+        </div>
+    </transition>
+    <!-- 引导帮TA砍价 -->
+    <transition name="fades">
+        <div class="saveMoney" v-if="saveMoney" @click="saveMoney=false">
+           <img src="__STATIC__/kjvue/img/shengqian.png">
+        </div>
+    </transition>
+    <!-- 自己进自己的 报名引导 -->
+    <transition name="fades">
+        <div class="shareApply" v-if="shareApply" @click="guideHide()">
+            <div class="top">
+                <img src="__STATIC__/kjvue/img/fenxiang.png">
+                <div class="msg">
+                    {{shareApplyMsg1}}
+                    <br>
+                    {{shareApplyMsg2}}
+                    <div>{{shareApplyMsg3}}<span class='m'>{{shareApplyMsg4}}</span></div>
+                </div>
+            </div>
+            <div class="bottom" v-if="applyShow">
+                <img src="__STATIC__/kjvue/img/baoming.png">
+            </div>
+        </div>
+    </transition>
+</section>
+{php}if($user['state'] == 3){{/php}
+<a class="complaint" href="/kjlog/member/index?hid={$hid}">员工</a>
+{php}}else{{/php}
+<a class="complaint" href="/kjlog/ts/show?hid={$hid}">投诉</a>
+{php}}{/php}
+{php}if($state == 2 || $state == 5){{/php}
+<a href="/kjlog/poster/index" class="poster"><img src="__STATIC__/kjvue/img/sheng.png"></a>
+{php}}{/php}
+<a class="activity" href="/kjlog/index/ch?type=kj">创建我的活动</a>
+<script src="__STATIC__/kjvue/script/api.js"></script>
+<!--<script src="__STATIC__/kjvue/script/style.js"></script>-->
+<script src="__STATIC__/kjvue/script/vue.min.js"></script>
+<script src="__STATIC__/kjvue/script/vue-scroller.min.js"></script>
+<script src="__STATIC__/kjvue/script/swiper-4.3.5.min.js"></script>
+<script src="__STATIC__/kjvue/script/vue-resource.min.js"></script>
+<script src="__STATIC__/kj/js/jweixin-1.4.0.js"></script>
+<script>
+    //设置联系客服的ul
+    var width = document.getElementById('lianxi');
+    var contact = document.getElementById('contact');
+    contact.style.width = width.clientWidth + 'px';
+
+    var imgurl = '{$activity.public_img}';
+    var userId = '{$user.id}';
+    var memberId = '{$member.id}';
+    var hid = '{$hid}';
+    var url = '{$url}';
+    wx.config({
+        debug: false, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
+        appId: '{$arr.appid}', // 必填，公众号的唯一标识
+        timestamp: '{$arr.timestamp}', // 必填，生成签名的时间戳
+        nonceStr: '{$arr.noncestr}', // 必填，生成签名的随机串
+        signature: '{$arr.signature}',// 必填，签名
+        jsApiList: ["onMenuShareTimeline","onMenuShareAppMessage","updateAppMessageShareData","updateTimelineShareData"] // 必填，需要使用的JS接口列表
+    });
+    wx.ready(function () {
+        var data = {
+            title: "{$activity.name}",
+            desc: "{$member.name}在参加活动，打开帮他省钱！",
+            link: url+"/kjlog/index/welcome?hid={$member.hid}&sid={$member.id}",
+            imgUrl: imgurl,
+            success: function () {
+                // 用户确认分享后执行的回调函数
+                Vue.http.post('/kjlog/index/fx',{userId:userId,memberId:memberId,hid:hid}).then(function (res) {
+                    var data = res.data;
+                    console.log(data);
+                    //砍价再次分享
+                    if(data.state == 0){
+                       eventHub.guideHide();
+                        eventHub.showmsg('砍价失败',data.message);
+                        return false;
+                    }
+                    if(data.state == 6){
+                       eventHub.guideHide();
+                        eventHub.showmsg('分享成功',data.message);
+                        return false;
+                    }
+                    if(data.state == 7){
+                        var shareApplyMsg1 = '分享成功';
+                        var shareApplyMsg2 = '继续分享到两个群聊可以在砍一刀哦';
+                        var shareApplyMsg3 = '分享到群聊进度：';
+                        var shareApplyMsg4 = '1/2';
+                        eventHub.guideShow(shareApplyMsg1,shareApplyMsg2,shareApplyMsg3,shareApplyMsg4,0);
+                        return false;
+                    }
+                    if(data.state == 8){
+                        if(data.data.share == 1){
+                            shareApplyMsg1 = '首次分享成功，多砍了'+data.message+'元';
+                            shareApplyMsg2 = '继续分享到两个群聊可以在砍一刀哦';
+                            shareApplyMsg3 = '分享到群聊进度：';
+                            shareApplyMsg4 = '0/2';
+                            eventHub.guideShow(shareApplyMsg1,shareApplyMsg2,shareApplyMsg3,shareApplyMsg4,0);
+                            eventHub.dMoney = eventHub.dMoney-data.message;
+                            return false;
+                        }
+                        if(data.data.share == 3){
+                            shareApplyMsg1 = '再次分享成功，多砍了'+data.message+'元';
+                            shareApplyMsg2 = '继续分享，邀请更多好友帮忙砍价。';
+                            shareApplyMsg3 = '';
+                            shareApplyMsg4 = '';
+                            eventHub.guideShow(shareApplyMsg1,shareApplyMsg2,shareApplyMsg3,shareApplyMsg4,0);
+                            eventHub.dMoney = eventHub.dMoney-data.message;
+                            return false;
+                        }
+                    }
+                    //分享自己的
+                    if(data.state == 2){
+                        shareApplyMsg1 = '分享到朋友圈成功';
+                        shareApplyMsg2 = '继续分享到两个群聊';
+                        shareApplyMsg3 = '分享到群聊进度：';
+                        shareApplyMsg4 = data.data+'/2';
+                        eventHub.guideShow(shareApplyMsg1,shareApplyMsg2,shareApplyMsg3,shareApplyMsg4,0);
+                        return false;
+                    }
+                    if(data.state == 3){
+                       shareApplyMsg1 = '分享到群聊成功';
+                        shareApplyMsg2 = '继续分享到两个群聊';
+                        shareApplyMsg3 = '分享到群聊进度：';
+                        shareApplyMsg4 = data.data+'/2';
+                        eventHub.guideShow(shareApplyMsg1,shareApplyMsg2,shareApplyMsg3,shareApplyMsg4,0);
+                        return false;
+                    }
+                    if(data.state == 4){
+                        shareApplyMsg1 = '分享给好友成功';
+                        shareApplyMsg2 = '继续分享给七个好友';
+                        shareApplyMsg3 = '分享给朋友进度：';
+                        shareApplyMsg4 = data.data+'/7';
+                        eventHub.guideShow(shareApplyMsg1,shareApplyMsg2,shareApplyMsg3,shareApplyMsg4,0);
+                        return false;
+                    }
+                    if(data.state == 5){
+                        shareApplyMsg1 = '分享成功';
+                        shareApplyMsg2 = '继续分享给更多的好友';
+                        shareApplyMsg3 = '分享次数：';
+                        shareApplyMsg4 = data.data+'次';
+                        eventHub.guideShow(shareApplyMsg1,shareApplyMsg2,shareApplyMsg3,shareApplyMsg4,0);
+                        return false;
+                    }
+                    eventHub.kjMsg = false;
+                    eventHub.showmsg('分享成功','感谢你的参与！');
+                });
+            },
+            cancel: function () {
+                // 用户取消分享后执行的回调函数
+            }
+        };
+        wx.onMenuShareTimeline(data); //分享到朋友圈
+        wx.onMenuShareAppMessage(data); //分享给朋友
+    });
+</script>
+<script>
+   var eventHub = new Vue({
+        el:'#app',
+        data: {
+            id:'{$user.id}',
+            hid:'{$hid}',
+            activeTime:'{$time}',
+            day:'',
+            hours:'',
+            minutes:'',
+            second:'',
+            radioList:[
+                {name:'我是老生',value:2},
+                {name:'我是新生',value:1},
+            ],
+            radioValue:2,
+            addShow:false,
+            no1:true,
+            no2:false,
+            leadShow:true,
+            shareShow:false,
+            title:'提示标题提示标题提示标题',
+            content:'提示标题提示标题提示标题提示标题提示标题提示标题提示',
+            tipsShow:false,
+            name:'',
+            phone:'',
+            store:'请选择您附近的门店',
+            isSelect:true,
+            kjMsg:false,
+            money:0,
+            more:"可以<span class='more'>多砍一刀</span>哦",
+            hintMsg:false,
+            kjMsg2:false,
+            kjMsg3:false,
+            applyGuide:false,
+            payGuide:false,
+            rightGuide:false,
+            leftGuide:true,
+            state:'{$state}',
+            site1:'',
+            site2:'',
+            num:'',
+            shareMsg:'',
+            btnPay:false,
+            info:'到朋友圈',
+            x_num:'',
+            fxMsg:'',
+            dMoney:'{$data.d_money}',
+            share_num:'{$user.share_num}',
+            pay:'{$user.pay}',
+            sid:'{$sid}',
+            states:'{$user.state}',
+            contact: false,
+            low_price: '{$member.low_price}',
+            lowMsg: false,
+            saveMoney:false,
+            shareApply:false,
+            applyShow:false,
+            shareApplyMsg1:'点击右上角分享到群聊',
+            shareApplyMsg2:'让更多的朋友帮你省钱',
+            shareApplyMsg3:"分享到群聊进度：",
+            shareApplyMsg4:"0/1",
+            shareApply2:true,
+            attend:"{$activity.attend}",
+            addShow2:false,
+            radio:2
+        },
+        mounted:function () {
+            this.actives();
+            this.timer = setInterval(this.actives, 1000);
+           
+                var mySwiper = new Swiper ('.swiper-container', {
+                    loop: false, // 循环模式选项
+                    // 如果需要分页器
+                    pagination: {
+                        el: '.swiper-paginations',
+                        bulletClass : 'my-bullet',
+                        autoHeight: true,
+                        bulletActiveClass: 'my-bullet-active',
+                        clickable: true,
+                        renderBullet: function (index, className) {
+                            switch(index){
+                                case 0:text='亲友团';break;
+                                case 1:text='活动规则';break;
+                                case 2:text='品牌介绍';break;
+                            }
+                            return '<span class="' + className + '">' + text + '</span>';
+                        },
+                    },
+                })
+           
+        },
+        methods: {
+            actives:function () {
+                var today = new Date().getTime();
+                var activeTime = new Date(this.activeTime).getTime();
+                var time = parseInt(activeTime - today);
+                this.d ='' + this.checkTime(parseInt(time / 1000 / 60 / 60 / 24, 10));
+                this.h ='' + this.checkTime(parseInt(time / 1000 / 60 / 60 % 24 , 10));
+                this.m ='' + this.checkTime(parseInt(time / 1000 / 60 % 60, 10));
+                this.s ='' + this.checkTime(parseInt(time / 1000 % 60, 10));
+                if (this.d == '00' && this.h == '00' && this.m == '00' && this.s == '00') {
+                    clearInterval(this.timer);
+                }
+                this.day = this.d.split('');
+                this.hours =this.h.split('');
+                this.minutes = this.m.split('');
+                this.second = this.s.split('');
+            },
+            checkTime:function (n) {
+                return n < 10 ? '0' + n : n;
+            },
+            change:function(item){
+                this. radioValue = item.value;
+            },
+            down:function () {
+                this.no1 = false;
+                this.no2 = true;
+            },
+            //    提示函数
+            tips:function () {
+                this.tipsShow = true;
+            },
+            //提示框
+            showmsg:function(title,msg){
+                this.title = title;
+                this.content = msg;
+                this.tipsShow = true;
+            },
+            //判断支付
+            payShow:function(id,hid){
+                this.$http.post('/kjlog/index/pay',{id:id,hid:hid}).then(function (res) {
+                    var data = res.body;
+                    if(data.state == 0){
+                        this.showmsg('支付失败',data.message);
+                    }else{
+                        location.href = '/kjlog/example/jsapi?id='+id+'&hid='+hid;
+                    }
+                },function (res) {
+                    this.showmsg('错误代码',res.status);
+                });
+            },
+            //判断报名
+            applysShow:function(){
+                // this.addShow=true;
+                // return false;
+                if(this.attend == '1'){
+                	this.$http.post('/kjlog/kj/applysShow',null).then(function (res) {
+	                    var data = res.body;
+	                    if(data.state == 0){
+	                        this.showmsg('错误信息',data.message);
+	                        return false;
+	                    }
+	                    if(data.state == 1){
+	                        this.showmsg('请长按识别二维码，关注后打开弹出的链接报名参加活动！','<img src={$activity.twocode}>');
+	                        return false;
+	                    }
+	                    if(data.state == 2){
+	                        this.addShow2=true;
+	                    }
+	                },function (res) {
+	                    this.showmsg('错误代码',res.status);
+	                });
+                }else{
+                	this.addShow2=true;
+                }
+            },
+            //报名
+            apply:function(){
+                if(this.name == '') {
+                    this.showmsg('报名失败','请输入您的姓名');
+                    return false;
+                }
+                if(!/^1[3-9]\d{9}$/.test(this.phone)){
+                    this.showmsg('报名失败','请输入正确的手机号');
+                    return false;
+                }
+                if(this.store == '请选择您附近的门店'){
+                    this.showmsg('报名失败','请选择您附近的门店');
+                    return false;
+                }
+                this.$http.post('/kjlog/index/apply',{
+                    name:this.name,
+                    phone:this.phone,
+                    store:this.store,
+                    old:this.radioValue,
+                    tid:'{$member.id}',
+                    masterid:'{$member.masterid}'
+                }).then(function (res) {
+                    var data = res.body;
+                    console.log(data);
+                    if(data.state == 1){
+                        this.showmsg('报名成功',data.message);
+                        location.href = '/kjlog/index/welcome?hid='+this.hid;
+                       // window.location.reload();
+                    }else{
+                        this.showmsg('报名失败',data.message);
+                    }
+                },function (res) {
+                    this.showmsg('错误代码',res.status);
+                });
+            },
+            //报名2
+            apply2:function(){
+                if(this.name == '') {
+                    this.showmsg('报名失败','请输入您的姓名');
+                    return false;
+                }
+                if(!/^1[3-9]\d{9}$/.test(this.phone)){
+                    this.showmsg('报名失败','请输入正确的手机号');
+                    return false;
+                }
+                if(this.store == '请选择您附近的门店'){
+                    this.showmsg('报名失败','请选择您附近的门店');
+                    return false;
+                }
+                this.$http.post('/kjlog/index/apply',{
+                    name:this.name,
+                    phone:this.phone,
+                    store:this.store,
+                    old:this.radio,
+                    tid:'{$member.id}',
+                    masterid:'{$member.masterid}'
+                }).then(function (res) {
+                    var data = res.body;
+                    console.log(data);
+                    if(data.state == 1){
+                        this.addShow = false;
+                        this.showmsg('报名成功',data.message);
+                        location.href = '/kjlog/index/welcome?hid='+this.hid;
+                        //window.location.reload();
+                    }else{
+                        this.showmsg('报名失败',data.message);
+                    }
+                },function (res) {
+                    this.showmsg('错误代码',res.status);
+                });
+            },
+            //帮他省钱
+            save:function(id,hid){
+                this.$http.post('/kjlog/kj/index',{id:id,hid:hid}).then(function (res) {
+                    var data = res.body;
+                    var user = data.data;
+                    console.log(data);
+                    console.log(user);
+                    //砍价失败
+                    if (data.state == 0) {
+                        this.showmsg('砍价失败',data.message);
+                    }
+                    //砍价成功
+                    if (data.state == 1) {
+                        if(user.share == 0){
+                            var shareApplyMsg1 = '你已砍了'+data.message+'元';
+                            var shareApplyMsg2 = '分享到朋友圈可以在砍一刀哦';
+                            var shareApplyMsg3 = '分享到朋友圈进度：';
+                            var shareApplyMsg4 = '0/1';
+                        } else if(user.share == 1 || user.share == 2){
+                            shareApplyMsg1 = '你已砍了'+data.message+'元';
+                            shareApplyMsg2 = '分享到两个群聊可以在砍一刀哦';
+                            shareApplyMsg3 = '分享到群聊进度：';
+                            shareApplyMsg4 = user.share-1+'/2';
+                        } else{
+                            shareApplyMsg1 = '你已砍了'+data.message+'元';
+                            shareApplyMsg2 = '分享到朋友圈邀请更多的人帮忙吧';
+                            shareApplyMsg3 = '';
+                            shareApplyMsg4 = '';
+                        }
+                        if(this.states == 0){
+                            var state = 1;
+                        }else{
+                            state = 0;
+                        }
+                        this.guideShow(shareApplyMsg1,shareApplyMsg2,shareApplyMsg3,shareApplyMsg4,state);
+                        //window.location.reload();
+                    }
+                },function (res) {
+                    this.showmsg('错误代码',res.status);
+                });
+            },
+            //关闭我要报名引导
+            applys:function(){
+                this.applyGuide=false;
+                var cookie = this.getCookie('guide');
+                if(cookie == null){
+                    var value = 1;
+                }else{
+                    var value = cookie+',1';
+                }
+                this.setCookie('guide',value);
+            },
+            //关闭立即支付引导
+            pays:function(){
+                this.leftGuide = false;
+                this.rightGuide = true;
+            },
+            //关闭请人围观
+            onlooker:function(num){
+                this.payGuide = false;
+                var cookie = this.getCookie('guide');
+                if(cookie == null){
+                    var value = num;
+                }else{
+                    var value = cookie+','+num;
+                }
+                this.setCookie('guide',value);
+            },
+            //写cookies
+            setCookie:function(name,value)
+            {
+                var Days = 30;
+                var exp = new Date();
+                exp.setTime(exp.getTime() + Days*24*60*60*1000);
+                document.cookie = name + "="+ escape (value) + ";expires=" + exp.toGMTString();
+            },
+            //读取cookies
+            getCookie:function(name)
+            {
+                var arr,reg=new RegExp("(^| )"+name+"=([^;]*)(;|$)");
+                if(arr=document.cookie.match(reg))
+                    return unescape(arr[2]);
+                else
+                    return null;
+            },
+            //删除cookies
+            delCookie:function(name)
+            {
+                var exp = new Date();
+                exp.setTime(exp.getTime() - 1);
+                var cval=this.getCookie(name);
+                if(cval!=null)
+                    document.cookie= name + "="+cval+";expires="+exp.toGMTString();
+            },
+            share:function(){
+                this.btnPay = false;
+                this.$http.post('/kjlog/index/share',null).then(function (res) {
+                    var data = res.body;
+                    console.log(data);
+                    if(data.state == 2){
+                        var shareApplyMsg1 = '点击右上角分享到朋友圈';
+                        var shareApplyMsg2 = '';
+                        var shareApplyMsg3 = '分享到朋友圈进度：';
+                        var shareApplyMsg4 = data.data+'/1';
+                    }
+                    if(data.state == 3){
+                        shareApplyMsg1 = '点击右上角分享到群聊';
+                         shareApplyMsg2 = '';
+                         shareApplyMsg3 = '分享到群聊进度：';
+                         shareApplyMsg4 = data.data+'/2';
+                    }
+                    if(data.state == 4){
+                       shareApplyMsg1 = '点击右上角分享给好友';
+                        shareApplyMsg2 = '';
+                        shareApplyMsg3 = '分享给朋友进度：';
+                        shareApplyMsg4 = data.data+'/7';
+                    }
+                    if(data.state == 5){
+                        shareApplyMsg1 = '点击右上角即可分享给好友';
+                        shareApplyMsg2 = '';
+                        shareApplyMsg3 = '分享次数：';
+                        shareApplyMsg4 = data.data+'次';
+                        this.num = data.data+'次';
+                    }
+                   this.guideShow(shareApplyMsg1,shareApplyMsg2,shareApplyMsg3,shareApplyMsg4,0);
+                },function (res) {
+                    this.showmsg('错误代码',res.status);
+                });
+            },
+            //联系客服
+            lianxi:function(){
+                this.contact = !this.contact;
+            },
+            //显示引导
+            guideShow:function(shareApplyMsg1,shareApplyMsg2,shareApplyMsg3,shareApplyMsg4,state){
+                this.shareApplyMsg1 = shareApplyMsg1;
+                this.shareApplyMsg2 = shareApplyMsg2;
+                this.shareApplyMsg3 = shareApplyMsg3;
+                this.shareApplyMsg4 = shareApplyMsg4;
+                this.shareApply = true;
+                if(state == 1){
+                    this.applyShow = true;
+                }else{
+                    this.applyShow = false;
+                }
+            },
+            //关闭引导
+            guideHide:function(){
+                this.shareApply = false;
+                this.applyShow = false;
+            }
+        },
+        watch: {
+        },
+    });
+var guide = eventHub.getCookie('guide');
+    // if(guide == null){
+    //     eventHub.applyGuide = true;
+    //     eventHub.payGuide = true;
+    // }else{
+    //     if(guide.indexOf(1) == -1){
+    //         eventHub.applyGuide = true;
+    //     }
+    //     if(guide.indexOf(eventHub.state) == -1){
+    //         eventHub.payGuide = true;
+    //     }
+    // }
+    if(eventHub.sid == '' && eventHub.states != 0 && eventHub.pay == 0 && parseInt(eventHub.dMoney)>parseInt(eventHub.low_price)){
+            console.log(eventHub.share_num);
+            if(eventHub.share_num == 0){
+                var shareApplyMsg1 = '点击右上角分享到朋友圈';
+                var shareApplyMsg2 = '让更多的朋友帮你省钱';
+                var shareApplyMsg3 = '分享到朋友圈进度：';
+                var shareApplyMsg4 = '0/1';
+                eventHub.guideShow(shareApplyMsg1,shareApplyMsg2,shareApplyMsg3,shareApplyMsg4,0);
+            }
+            if(eventHub.share_num > 0 && eventHub.share_num <= 2){
+                shareApplyMsg1 = '点击右上角分享到群聊';
+                shareApplyMsg2 = '让更多的朋友帮你省钱';
+                shareApplyMsg3 = '分享到群聊进度：';
+                shareApplyMsg4 = eventHub.share_num-1+'/2';
+                eventHub.guideShow(shareApplyMsg1,shareApplyMsg2,shareApplyMsg3,shareApplyMsg4,0);
+            }
+            if(eventHub.share_num >2 && eventHub.share_num < 10){
+                shareApplyMsg1 = '点击右上角分享给好友';
+                shareApplyMsg2 = '让更多的朋友帮你省钱';
+                shareApplyMsg3 = '分享给朋友进度：';
+                shareApplyMsg4 = eventHub.share_num-3+'/7';
+                eventHub.guideShow(shareApplyMsg1,shareApplyMsg2,shareApplyMsg3,shareApplyMsg4,0);
+            }
+            if(eventHub.share_num >= 10){
+                shareApplyMsg1 = '点击右上角分享给好友';
+                shareApplyMsg2 = '让更多的朋友帮你省钱';
+                shareApplyMsg3 = '';
+                shareApplyMsg4 = '';
+                eventHub.guideShow(shareApplyMsg1,shareApplyMsg2,shareApplyMsg3,shareApplyMsg4,0);
+            }
+        }
+    if(eventHub.sid == '' && eventHub.states != 0 && eventHub.pay == 0 && parseInt(eventHub.dMoney)<=parseInt(eventHub.low_price)){
+        eventHub.lowMsg = true;
+    }
+    // if(eventHub.state == 3 || eventHub.state == 4){
+    //     eventHub.saveMoney = true;
+    // }
+    if(eventHub.state == 3){
+        eventHub.applysShow();
+    }
+</script>
+</body>
+</html>

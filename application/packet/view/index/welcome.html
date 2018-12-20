@@ -1,0 +1,479 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,initial-scale=1.0,width=device-width"/>
+    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+    <title>{$activity.name}</title>
+    <link rel="stylesheet" href="__STATIC__/kjvue/css/api.css">
+    <link rel="stylesheet" href="__STATIC__/kjvue/css/swiper-4.3.5.min.css">
+    <link rel="stylesheet" href="__STATIC__/kjvue/index.css">
+    <link rel="stylesheet" href="__STATIC__/kjvue/kj.css">
+    <link rel="stylesheet" href="__STATIC__/packet/packet.css">
+    <style>
+    	body{
+     min-height: 2rem;
+}
+        .copyright, .copyright a {
+            text-align: center;
+            color: #666;
+            font-size: 0.8rem;
+            line-height: 2;
+        }
+
+        .bottom-tab p a {
+            color: #fff;
+        }
+
+        .sign_form_item {
+            margin-top: 30px;
+            width: 100%;
+            height: 1.8rem;
+            border-radius: 0.1rem;
+            border: 1px solid #ccc;
+            text-indent: 0.6rem;
+            margin-bottom: 0.5rem;
+            font-size: 1rem;
+        }
+
+        button a {
+            color: #fff;
+        }
+
+        #page li span {
+            width: 120px;
+            height: 40px;
+            line-height: 40px;
+            background-color: #eee;
+            font-size: 14px;
+        }
+
+        #page li a {
+            width: 120px;
+            height: 40px;
+            line-height: 40px;
+            background-color: #eee;
+            font-size: 14px;
+        }
+
+        .complaint {
+            width: 2.2rem;
+            height: 2.2rem;
+            line-height: 2.2rem;
+            border-radius: 1.1rem;
+            display: block;
+            background: rgba(255, 255, 255, 0.65);
+            position: fixed;
+            right: 0.6rem;
+            top: 4rem;
+            text-decoration: none;
+            font-size: 0.8rem;
+            text-align: center;
+            color: #000;
+            z-index: 100;
+        }
+
+        .complaint2 {
+            width: 6rem;
+            height: 2.2rem;
+            line-height: 2.2rem;
+            border-radius: 1.1rem;
+            display: block;
+            background: rgba(255, 255, 255, 0.65);
+            position: fixed;
+            left: 0.2rem;
+            top: 9rem;
+            text-decoration: none;
+            font-size: 0.8rem;
+            text-align: center;
+            color: #000;
+            z-index: 100;
+        }
+
+        .master-box .box2 .tipContent {
+            max-height: 20rem;
+        }
+
+    </style>
+</head>
+<body>
+<section id="app">
+    <div class="chat-page">
+        <scroller ref="myscroller">
+            <div class="wrapper">
+                <div class="banner">
+                    <img src="{$activity.mian_img}" alt="">
+                </div>
+                <div class="active-wrapper">
+                    <div class="time-wrapper">
+                        <span>距离活动结束仅剩</span>
+                        <div class="day" v-for="(item, index) in day" :key="index">{{item}}</div>
+                        <span>天</span>
+                        <div class="hours" v-for="(item, index) in hours" :key="index">{{item}}</div>
+                        <span>:</span>
+                        <div class="hours" v-for="(item, index) in minutes" :key="index">{{item}}</div>
+                        <span>:</span>
+                        <div class="hours" v-for="(item, index) in second" :key="index">{{item}}</div>
+                    </div>
+                    <div class="activeBox">
+                        <div class="info-box">
+                            <img src="{$member.pic}" alt="">
+                            <span>{$member.nickname}</span>
+                            <span>
+                                {eq name="$member['state']" value="0"}游客{/eq}
+                                {eq name="$member['state']" value="1"}已参与{/eq}
+                                {eq name="$member['state']" value="2"}员工{/eq}
+                                {eq name="$member['state']" value="3"}新生{/eq}
+                                {eq name="$member['state']" value="4"}老生{/eq}
+                            </span>
+                        </div>
+                        <div class="text-box">
+                            <p>红包发放：￥{$member.new_integral}</p>
+                        </div>
+                        <!--<div class="btn-box">-->
+                        <!--<button>立即支付</button>-->
+                        <!--</div>-->
+                        {eq name="$member['pay']" value="0"}
+                        <div class="btnbox">
+                            <button @click="addShow=true" type="button">立即抢购</button>
+                            <span></span>
+                            <a href="/packet/my/index"><button>个人中心</button></a>
+                        </div>
+                        {/eq}
+                        {eq name="$member['pay']" value="1"}
+                        <div class="btnbox">
+                            <button @click="showmsg('支付凭证','<div style=color:red;text-align:center;font-size:34px;letter-spacing:10px;>{$member.yzm}</div>')" type="button">支付凭证</button>
+                            <span></span>
+                            <a href="/packet/my/index"><button>个人中心</button></a>
+                        </div>
+                        {/eq}
+                    </div>
+                </div>
+                <div class="footer">
+                    <p>最近参与用户</p>
+                    <div class="tab-head">
+                        <p>浏览人数（{$activity['wgnumber']}人）</p>
+                    </div>
+                    <div class="newest">
+                        {volist name="$activity['user']" id="m"}
+                        <span>
+                            <img src="{$m.pic}">
+                            <span>{php} echo mb_strlen($m['nickname'])>10?mb_substr($m['nickname'],0,10).'...':$m['nickname'];{/php}</span>
+                        </span>
+                        {/volist}
+                    </div>
+                </div>
+                <div class="footer">
+                    <p>购买记录</p>
+                    <div class="tab-head">
+                        <p>人数（{$activity['paynumber']}人）</p>
+                    </div>
+                    {volist name="$activity['pay']" id="m"}
+                    <div class="user">
+                        <div class="img">
+                            <img src="{$m.pic}">
+                        </div>
+                        <div class="username">
+                            <div>{php} echo mb_strlen($m['nickname'])>8?mb_substr($m['nickname'],0,8).'...':$m['nickname'];{/php}</div>
+                            <div>{$m.time}</div>
+                        </div>
+                        <div class="pays">
+                            已支付￥{$m.money}
+                        </div>
+                    </div>
+                    {/volist}
+                </div>
+                <div class="activitys">
+                    <div class="titles">活动介绍</div>
+                    <img src="{$activity.intro_img}">
+                </div>
+                <div class="copyright">
+                    <br>
+                    <a href="/kjlog/index/ch?type=hb">招生咨询&活动策划：Znote</a>
+                    <br>
+                </div>
+            </div>
+        </scroller>
+    </div>
+    <a class="activity" href="/kjlog/index/ch?type=hb">我是校长，我要创建我的活动</a>
+    {php}if($member['state'] == 2){{/php}
+    <a class="complaint" href="/packet/index/member">员工</a>
+    {php}}else{{/php}
+    <a class="complaint" href="/packet/index/ts">投诉</a>
+    {php}}{/php}
+    <div class="apply">
+        <div>
+            <p @click="lianxi()" id="lianxi">联系客服</p>
+            <ul id="contact" v-if="contact">
+                <li @click="showmsg('客服微信','<img src={$activity.service}>')">客服微信</li>
+                <div style="border: #706d73 solid 1px; width: 100%"></div>
+                <li><a href="tel:{$activity.service_phone}">拨打电话</a></li>
+            </ul>
+        </div>
+        <div>
+            {eq name="$member['pay']" value="0"}
+            <p @click="addShow=true">立即抢购</p>
+            {/eq}
+            {eq name="$member['pay']" value="1"}
+            <a href="/packet/poster/index"><p>分享活动马上赚钱</p></a>
+            {/eq}
+        </div>
+    </div>
+    <!--mp3关闭打开框-->
+    <div class="mp3" @click="mp3Show()">
+        <img id="mp3" class="Rotation" src="__STATIC__/packet/mp3/timg.png">
+    </div>
+    <!--提示弹窗-->
+    <transition name="fade">
+        <div class="master-box" v-if="tipsShow" style="z-index: 999;">
+            <div class="master"></div>
+            <div class="box2">
+                <div class="top-tip" style="text-align: center;">
+                    <p>
+                        {{title}}
+                    </p>
+                </div>
+                <div class="content tipContent" v-html="content">
+                </div>
+                <div class="close" @click="tipsShow=false"></div>
+            </div>
+        </div>
+    </transition>
+    <!--抢购框-->
+    <transition name="fade">
+        <div class="master" v-if="addShow">
+            <div class="box">
+                <div class="top">
+                    <p>你正在抢购{$activity.name}活动</p>
+                </div>
+                <div class="footers">
+                    <div class="input" style="padding-top: 20px;">
+                        <input type="text" v-model="name" placeholder="请输入您的名字">
+                    </div>
+                    <div class="input" style="padding-top: 15px;">
+                        <input type="text" v-model="phone" placeholder="请输入您的手机号">
+                    </div>
+                    <div class="select">
+                        <select class="sign_form_item" v-model="store">
+                            <option :selected="isSelect">请选择您附近的门店</option>
+                            {php}
+                            $address = explode('|',$activity['address']);
+                            {/php}
+                            {volist name='$address' id='a'}
+                            <option value="{$a}">{$a}</option>
+                            {/volist}
+                        </select>
+                    </div>
+                    <div class="radio" style="width: 88%;margin: 0 auto">
+                        <input type="radio" name="state" v-model="radio" value="3" id="0"><label for="0">我是新生</label>
+                        <input type="radio" name="state" v-model="radio" value="4" id="1"> <label for="1">我是老生</label>
+                    </div>
+                    <button type="button" @click="apply()">确认提交</button>
+                </div>
+                <div class="close" @click="addShow=false"><img src="__STATIC__/kjvue/images/demo2/close_03.png"></div>
+            </div>
+        </div>
+    </transition>
+    <!--mp3播放-->
+    <audio id="audio" src="__STATIC__/packet/mp3/packet.mp3" autoplay></audio>
+    <!--分享引导-->
+    <transition name="fades">
+        <div class="saveMoney" v-if="saveMoney" @click="saveMoney=false">
+            <img src="__STATIC__/packet/img/fenxiang.png">
+        </div>
+    </transition>
+</section>
+<script src="__STATIC__/kjvue/script/api.js"></script>
+<script src="__STATIC__/kjvue/script/vue.min.js"></script>
+<script src="__STATIC__/kjvue/script/vue-scroller.min.js"></script>
+<script src="__STATIC__/kjvue/script/swiper-4.3.5.min.js"></script>
+<script src="__STATIC__/kjvue/script/vue-resource.min.js"></script>
+<script src="__STATIC__/kj/js/jweixin-1.4.0.js"></script>
+<script>
+    var imgurl = '{$activity.public_img}';
+    var url = '{$url}';
+    wx.config({
+        debug: false, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
+        appId: '{$arr.appid}', // 必填，公众号的唯一标识
+        timestamp: '{$arr.timestamp}', // 必填，生成签名的时间戳
+        nonceStr: '{$arr.noncestr}', // 必填，生成签名的随机串
+        signature: '{$arr.signature}',// 必填，签名
+        jsApiList: ["onMenuShareTimeline","onMenuShareAppMessage","updateAppMessageShareData","updateTimelineShareData"] // 必填，需要使用的JS接口列表
+    });
+    wx.ready(function () {
+        var data = {
+           title: "我是{$member.nickname}，我正在参加{$activity.name}",
+            desc: "{$activity.intro}", 
+            link: url+"/packet/index/welcome?hid={$member.hid}&sid={$member.id}",
+            imgUrl: imgurl,
+            success: function () {
+                // 用户确认分享后执行的回调函数
+            },
+            cancel: function () {
+                // 用户取消分享后执行的回调函数
+            }
+        };
+        wx.onMenuShareTimeline(data); //分享到朋友圈
+        wx.onMenuShareAppMessage(data); //分享给朋友
+    });
+    //--创建页面监听，等待微信端页面加载完毕 触发音频播放
+    window.onload = function () {
+        var audio = document.getElementById('audio');
+        audio.play();
+    }
+    document.addEventListener("WeixinJSBridgeReady", function () {
+        var audio = document.getElementById('audio');
+        audio.play();
+    }, false);
+    document.addEventListener('YixinJSBridgeReady', function() {
+        var audio = document.getElementById('audio');
+        audio.play();
+    }, false);
+</script>
+<script>
+    var eventHub = new Vue({
+        el:'#app',
+        data: {
+            activeTime:'{$time}',
+            day:'',
+            hours:'',
+            minutes:'',
+            second:'',
+            contact:false,
+            tipsShow:false,
+            title:'提示标题提示标题提示标题',
+            content:'提示标题提示标题提示标题提示标题提示标题提示标题提示',
+            addShow:false,
+            isSelect:true,
+            name:'',
+            phone:'',
+            store:'请选择您附近的门店',
+            id:"{$member.id}",
+            hid:{$hid},
+            audio:true,
+            saveMoney:false,
+            pay:"{$member.pay}",
+            radio:3
+        },
+        mounted:function () {
+            this.actives();
+            this.timer = setInterval(this.actives, 1000);
+//          this.$nextTick(() => {
+//              var mySwiper = new Swiper ('.swiper-container', {
+//                  loop: false, // 循环模式选项
+//                  // 如果需要分页器
+//                  pagination: {
+//                      el: '.swiper-paginations',
+//                      bulletClass : 'my-bullet',
+//                      autoHeight: true,
+//                      bulletActiveClass: 'my-bullet-active',
+//                      clickable: true,
+//                      renderBullet: function (index, className) {
+//                          switch(index){
+//                              case 0:text='活动规则';break;
+//                              case 1:text='品牌介绍';break;
+//                              case 2:text='亲友团';break;
+//                          }
+//                          return '<span class="' + className + '">' + text + '</span>';
+//                      },
+//                  },
+//              })
+//          });
+        },
+        methods: {
+            actives:function () {
+                var today = new Date().getTime();
+                var activeTime = new Date(this.activeTime).getTime();
+                var time = parseInt(activeTime - today);
+                this.d ='' + this.checkTime(parseInt(time / 1000 / 60 / 60 / 24, 10));
+                this.h ='' + this.checkTime(parseInt(time / 1000 / 60 / 60 % 24 , 10));
+                this.m ='' + this.checkTime(parseInt(time / 1000 / 60 % 60, 10));
+                this.s ='' + this.checkTime(parseInt(time / 1000 % 60, 10));
+                if (this.d == '00' && this.h == '00' && this.m == '00' && this.s == '00') {
+                    clearInterval(this.timer);
+                }
+                this.day = this.d.split('');
+                this.hours =this.h.split('');
+                this.minutes = this.m.split('');
+                this.second = this.s.split('');
+            },
+            checkTime:function (n) {
+                return n < 10 ? '0' + n : n;
+            },
+            change:function(item){
+                this. radioValue = item.value;
+            },
+            down:function () {
+                this.no1 = false;
+                this.no2 = true;
+            },
+            //    提示函数
+            tips:function () {
+                this.tipsShow = true;
+            },
+            //联系客服
+            lianxi:function(){
+                this.contact = !this.contact;
+            },
+            //提示框
+            showmsg:function(title,msg){
+                this.title = title;
+                this.content = msg;
+                this.tipsShow = true;
+            },
+            //抢购
+            apply:function(){
+                if(this.name == '') {
+                    this.showmsg('抢购失败','请输入您的姓名');
+                    return false;
+                }
+                if(!/^1[3-9]\d{9}$/.test(this.phone)){
+                    this.showmsg('抢购失败','请输入正确的手机号');
+                    return false;
+                }
+                if(this.store == '请选择您附近的门店'){
+                    this.showmsg('抢购失败','请选择您附近的门店');
+                    return false;
+                }
+                this.$http.post('/packet/apply/index',{
+                    name:this.name,
+                    phone:this.phone,
+                    store:this.store,
+                    state:this.radio
+                }).then(function (res) {
+                    var data = res.body;
+                    console.log(data);
+                    if(data.state == 0){
+                        this.showmsg('抢购失败',data.msg);
+                        return false;
+                    }else{
+                        location.href = data.data;
+                    }
+                    //location.href = data;
+                },function (res) {
+                    this.showmsg('错误代码',res.status);
+                });
+            },
+            //关闭打开mp3
+            mp3Show:function(){
+               var audio = document.getElementById('audio');
+                var mp3 = document.getElementById('mp3');
+                if(audio.paused){
+                    //已停止
+                    mp3.classList.add("Rotation");
+                    audio.play();
+                }else{
+                    //已打开
+                    mp3.classList.remove("Rotation");
+                    audio.pause();
+                }
+            }
+        }
+    });
+    if(eventHub.pay == '1'){
+        eventHub.saveMoney = true;
+    }
+</script>
+</body>
+</html>

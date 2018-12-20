@@ -1,0 +1,262 @@
+{extend name="common/base"/}
+{block name="title"}关注回复{/block}
+{block name="script"}
+<script>
+
+</script>
+{/block}
+{block name='center'}
+<div class="content">
+    <div class="cLineB">
+        <h4>关注时自动回复内容</h4>
+    </div>
+    <div class="zdhuifu">
+        <form method="post" action="{:url('/index/index')}">
+            <table cellspacing="0" cellpadding="0" border="0" width="100%">
+                <tbody>
+                <tr>
+                    <td valign="top" width="420">
+                        <textarea class="px" style="width:420px; height:500px; margin:5px 0" id="Hfcontent" name="content">{$data}</textarea>
+                    <td valign="top">
+                        <div class="zdhuifu" style="margin-left:20px">
+                            <h4>参考范例：</h4>这里是关注时的回复。
+                            <br>
+                            <h4 class="red">文字加超链接范例：</h4>
+                            <div> &lt;a&nbsp;href="http://www.baidu.com/"&gt;3G首页&lt;/a&gt; </div>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td height="50"><input type="submit" id="btn" value="保存" name="sbmt" class="btnGreen left">
+                        <div class="right">
+                            <ul>
+                                <li class="biaoqing"><img src="__STATIC__/u-admin/x.png"><span
+                                        style="position: relative;bottom: 27px;left: 4px;">表情</span>
+                                    <ul>
+                                        <li><img src="__STATIC__/u-admin/0.gif" alt="微笑"
+                                                 onclick="jsbq(&#39;微笑&#39;)"></li>
+                                        <li><img src="__STATIC__/u-admin/1.gif" alt="撇嘴"
+                                                 onclick="jsbq(&#39;撇嘴&#39;)"></li>
+                                        <li><img src="__STATIC__/u-admin/2.gif" alt="色"
+                                                 onclick="jsbq(&#39;色&#39;)"></li>
+                                        <li><img src="__STATIC__/u-admin/3.gif" alt="发呆"
+                                                 onclick="jsbq(&#39;发呆&#39;)"></li>
+                                        <li><img src="__STATIC__/u-admin/4.gif" alt="得意"
+                                                 onclick="jsbq(&#39;得意&#39;)"></li>
+                                        <li><img src="__STATIC__/u-admin/5.gif" alt="流泪"
+                                                 onclick="jsbq(&#39;流泪&#39;)"></li>
+                                        <li><img src="__STATIC__/u-admin/6.gif" alt="害羞"
+                                                 onclick="jsbq(&#39;害羞&#39;)"></li>
+                                        <li><img src="__STATIC__/u-admin/7.gif" alt="闭嘴"
+                                                 onclick="jsbq(&#39;闭嘴&#39;)"></li>
+                                        <li><img src="__STATIC__/u-admin/8.gif" alt="睡"
+                                                 onclick="jsbq(&#39;睡&#39;)"></li>
+                                        <li><img src="__STATIC__/u-admin/9.gif" alt="大哭"
+                                                 onclick="jsbq(&#39;大哭&#39;)"></li>
+                                        <li><img src="__STATIC__/u-admin/10.gif" alt="尴尬"
+                                                 onclick="jsbq(&#39;尴尬&#39;)"></li>
+                                        <li><img src="__STATIC__/u-admin/11.gif" alt="发怒"
+                                                 onclick="jsbq(&#39;发怒&#39;)"></li>
+                                        <li><img src="__STATIC__/u-admin/12.gif" alt="调皮"
+                                                 onclick="jsbq(&#39;调皮&#39;)"></li>
+                                        <li><img src="__STATIC__/u-admin/13.gif" alt="呲牙"
+                                                 onclick="jsbq(&#39;呲牙&#39;)"></li>
+                                        <li><img src="__STATIC__/u-admin/14.gif" alt="惊讶"
+                                                 onclick="jsbq(&#39;惊讶&#39;)"></li>
+                                        <li><img src="__STATIC__/u-admin/15.gif" alt="难过"
+                                                 onclick="jsbq(&#39;难过&#39;)"></li>
+                                        <li><img src="__STATIC__/u-admin/16.gif" alt="酷"
+                                                 onclick="jsbq(&#39;酷&#39;)"></li>
+                                        <li><img src="__STATIC__/u-admin/17.gif" alt="冷汗"
+                                                 onclick="jsbq(&#39;冷汗&#39;)"></li>
+                                        <li><img src="__STATIC__/u-admin/18.gif" alt="抓狂"
+                                                 onclick="jsbq(&#39;抓狂&#39;)"></li>
+                                        <li><img src="__STATIC__/u-admin/19.gif" alt="吐"
+                                                 onclick="jsbq(&#39;吐&#39;)"></li>
+                                        <li><img src="__STATIC__/u-admin/20.gif" alt="偷笑"
+                                                 onclick="jsbq(&#39;偷笑&#39;)"></li>
+                                        <li><img src="__STATIC__/u-admin/21.gif" alt="可爱"
+                                                 onclick="jsbq(&#39;可爱&#39;)"></li>
+                                        <li><img src="__STATIC__/u-admin/22.gif" alt="白眼"
+                                                 onclick="jsbq(&#39;白眼&#39;)"></li>
+                                        <li><img src="__STATIC__/u-admin/23.gif" alt="傲慢"
+                                                 onclick="jsbq(&#39;傲慢&#39;)"></li>
+                                        <li><img src="__STATIC__/u-admin/24.gif" alt="饥饿"
+                                                 onclick="jsbq(&#39;饥饿&#39;)"></li>
+                                        <li><img src="__STATIC__/u-admin/25.gif" alt="困"
+                                                 onclick="jsbq(&#39;困&#39;)"></li>
+                                        <li><img src="__STATIC__/u-admin/26.gif" alt="惊恐"
+                                                 onclick="jsbq(&#39;惊恐&#39;)"></li>
+                                        <li><img src="__STATIC__/u-admin/27.gif" alt="流汗"
+                                                 onclick="jsbq(&#39;流汗&#39;)"></li>
+                                        <li><img src="__STATIC__/u-admin/28.gif" alt="憨笑"
+                                                 onclick="jsbq(&#39;憨笑&#39;)"></li>
+                                        <li><img src="__STATIC__/u-admin/29.gif" alt="大兵"
+                                                 onclick="jsbq(&#39;大兵&#39;)"></li>
+                                        <li><img src="__STATIC__/u-admin/30.gif" alt="奋斗"
+                                                 onclick="jsbq(&#39;奋斗&#39;)"></li>
+                                        <li><img src="__STATIC__/u-admin/31.gif" alt="咒骂"
+                                                 onclick="jsbq(&#39;咒骂&#39;)"></li>
+                                        <li><img src="__STATIC__/u-admin/32.gif" alt="疑问"
+                                                 onclick="jsbq(&#39;疑问&#39;)"></li>
+                                        <li><img src="__STATIC__/u-admin/33.gif" alt="嘘"
+                                                 onclick="jsbq(&#39;嘘&#39;)"></li>
+                                        <li><img src="__STATIC__/u-admin/34.gif" alt="晕"
+                                                 onclick="jsbq(&#39;晕&#39;)"></li>
+                                        <li><img src="__STATIC__/u-admin/35.gif" alt="折磨"
+                                                 onclick="jsbq(&#39;折磨&#39;)"></li>
+                                        <li><img src="__STATIC__/u-admin/36.gif" alt="衰"
+                                                 onclick="jsbq(&#39;衰&#39;)"></li>
+                                        <li><img src="__STATIC__/u-admin/37.gif" alt="骷髅"
+                                                 onclick="jsbq(&#39;骷髅&#39;)"></li>
+                                        <li><img src="__STATIC__/u-admin/38.gif" alt="敲打"
+                                                 onclick="jsbq(&#39;敲打&#39;)"></li>
+                                        <li><img src="__STATIC__/u-admin/39.gif" alt="再见"
+                                                 onclick="jsbq(&#39;再见&#39;)"></li>
+                                        <li><img src="__STATIC__/u-admin/40.gif" alt="擦汗"
+                                                 onclick="jsbq(&#39;擦汗&#39;)"></li>
+                                        <li><img src="__STATIC__/u-admin/41.gif" alt="抠鼻"
+                                                 onclick="jsbq(&#39;抠鼻&#39;)"></li>
+                                        <li><img src="__STATIC__/u-admin/42.gif" alt="鼓掌"
+                                                 onclick="jsbq(&#39;鼓掌&#39;)"></li>
+                                        <li><img src="__STATIC__/u-admin/43.gif" alt="糗大了"
+                                                 onclick="jsbq(&#39;糗大了&#39;)"></li>
+                                        <li><img src="__STATIC__/u-admin/44.gif" alt="坏笑"
+                                                 onclick="jsbq(&#39;坏笑&#39;)"></li>
+                                        <li><img src="__STATIC__/u-admin/45.gif" alt="左哼哼"
+                                                 onclick="jsbq(&#39;左哼哼&#39;)"></li>
+                                        <li><img src="__STATIC__/u-admin/46.gif" alt="右哼哼"
+                                                 onclick="jsbq(&#39;右哼哼&#39;)"></li>
+                                        <li><img src="__STATIC__/u-admin/47.gif" alt="哈欠"
+                                                 onclick="jsbq(&#39;哈欠&#39;)"></li>
+                                        <li><img src="__STATIC__/u-admin/48.gif" alt="鄙视"
+                                                 onclick="jsbq(&#39;鄙视&#39;)"></li>
+                                        <li><img src="__STATIC__/u-admin/49.gif" alt="委屈"
+                                                 onclick="jsbq(&#39;委屈&#39;)"></li>
+                                        <li><img src="__STATIC__/u-admin/50.gif" alt="快哭了"
+                                                 onclick="jsbq(&#39;快哭了&#39;)"></li>
+                                        <li><img src="__STATIC__/u-admin/51.gif" alt="阴险"
+                                                 onclick="jsbq(&#39;阴险&#39;)"></li>
+                                        <li><img src="__STATIC__/u-admin/52.gif" alt="亲亲"
+                                                 onclick="jsbq(&#39;亲亲&#39;)"></li>
+                                        <li><img src="__STATIC__/u-admin/53.gif" alt="吓"
+                                                 onclick="jsbq(&#39;吓&#39;)"></li>
+                                        <li><img src="__STATIC__/u-admin/54.gif" alt="可怜"
+                                                 onclick="jsbq(&#39;可怜&#39;)"></li>
+                                        <li><img src="__STATIC__/u-admin/55.gif" alt="菜刀"
+                                                 onclick="jsbq(&#39;菜刀&#39;)"></li>
+                                        <li><img src="__STATIC__/u-admin/56.gif" alt="西瓜"
+                                                 onclick="jsbq(&#39;西瓜&#39;)"></li>
+                                        <li><img src="__STATIC__/u-admin/57.gif" alt="啤酒"
+                                                 onclick="jsbq(&#39;啤酒&#39;)"></li>
+                                        <li><img src="__STATIC__/u-admin/58.gif" alt="篮球"
+                                                 onclick="jsbq(&#39;篮球&#39;)"></li>
+                                        <li><img src="__STATIC__/u-admin/59.gif" alt="乒乓"
+                                                 onclick="jsbq(&#39;乒乓&#39;)"></li>
+                                        <li><img src="__STATIC__/u-admin/60.gif" alt="咖啡"
+                                                 onclick="jsbq(&#39;咖啡&#39;)"></li>
+                                        <li><img src="__STATIC__/u-admin/61.gif" alt="饭"
+                                                 onclick="jsbq(&#39;饭&#39;)"></li>
+                                        <li><img src="__STATIC__/u-admin/62.gif" alt="猪头"
+                                                 onclick="jsbq(&#39;猪头&#39;)"></li>
+                                        <li><img src="__STATIC__/u-admin/63.gif" alt="玫瑰"
+                                                 onclick="jsbq(&#39;玫瑰&#39;)"></li>
+                                        <li><img src="__STATIC__/u-admin/64.gif" alt="凋谢"
+                                                 onclick="jsbq(&#39;凋谢&#39;)"></li>
+                                        <li><img src="__STATIC__/u-admin/65.gif" alt="示爱"
+                                                 onclick="jsbq(&#39;示爱&#39;)"></li>
+                                        <li><img src="__STATIC__/u-admin/66.gif" alt="爱心"
+                                                 onclick="jsbq(&#39;爱心&#39;)"></li>
+                                        <li><img src="__STATIC__/u-admin/67.gif" alt="心碎"
+                                                 onclick="jsbq(&#39;心碎&#39;)"></li>
+                                        <li><img src="__STATIC__/u-admin/68.gif" alt="蛋糕"
+                                                 onclick="jsbq(&#39;蛋糕&#39;)"></li>
+                                        <li><img src="__STATIC__/u-admin/69.gif" alt="闪电"
+                                                 onclick="jsbq(&#39;闪电&#39;)"></li>
+                                        <li><img src="__STATIC__/u-admin/70.gif" alt="炸弹"
+                                                 onclick="jsbq(&#39;炸弹&#39;)"></li>
+                                        <li><img src="__STATIC__/u-admin/71.gif" alt="刀"
+                                                 onclick="jsbq(&#39;刀&#39;)"></li>
+                                        <li><img src="__STATIC__/u-admin/72.gif" alt="足球"
+                                                 onclick="jsbq(&#39;足球&#39;)"></li>
+                                        <li><img src="__STATIC__/u-admin/73.gif" alt="瓢虫"
+                                                 onclick="jsbq(&#39;瓢虫&#39;)"></li>
+                                        <li><img src="__STATIC__/u-admin/74.gif" alt="便便"
+                                                 onclick="jsbq(&#39;便便&#39;)"></li>
+                                        <li><img src="__STATIC__/u-admin/75.gif" alt="月亮"
+                                                 onclick="jsbq(&#39;月亮&#39;)"></li>
+                                        <li><img src="__STATIC__/u-admin/76.gif" alt="太阳"
+                                                 onclick="jsbq(&#39;太阳&#39;)"></li>
+                                        <li><img src="__STATIC__/u-admin/77.gif" alt="礼物"
+                                                 onclick="jsbq(&#39;礼物&#39;)"></li>
+                                        <li><img src="__STATIC__/u-admin/78.gif" alt="拥抱"
+                                                 onclick="jsbq(&#39;拥抱&#39;)"></li>
+                                        <li><img src="__STATIC__/u-admin/79.gif" alt="强"
+                                                 onclick="jsbq(&#39;强&#39;)"></li>
+                                        <li><img src="__STATIC__/u-admin/80.gif" alt="弱"
+                                                 onclick="jsbq(&#39;弱&#39;)"></li>
+                                        <li><img src="__STATIC__/u-admin/81.gif" alt="握手"
+                                                 onclick="jsbq(&#39;握手&#39;)"></li>
+                                        <li><img src="__STATIC__/u-admin/82.gif" alt="胜利"
+                                                 onclick="jsbq(&#39;胜利&#39;)"></li>
+                                        <li><img src="__STATIC__/u-admin/83.gif" alt="抱拳"
+                                                 onclick="jsbq(&#39;抱拳&#39;)"></li>
+                                        <li><img src="__STATIC__/u-admin/84.gif" alt="勾引"
+                                                 onclick="jsbq(&#39;勾引&#39;)"></li>
+                                        <li><img src="__STATIC__/u-admin/85.gif" alt="拳头"
+                                                 onclick="jsbq(&#39;拳头&#39;)"></li>
+                                        <li><img src="__STATIC__/u-admin/86.gif" alt="差劲"
+                                                 onclick="jsbq(&#39;差劲&#39;)"></li>
+                                        <li><img src="__STATIC__/u-admin/87.gif" alt="爱你"
+                                                 onclick="jsbq(&#39;爱你&#39;)"></li>
+                                        <li><img src="__STATIC__/u-admin/88.gif" alt="NO"
+                                                 onclick="jsbq(&#39;NO&#39;)"></li>
+                                        <li><img src="__STATIC__/u-admin/89.gif" alt="OK"
+                                                 onclick="jsbq(&#39;OK&#39;)"></li>
+                                        <li><img src="__STATIC__/u-admin/90.gif" alt="爱情"
+                                                 onclick="jsbq(&#39;爱情&#39;)"></li>
+                                        <li><img src="__STATIC__/u-admin/91.gif" alt="飞吻"
+                                                 onclick="jsbq(&#39;飞吻&#39;)"></li>
+                                        <li><img src="__STATIC__/u-admin/92.gif" alt="跳跳"
+                                                 onclick="jsbq(&#39;跳跳&#39;)"></li>
+                                        <li><img src="__STATIC__/u-admin/93.gif" alt="发抖"
+                                                 onclick="jsbq(&#39;发抖&#39;)"></li>
+                                        <li><img src="__STATIC__/u-admin/94.gif" alt="怄火"
+                                                 onclick="jsbq(&#39;怄火&#39;)"></li>
+                                        <li><img src="__STATIC__/u-admin/95.gif" alt="转圈"
+                                                 onclick="jsbq(&#39;转圈&#39;)"></li>
+                                        <li><img src="__STATIC__/u-admin/96.gif" alt="磕头"
+                                                 onclick="jsbq(&#39;磕头&#39;)"></li>
+                                        <li><img src="__STATIC__/u-admin/97.gif" alt="回头"
+                                                 onclick="jsbq(&#39;回头&#39;)"></li>
+                                        <li><img src="__STATIC__/u-admin/98.gif" alt="跳绳"
+                                                 onclick="jsbq(&#39;跳绳&#39;)"></li>
+                                        <li><img src="__STATIC__/u-admin/99.gif" alt="挥手"
+                                                 onclick="jsbq(&#39;挥手&#39;)"></li>
+                                        <li><img src="__STATIC__/u-admin/100.gif" alt="激动"
+                                                 onclick="jsbq(&#39;激动&#39;)"></li>
+                                        <li><img src="__STATIC__/u-admin/101.gif" alt="街舞"
+                                                 onclick="jsbq(&#39;街舞&#39;)"></li>
+                                        <li><img src="__STATIC__/u-admin/102.gif" alt="献吻"
+                                                 onclick="jsbq(&#39;献吻&#39;)"></li>
+                                        <li><img src="__STATIC__/u-admin/103.gif" alt="左太极"
+                                                 onclick="jsbq(&#39;左太极&#39;)"></li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </div>
+                        <script type="text/javascript">function jsbq(srt) {
+                            document.getElementById("Hfcontent").value = document.getElementById("Hfcontent").value + "/" + srt;
+                        }
+                        </script>
+                    </td>
+                    <td valign="top"></td>
+                </tr>
+                </tbody>
+            </table>
+            <input type="hidden" name="__hash__"
+                   value="9f71b699521f70c42bc5ef920c557700_a6baaa19955d21e40b9a4eea9a4905e0">
+        </form>
+    </div>
+</div>
+{/block}

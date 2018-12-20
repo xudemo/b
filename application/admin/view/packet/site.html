@@ -1,0 +1,54 @@
+{extend name="common/base"/}
+{block name="title"}活动地址{/block}
+{block name="script"}
+<style>
+    #tags li {
+        background-color: #f9f9f9;
+        width: 120px;
+        height: 40px;
+        line-height: 40px;
+    }
+
+    #tags li a {
+        margin-left: 10px;
+    }
+    .site{
+        margin: 20px;
+        font-size: 18px;
+    }
+</style>
+<script>
+    $(function () {
+        $('.selected').addClass('subCatalogList');
+        $('.selected').removeClass('selected');
+        $('.two li').eq(1).addClass('selected');
+        $('.now').hide();
+        $('.two').show();
+    })
+
+</script>
+{/block}
+{block name='center'}
+<div class="content">
+    <div class="cLineB"><h4 class="left">{$activity.name}</h4>
+        <div class="clr"></div>
+    </div>
+    <div class="msgWrap form">
+        <ul id="tags" style="width:100%">
+            <li><a href="/packet/index?id={$id}&appid={$appid}">用户列表</a></li>
+            <li><a href="/packet/apply?id={$id}&appid={$appid}">参与用户</a></li>
+                        <li><a href="/packet/staff?id={$id}&appid={$appid}">员工列表</a></li>
+            <li><a href="/packet/pay?id={$id}&appid={$appid}">支付列表</a></li>
+            <li><a href="/packet/hb?id={$id}&appid={$appid}">红包列表</a></li>
+            <li><a href="/packet/proof?id={$id}&appid={$appid}">凭证查询</a></li>
+            <li class="selectTag" style="background-color: #eee;"><a href="/packet/site?id={$id}&appid={$appid}">活动地址</a></li>
+            <li><a href="/packet/examples?id={$id}&appid={$appid}">折线图</a></li>
+            <div class="clr" style="height:1px;background:#eee;margin-bottom:20px;"></div>
+        </ul>
+    </div>
+    <div class="msgWrap">
+        <div class="site">活动地址：<span>http://www.42461.cn/packet/index/welcome/hid/{$id}</span></div>
+        <div class="site">活动二维码：<img src="http://qr.liantu.com/api.php?text={$url}"></div>
+    </div>
+</div>
+{/block}

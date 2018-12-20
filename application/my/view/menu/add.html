@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>管理员列表</title>
+    {include file="common/head"/}
+</head>
+<body>
+<div class="x-body">
+    <form class="layui-form">
+        <div class="layui-form-item">
+            <label for="username" class="layui-form-label">
+                <span class="x-red">*</span>菜单名称
+            </label>
+            <div class="layui-input-inline">
+                <input type="text" name="menu_name" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label for="username" class="layui-form-label">
+                <span class="x-red">*</span>菜单URL
+            </label>
+            <div class="layui-input-inline">
+                <input type="text" name="menu_url" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">
+                <span class="x-red">*</span>菜单级别
+            </label>
+            <div class="layui-input-inline">
+                <select name="grade" lay-filter="grade">
+                    <option value="1">一级菜单</option>
+                    <option value="2">二级菜单</option>
+                </select>
+            </div>
+        </div>
+        <div class="layui-form-item" id="top_menu" style="display: none;">
+            <label class="layui-form-label">
+                <span class="x-red">*</span>上级菜单
+            </label>
+            <div class="layui-input-inline">
+                <select name="top_menu">
+                    {volist name='$list' id='l'}
+                    <option value="{$l.id}">{$l.menu_name}</option>
+                    {/volist}
+                </select>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">
+                <span class="x-red">*</span>菜单图标
+            </label>
+            <div class="layui-input-inline">
+                <input type="text" name="menu_icon" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">
+                <span class="x-red">*</span>排序
+            </label>
+            <div class="layui-input-inline">
+                <input type="text" value="0" name="sort" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label"></label>
+            <button class="layui-btn" id="btn" type="button">提交</button>
+        </div>
+    </form>
+</div>
+<script>
+    layui.use('form', function(){
+        var form = layui.form;
+        //监听提交
+        form.on('select(grade)', function(data){
+            var val = data.value;
+            if(val == 1){
+                $('#top_menu').hide();
+                return false;
+            }
+            if(val == 2){
+                $('#top_menu').show();
+                return false;
+            }
+        });
+    });
+    $("#btn").click(function () {
+        layer.load(2, {shade: [0.3,'#eee']});
+        $.post('/my/menu/add',$('form').serialize(),function (data) {
+            if(data.code == 400){
+                layer.msg(data.msg,{icon:2,time:1000});
+                return false;
+            }
+            if(data.code == 200){
+                layer.msg(data.msg,{icon:1,time:1000});
+                setTimeout("x_admin_close();",1000);
+                return false;
+            }
+        });
+    });
+</script>
+</body>
+</html>

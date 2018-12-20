@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>管理员列表</title>
+    {include file="common/head"/}
+</head>
+<body>
+<div class="x-nav">
+    <a class="layui-btn layui-btn-small" style="line-height:1.6em;margin-top:3px;float:right"
+       href="javascript:location.replace(location.href);" title="刷新">
+        <i class="layui-icon" style="line-height:30px">ဂ</i></a>
+</div>
+<div class="x-body">
+    <xblock>
+        <div class="layui-row">
+            {include file="common/menu"/}
+        </div>
+    </xblock>
+    <table class="layui-table layui-form">
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>菜单名称</th>
+            <th>菜单URL</th>
+            <th>菜单图标</th>
+            <th>菜单类型</th>
+            <th>排序</th>
+            <th>状态</th>
+            <th>操作</th>
+        </thead>
+        <tbody class="x-cate">
+        {php}
+        for($i=0;$i<count($list);$i++){
+        {/php}
+        <tr cate-id='{$i+1}' fid="{$list[$i]['fid']}">
+            <td>{$list[$i]['id']}</td>
+            <td>
+                {eq name="$list[$i]['grade']" value="1"}
+                <i class="layui-icon x-show" status='true'>&#xe623;</i>
+                {$list[$i]['menu_name']}
+                {/eq}
+                {eq name="$list[$i]['grade']" value="2"}
+                &nbsp;&nbsp;&nbsp;&nbsp;├{$list[$i]['menu_name']}
+                {/eq}
+            </td>
+            <td>{$list[$i]['menu_url']}</td>
+            <td><i class="iconfont">{php}echo trim($list[$i]['menu_icon']);{/php}</i></td>
+            <td>
+                {eq name="$list[$i]['grade']" value="1"}一级菜单{/eq}
+                {eq name="$list[$i]['grade']" value="2"}二级菜单{/eq}
+            </td>
+            <td>
+                <input type="text" onchange="sort(this,'{$list[$i][\'id\']}');" name="sort" value="{$list[$i]['sort']}">
+            </td>
+            <td class="td-status">
+                {eq name="$list[$i]['status']" value="0"}
+                 <span onclick="yes('{$list[$i][\'id\']}',1)">
+                <input type="checkbox" name="status" lay-text="显示|隐藏" checked="" lay-skin="switch">
+                </span>
+                {/eq}
+                {eq name="$list[$i]['status']" value="1"}
+                <span onclick="yes('{$list[$i][\'id\']}',0)">
+                <input type="checkbox" name="status" lay-text="显示|隐藏" lay-skin="switch">
+                </span>
+                {/eq}
+            </td>
+            <td class="td-manage">
+                <button class="layui-btn layui-btn layui-btn-xs"
+                        onclick="x_admin_show('编辑','edit?id={$list[$i][\'id\']}')"><i
+                        class="layui-icon">&#xe642;</i>编辑
+                </button>
+                <button class="layui-btn-danger layui-btn layui-btn-xs" onclick="deletes('{$list[$i][\'id\']}','{$list[$i][\'grade\']}')">
+                    <i class="layui-icon">&#xe640;</i>
+                    删除
+                </button>
+            </td>
+        </tr>
+        {php}}{/php}
+        </tbody>
+    </table>
+</div>
+<script>
+    //修改状态
+    function yes(id, status) {
+        var index = layer.load(2, {shade: [0.3, '#eee']});
+        $.post('status', {id: id, status: status}, function (data) {
+            layer.close(index);
+            if (data.code == 400) {
+                layer.msg(data.msg, {icon: 2, time: 1000});
+                return false;
+            }
+            if (data.code == 200) {
+                layer.msg(data.msg, {icon: 1, time: 1000});
+                setTimeout("window.location.reload()", 1000);
+                return false;
+            }
+        });
+    }
+    //删除
+    function deletes(id,grade) {
+        layer.confirm('确认要删除吗？', {
+        }, function(){
+            var index = layer.load(2, {shade: [0.3, '#eee']});
+            $.post('delete',{id:id,grade:grade},function (data) {
+                layer.close(index);
+                if (data.code == 200) {
+                    layer.msg(data.msg, {icon: 1, time: 1000});
+                    setTimeout("window.location.reload()", 1000);
+                    return false;
+                }else{
+                    layer.msg(data.msg, {icon: 2, time: 1000});
+                    return false;
+                }
+            });
+        });
+    }
+    //修改排序
+    function sort(sort,id) {
+        var index = layer.load(2, {shade: [0.3, '#eee']});
+        var sortVal = sort.value;
+        $.post('sort',{id:id,sort:sortVal},function (data) {
+            layer.close(index);
+            if (data.code == 400) {
+                layer.msg(data.msg, {icon: 2, time: 1000});
+                return false;
+            }
+            if (data.code == 200) {
+                layer.msg(data.msg, {icon: 1, time: 1000});
+                return false;
+            }
+        });
+    }
+    //更新菜单
+    function setmenu() {
+        var index = layer.load(2, {shade: [0.3, '#eee']});
+        $.post('menu',null,function (data) {
+            layer.close(index);
+            if (data.code == 400) {
+                layer.msg(data.msg, {icon: 2, time: 1000});
+                return false;
+            }
+            if (data.code == 200) {
+                layer.msg(data.msg, {icon: 1, time: 1000});
+                setTimeout("window.location.reload()", 1000);
+                return false;
+            }
+        });
+    }
+</script>
+</body>
+</html>

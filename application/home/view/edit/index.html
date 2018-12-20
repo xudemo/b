@@ -1,0 +1,58 @@
+{extend name="common/base"/}
+{block name="title"}控制中心{/block}
+{block name='center'}
+<div class="content">
+    <div class="cLineB"><h4>修改资料<span class="FAQ"></span></h4></div>
+    <div class="ftip"><span class="blink">温馨提示</span>：用户名不可修改，保存一次即可，数据没有变化时提交会保存失败，付费版用户支持到期提醒，到期前3天发送提醒短信。
+    </div>
+    <style>
+        .ftip {
+            background: #fefbe4 url(/static/admin/lightbulb.gif) no-repeat 10px 10px;
+            border: 1px solid #F3ECB9;
+            padding: 6px 20px 6px 36px;
+
+            font-size: 14px;
+            margin: 10px;
+            color: #993300;
+            line-height: 24px;
+        }
+    </style>
+    <form method="post" action="{:url('home/edit/index')}"
+          enctype="multipart/form-data">
+        <div class="msgWrap">
+            <table class="userinfoArea" border="0" cellspacing="0" cellpadding="0" width="100%">
+                <tbody>
+                <tr>
+                    <th>&nbsp;&nbsp;用 户 名：</th>
+                    <td>
+                        <input type="text" class="px" value="{$user['nickname']}" name="nickname" readonly="true" style="width: 200px;">&nbsp;&nbsp;&nbsp;&nbsp;
+                        <span class="red">登录用户名，不可修改</span>
+                    </td>
+                </tr>
+                <tr>
+                    <th><span class="red">*</span>绑定手机：</th>
+                    <td>
+                        <input type="text" class="px" value="{$user['phone']}" name="phone" style="width: 200px;">&nbsp;&nbsp;&nbsp;&nbsp;
+                        <span class="red">非常重要，付费用户可以接受到期提醒</span>
+                    </td>
+                </tr>
+                <tr>
+                    <th><span class="red">*</span>绑定邮箱：</th>
+                    <td>
+                        <input type="text" class="px" value="{$user['email']}" name="email" style="width: 200px;">&nbsp;&nbsp;&nbsp;&nbsp;
+                        <span class="red">非常重要，忘记密码时用于重置密码</span>
+                    </td>
+                </tr>
+                <tr>
+                    <th></th>
+                    <td>
+                        <button type="submit" name="button" class="btnGreen">提交</button>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </form>
+</div>
+<div class="clr"></div>
+{/block}

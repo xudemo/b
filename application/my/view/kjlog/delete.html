@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>编辑信息</title>
+    {include file="common/head"/}
+    <style>
+        .layui-form-label{
+            width: 160px;
+        }
+        .layui-input{
+            width: 400px;
+        }
+        .layui-form-mid{
+            margin-left: 220px;
+        }
+    </style>
+</head>
+<body>
+<div class="x-body">
+    <form class="layui-form" method="post" action="/my/kjlog/delete">
+        <div class="layui-form-item">
+            <label for="username" class="layui-form-label">
+                <span class="x-red"></span>AppID
+            </label>
+            <div class="layui-input-inline">
+                <input type="text" id="" name="appId"
+                       autocomplete="off" class="layui-input" value="{$user.appId}">
+            </div>
+            <div class="layui-form-mid layui-word-aux">
+                <span class="x-red"></span>基本信息配置，在微信公众平台基本配置里面查看。
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label for="L_pass" class="layui-form-label">
+                <span class="x-red"></span>AppSecret
+            </label>
+            <div class="layui-input-inline">
+                <input type="text" id="" name="appSecret"
+                       autocomplete="off" class="layui-input" value="{$user.appSecret}">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label for="L_repass" class="layui-form-label">
+                <span class="x-red"></span>微信支付商户号
+            </label>
+            <div class="layui-input-inline">
+                <input type="text" id="" name="mchiD"
+                       autocomplete="off" class="layui-input" value="{$user.mchiD}">
+            </div>
+            <div class="layui-form-mid layui-word-aux">
+                <span class="x-red"></span>微信支付信息，在微信支付平台查看。
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label for="L_pass" class="layui-form-label">
+                <span class="x-red"></span>微信支付密匙
+            </label>
+            <div class="layui-input-inline">
+                <input type="text" id="" name="key"
+                       autocomplete="off" class="layui-input" value="{$user.key}">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label for="L_repass" class="layui-form-label">
+                <span class="x-red"></span>报名成功模板ID
+            </label>
+            <div class="layui-input-inline">
+                <input type="text" id="" name="bm_id"
+                       autocomplete="off" class="layui-input" value="{$user.bm_id}">
+            </div>
+            <div class="layui-form-mid layui-word-aux">
+                <span class="x-red"></span>公众号消息通知模板ID，在微信公众平台模板消息中添加后拿到模板ID。
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label for="L_pass" class="layui-form-label">
+                <span class="x-red"></span>参团成功模板ID
+            </label>
+            <div class="layui-input-inline">
+                <input type="text" id="" name="ct_id"
+                       autocomplete="off" class="layui-input" value="{$user.ct_id}">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label for="L_pass" class="layui-form-label">
+                <span class="x-red"></span>砍价成功模板ID
+            </label>
+            <div class="layui-input-inline">
+                <input type="text" id="" name="kj_id"
+                       autocomplete="off" class="layui-input" value="{$user.kj_id}">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label for="L_pass" class="layui-form-label">
+                <span class="x-red"></span>支付成功模板ID
+            </label>
+            <div class="layui-input-inline">
+                <input type="text" id="" name="zf_id"
+                       autocomplete="off" class="layui-input" value="{$user.zf_id}">
+            </div>
+        </div>
+        <input type="hidden" name="user_name" value="{$user.user_name}">
+        <div class="layui-form-item">
+            <label for="L_repass" class="layui-form-label">
+            </label>
+            <button id="btn" type="button"  class="layui-btn" lay-filter="add" lay-submit="">
+                修改
+            </button>
+        </div>
+    </form>
+</div>
+<script>
+    $('#btn').click(function () {
+        $.post('/my/kjlog/delete',$('form').serialize(),function (data) {
+            if(data.state == 0){
+                layer.msg(data.message,{icon: 2, time: 1000});
+            }else{
+                layer.msg(data.message,{icon: 1, time: 1000});
+                setTimeout("x_admin_close()", 1000);
+            }
+        });
+    });
+</script>
+</body>
+</html>

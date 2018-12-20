@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport"
+          content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,initial-scale=1.0,width=device-width"/>
+    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+    <title>个人中心</title>
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1">
+    <link rel="shortcut icon" href="/favicon.ico">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link href="__STATIC__/packet/css/my.css" rel="stylesheet">
+    <link href="__STATIC__/kj/layer/theme/default/layer.css" rel="stylesheet">
+    <script src="__STATIC__/x-admin/js/jquery.min.js"></script>
+    <script src="__STATIC__/kj/layer/layer.js" charset="utf-8"></script>
+</head>
+<body>
+<div class="heaner">
+    <div class="head"></div>
+    <div class="userinfo" style="">
+        <div class="pic">
+            <img src="{$list.pic}">
+            <div class="nickname">
+                {$list.nickname}
+            </div>
+        </div>
+        <div style="border-bottom: #eee solid 1px;margin-top: 0.8rem;"></div>
+        <div class="data">
+            <div class="data_msg">
+                {$list.xNum}
+                <div>下级数量</div>
+            </div>
+            <div class="data_msg">
+                {$list.integNum}
+                <div>红包数量</div>
+            </div>
+            <div class="data_msg">
+                ￥{$list.new_integral}
+                <div>红包金额</div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="center">
+    <!--支付详情-->
+    {php}if($list['pay'] == 1 && $list['state'] != 2){{/php}
+    <div class="site" id="pay">
+        <div><img src="__STATIC__/packet/img/pay.jpg"></div>
+        <div class="site_msg">支付详情</div>
+        <div class="site_show">〉</div>
+    </div>
+    <!--①是否支付②该支付发放的金额③报名门店④支付金额⑤支付时间-->
+    <div class="pay_details">
+        <div style="border-bottom: #eee solid 1px;margin-left: 0.2rem;margin-right: 0.2rem;"></div>
+        <div class="pay_table">
+            <div class="pay_tr">姓名</div>
+            <span></span>
+            <div class="pay_td">{$list.name}</div>
+        </div>
+    </div>
+    <div class="pay_details">
+        <div style="border-bottom: #eee solid 1px;margin-left: 0.2rem;margin-right: 0.2rem;"></div>
+        <div class="pay_table">
+            <div class="pay_tr">电话</div>
+            <span></span>
+            <div class="pay_td">{$list.phone}</div>
+        </div>
+    </div>
+    <div class="pay_details">
+        <div style="border-bottom: #eee solid 1px;margin-left: 0.2rem;margin-right: 0.2rem;"></div>
+        <div class="pay_table">
+            <div class="pay_tr">门店</div>
+            <span></span>
+            <div class="pay_td">{$list.shop_site}</div>
+        </div>
+    </div>
+    <div class="pay_details">
+        <div style="border-bottom: #eee solid 1px;margin-left: 0.2rem;margin-right: 0.2rem;"></div>
+        <div class="pay_table">
+            <div class="pay_tr">是否支付</div>
+            <span></span>
+            <div class="pay_td">是</div>
+        </div>
+    </div>
+    <div class="pay_details">
+        <div style="border-bottom: #eee solid 1px;margin-left: 0.2rem;margin-right: 0.2rem;"></div>
+        <div class="pay_table">
+            <div class="pay_tr">支付时间</div>
+            <span></span>
+            <div class="pay_td">
+                {$order.time}
+            </div>
+        </div>
+    </div>
+    <div class="pay_details">
+        <div style="border-bottom: #eee solid 1px;margin-left: 0.2rem;margin-right: 0.2rem;"></div>
+        <div class="pay_table">
+            <div class="pay_tr">支付金额</div>
+            <span></span>
+            <div class="pay_td">￥{$order.money}</div>
+        </div>
+    </div>
+    {php}}{/php}
+
+    <!--红包详情-->
+    <div class="site" id="hb">
+        <div><img src="__STATIC__/packet/img/hb.jpg"></div>
+        <div class="site_msg">红包详情</div>
+        <div class="site_show">〉</div>
+    </div>
+    <div class="hb_details">
+
+    </div>
+    {volist name="$integral" id="i"}
+    <div class="hb_details">
+        <div style="border-bottom: #eee solid 1px;margin-left: 0.2rem;margin-right: 0.2rem;"></div>
+        <div class="hb_table">
+            <div class="hb_pic">
+                <img src="{$i.pic}">
+            </div>
+            <div class="hb_info">
+                <div class="hb_nickname">{$i.nickname}</div>
+                <div class="hb_time">{php}echo date('Y-m-d H:i:s',$i['savedate']);{/php}</div>
+            </div>
+            <div class="hb_money">
+                红包金额 <span>￥{$i.integral}</span>
+            </div>
+        </div>
+    </div>
+    {/volist}
+    <!--我的下级-->
+    <div class="site" id="xj">
+        <div><img src="__STATIC__/packet/img/xiaji.jpg"></div>
+        <div class="site_msg">我的下级</div>
+        <div class="site_show">〉</div>
+    </div>
+    <div class="xj_details">
+    </div>
+    {volist name="$xiaji" id="x"}
+    <div class="xj_details">
+        <div style="border-bottom: #eee solid 1px;margin-left: 0.2rem;margin-right: 0.2rem;"></div>
+        <div class="xj_table">
+            <div class="xj_pic">
+                <img src="{$x.pic}">
+            </div>
+            <div class="xj_info">
+                <div class="xj_nickname">
+                    {$x.nickname}
+                </div>
+                <div class="xj_time">{php}echo date('Y-m-d H:i:s',$x['savedate']);{/php}</div>
+            </div>
+            <div class="xj_money">
+                {eq name="$x['pay']" value="0"}未支付{/eq}
+                {eq name="$x['pay']" value="1"}已支付{/eq}
+            </div>
+        </div>
+    </div>
+    {/volist}
+</div>
+<br>
+<br>
+<br>
+<script>
+    //修改界面高度
+    var userinfo = $('.userinfo').height();
+    var rem = (userinfo / 16 - 1.55) * 16;
+    $('.userinfo').height(rem);
+    //支付详情
+    $('#pay').click(function () {
+        $('.pay_details').toggle(200);
+        setTimeout("setJinaTou('pay','pay_details');", 220);
+    });
+    //红包详情
+    $('#hb').click(function () {
+        $('.hb_details').toggle(200);
+        setTimeout("setJinaTou('hb','hb_details');", 220);
+//        if(payNum == 0){
+//            var img = '';
+//            var pic = 'http://thirdwx.qlogo.cn/mmopen/vi_32/MzFnxgHvzOwiaspQmB4DDBdUnRwepJEhbWV9aoJtuYhr0eP56PtJlPHzbh2D5ZyVSHecjNZ4Odt9ehG1JwkopNA/132';
+//            for(var i=0;i<3;i++){
+//                img+="<div class='hb_details'>"+
+//                        "<div style='border-bottom: #eee solid 1px;margin-left: 0.2rem;margin-right: 0.2rem;'></div>" +
+//                        "<div class='hb_table'>" +
+//                            "<div class='hb_pic'><img src='" + pic+"'></div>" +
+//                                "<div class='hb_info'></div>"
+//                        + "</div>"
+//                      +"</div>";
+//            }
+//        }
+//        payNum++;
+    });
+    //我的下级
+    $('#xj').click(function () {
+        $('.xj_details').toggle(200);
+        setTimeout("setJinaTou('xj','xj_details');", 220);
+    });
+    function setJinaTou(id, showtype) {
+        var payshow = $('.' + showtype).css('display');
+        if (payshow == 'block') {
+            $("#" + id).find('.site_show').html('﹀');
+        }
+        if (payshow == 'none') {
+            $("#" + id).find('.site_show').html('〉');
+        }
+    }
+</script>
+</body>
+</html>

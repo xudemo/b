@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{block name='title'}{/block}</title>
+    <link type="text/css" rel="stylesheet" href="/static/admin/css/style.css"/>
+    <link rel="stylesheet" type="text/css" href="/static/admin/style_2_common.css">
+    <link href="/static/admin/style-1.css" rel="stylesheet" type="text/css">
+    <script src="/static/admin/common.js" type="text/javascript"></script>
+    <script src="/static/admin/jquery-1.4.2.min.js"></script>
+    <link rel="stylesheet" href="/static/admin/default.css">
+    <script src="/static/admin/jquery.artDialog.js"></script>
+    <script src="/static/admin/iframeTools.js"></script>
+    <link rel="stylesheet" type="text/css" href="/static/admin/default_user_com.css" media="all">
+      <link href="__STATIC__/kj/layer/theme/default/layer.css" rel="stylesheet">
+    <script src="__STATIC__/x-admin/js/jquery.min.js"></script>
+    <script src="__STATIC__/kj/layer/layer.js" charset="utf-8"></script>
+    <style type="text/css">
+        #think_page_trace_open{display:none;}
+    </style>
+    {block name="style"}{/block}
+    {block name="script"}{/block}
+    <script type="text/javascript">
+        $(function () {
+            $(function () {
+                $('.header ul li').removeClass('current');
+                $('.login a').removeClass('current');
+                $('.login a').eq(1).addClass('current');
+            });
+        })
+    </script>
+</head>
+<body>
+<div class="wrap_header" >
+    <div class="header">
+        <div class="navigation">
+            <div class="logo">
+                <mig>
+                    <a href="{:url('/')}" style="background:url('__STATIC__/index/img/logo1.png') no-repeat;margin-top: -10px;"></a>
+                </mig>
+            </div>
+            <ul>
+                <li class="current">
+                    <a href="{:url('/')}">首页</a>
+                </li>
+                <li>
+                    <a href="{:url('/index/index/func')}">功能</a>
+                </li>
+                <li>
+                    <a href="{:url('/index/index/cases')}">案例</a>
+                </li>
+                <li>
+                    <a href="{:url('/index/index/contact')}">联系</a>
+                </li>
+            </ul>
+            <div class="login">
+                {if condition="empty(session('nowUser'))"}
+                    <a href="{:url('/index/login/index')}">登录</a>
+                    <a href="{:url('/index/register/index')}"/>注册</a>
+                {else/}
+                    <a href="{:url('/index/index/exits')}">注销</a>
+                    <a href="{:url('/home/index/index')}"/>控制中心</a>
+                {/if}
+            </div>
+        </div>
+    </div>
+</div>
+<div id="wp" class="wp">
+    <div class="contentmanage">
+        <div class="developer">
+            <div class="appTitle normalTitle"><h2>管理平台</h2>
+                <div class="accountInfo"></div>
+                <div class="clr"></div>
+            </div>
+            <div class="tableContent">
+                <div class="sideBar">
+                    <div class="catalogList">
+                        <ul class="newskin">
+                            <li class=" subCatalogList ">
+                                <a class="secnav_2" href="/home/index/index">我的公众号</a>
+                            </li>
+                            <li class=" subCatalogList ">
+                                <a class="secnav_4" href="/home/alipay/index">会员充值</a>
+                            </li>
+                            <li class="subCatalogList">
+                                <a class="secnav_5" href="/home/edit/index">修改资料</a>
+                            </li>
+                            <li class="subCatalogList">
+                                <a class="secnav_1" href="/home/edit/edit_pwd">修改密码</a>
+                            </li>
+                            <li class=" subCatalogList ">
+                                <a class="secnav_8" href="/home/Type/index">切换模板</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                {block name='center'}{/block}
+            </div>
+        </div>
+    </div>
+    <!-- 底部css -->
+    <style>.IndexFoot {
+        WIDTH: 100%;
+        HEIGHT: 30px
+    }
+    .foot {
+        width: 988px;
+        margin: 0px auto;
+        font-size: 14px;
+        line-height: 30px;
+    }
+    .foot .foot_page {
+        float: left;
+        width: 600px;
+        color: #000;
+    }
+    .foot .foot_page a {
+        color: #000;
+    }
+    #copyright {
+        float: right;
+        width: 380px;
+        text-align: right;
+        font-size: 14px;
+        color: #000;
+    }
+    </style>
+    <div class="IndexFoot" style="height:58px;clear:both;padding-top:8px;">
+        <div class="foot">
+            <div class="foot_page"><a href="http://weixin.gycode.com/">视觉-国内最大的免费微信第三方平台</a></div>
+            <div id="copyright" style="color:#000;">视觉(c)版权所有
+                <a href="http://www.miibeian.gov.cn/" target="_blank" style="color:#000">冀ICP备13002191号</a>
+            </div>
+        </div>
+    </div><!-- 帮助悬浮开始 --><!-- 帮助悬浮结束 -->
+    <div style="display:none"></div>
+    <div style="display: none; position: fixed; left: 0px; top: 0px; width: 100%; height: 100%; cursor: move; opacity: 0; background: rgb(255, 255, 255);"></div>
+</div>
+</body>
+</html>
